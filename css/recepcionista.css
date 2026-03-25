@@ -1,0 +1,61 @@
+ /* --- ESTILOS BASE --- */
+        body {
+            background-color: #fbfaee; /* Crema */
+            font-family: 'Manrope', sans-serif;
+            color: #181f21; /* Charcoal */
+        }
+        h1, h2, h3, h4, h5, .font-headline {
+            font-family: 'Noto Serif', serif;
+        }
+        .text-gold { color: #735c00; }
+        .bg-gold { background-color: #735c00; color: white; }
+        .bg-charcoal { background-color: #181f21; color: #fbfaee; }
+        .bg-light-cream { background-color: #f5f4e8; }
+        
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: rgba(251, 250, 238, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(115, 92, 0, 0.1);
+        }
+
+        /* --- INPUTS ELEGANTES (Línea inferior solamente) --- */
+        .input-atelier {
+            background: transparent !important;
+            border: none;
+            border-bottom: 1px solid rgba(115, 92, 0, 0.3);
+            border-radius: 0;
+            padding: 0.5rem 0;
+            color: inherit;
+            box-shadow: none !important;
+            font-weight: 600;
+        }
+        .input-atelier:focus {
+            border-bottom-color: #735c00;
+            outline: none;
+        }
+        .input-atelier-dark {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            color: white !important;
+        }
+        .input-atelier-dark option { color: #181f21; } /* Texto oscuro en el desplegable */
+        
+        .label-atelier {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #747879;
+            margin-bottom: 2px;
+            font-weight: 800;
+        }
+
+        /* --- TARJETAS --- */
+        .metric-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        }

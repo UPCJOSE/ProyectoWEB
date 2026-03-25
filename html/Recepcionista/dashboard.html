@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepción - Elegancia y Estilo</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/recepcionista.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top px-4 py-3">
+        <div class="container-fluid max-w-7xl">
+            <a class="navbar-brand fs-4 fw-bold" href="/html/Recepcionista/dashboard.html">Elegancia y Estilo</a>
+            
+            <div class="d-flex align-items-center gap-4 ms-auto">
+                <a href="principal.html" class="text-secondary text-decoration-none">Dashboard</a>
+                <a href="#" class="text-dark text-decoration-none fw-semibold border-bottom border-dark pb-1">Recepción</a>
+                <a href="pedidos.html" class="text-secondary text-decoration-none">Sastrería</a>
+                <a href="finanzas.html" class="text-secondary text-decoration-none">Finanzas</a>
+                
+                <a href="#" onclick="cerrarSesion()" class="text-decoration-none ms-3" title="Cerrar Sesión">
+                    <div class="rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 40px; height: 40px; background-color: #181f21; color: white; font-weight: bold;">
+                        CV
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        
+        <div class="row align-items-end mb-5 pb-4">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h1 class="display-3 fw-bold text-dark mb-2">
+                    Recepción <br><span class="text-gold fst-italic fw-normal">del Atelier</span>
+                </h1>
+                <p class="lead text-muted" style="font-size: 1.1rem; max-width: 500px;">
+                    Gestione cada detalle de la experiencia de sus clientes. La excelencia comienza en la primera medida.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="d-inline-block text-start bg-light-cream p-3 px-4 rounded-4 shadow-sm">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-gold text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                            <i class="bi bi-calendar-event fs-5"></i>
+                        </div>
+                        <div>
+                            <span class="label-atelier d-block mb-0">Hoy</span>
+                            <span class="fs-5 fw-bold font-headline">24 Marzo, 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5 pb-3">
+            <div class="col-md-6 col-lg-3">
+                <div class="card metric-card h-100 p-4 shadow-sm bg-white">
+                    <div class="d-flex justify-content-between mb-3">
+                        <i class="bi bi-person-badge fs-2 text-gold"></i>
+                        <span class="label-atelier text-success">+12% vs ayer</span>
+                    </div>
+                    <h2 class="font-headline mb-0">24</h2>
+                    <span class="label-atelier">Clientes Hoy</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card metric-card h-100 p-4 shadow-sm bg-charcoal">
+                    <div class="d-flex justify-content-between mb-3">
+                        <i class="bi bi-bag fs-2 text-white opacity-75"></i>
+                    </div>
+                    <h2 class="font-headline mb-0 text-white">156</h2>
+                    <span class="label-atelier text-white opacity-75">Pedidos Activos</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card metric-card h-100 p-4 shadow-sm bg-white">
+                    <div class="d-flex justify-content-between mb-3">
+                        <i class="bi bi-scissors fs-2 text-gold"></i>
+                    </div>
+                    <h2 class="font-headline mb-0">8</h2>
+                    <span class="label-atelier">En Sastrería</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card metric-card h-100 p-4 bg-light-cream">
+                    <div class="d-flex justify-content-between mb-3">
+                        <i class="bi bi-cash-coin fs-2 text-gold"></i>
+                    </div>
+                    <h2 class="font-headline mb-0">$4.250k</h2>
+                    <span class="label-atelier">Ingresos Semanales</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-5">
+            
+            <div class="col-lg-7">
+                <div class="d-flex align-items-center mb-4">
+                    <h3 class="font-headline mb-0">Registro y Medidas</h3>
+                    <hr class="flex-grow-1 mx-3 border-secondary">
+                    <span class="label-atelier text-gold mb-0">Paso 01</span>
+                </div>
+
+                <form>
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <label class="label-atelier">Nombre Completo</label>
+                            <input type="text" class="form-control input-atelier" placeholder="Ej: Julian Casablancas" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label-atelier">Teléfono / Correo</label>
+                            <input type="text" class="form-control input-atelier" placeholder="+57 300 000 000" required>
+                        </div>
+                    </div>
+
+                    <div class="bg-light-cream p-4 p-md-5 rounded-4">
+                        <h5 class="font-headline fst-italic mb-4">
+                            <i class="bi bi-rulers text-gold me-2"></i> Dimensiones Corporales (cm)
+                        </h5>
+                        <div class="row g-4">
+                            <div class="col-6 col-md-4">
+                                <label class="label-atelier">Busto / Pecho</label>
+                                <input type="number" step="0.1" class="form-control input-atelier fs-4 font-headline" placeholder="0.0">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label class="label-atelier">Cintura</label>
+                                <input type="number" step="0.1" class="form-control input-atelier fs-4 font-headline" placeholder="0.0">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label class="label-atelier">Cadera</label>
+                                <input type="number" step="0.1" class="form-control input-atelier fs-4 font-headline" placeholder="0.0">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label class="label-atelier">Espalda</label>
+                                <input type="number" step="0.1" class="form-control input-atelier fs-4 font-headline" placeholder="0.0">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label class="label-atelier">Largo Manga</label>
+                                <input type="number" step="0.1" class="form-control input-atelier fs-4 font-headline" placeholder="0.0">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <label class="label-atelier">Largo Total</label>
+                                <input type="number" step="0.1" class="form-control input-atelier fs-4 font-headline" placeholder="0.0">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="bg-charcoal p-4 p-md-5 rounded-4 shadow-lg position-relative overflow-hidden h-100">
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="font-headline text-white mb-0">Nuevo Pedido</h3>
+                        <span class="label-atelier text-gold mb-0">Paso 02</span>
+                    </div>
+
+                    <form>
+                        <div class="mb-4">
+                            <label class="label-atelier text-white opacity-75">Seleccionar Cliente</label>
+                            <select class="form-select input-atelier input-atelier-dark bg-transparent">
+                                <option disabled selected>-- Elija un cliente registrado --</option>
+                                <option>Julian Casablancas</option>
+                                <option>Roberto Gómez</option>
+                                <option>Cliente Nuevo (Usar datos del Paso 1)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="label-atelier text-white opacity-75">Tipo de Prenda / Servicio</label>
+                            <select class="form-select input-atelier input-atelier-dark bg-transparent">
+                                <option>Confección: Traje de Lana Merina</option>
+                                <option>Confección: Esmóquin de Gala</option>
+                                <option>Arreglo: Entallar Cintura</option>
+                                <option>Arreglo: Dobladillo Pantalón</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="label-atelier text-white opacity-75">Sastre Asignado</label>
+                            <select class="form-select input-atelier input-atelier-dark bg-transparent">
+                                <option>Maestro Alessandro (Alta Sastrería)</option>
+                                <option>Sastre Valentina (Corte Moderno)</option>
+                                <option>Oficial Roberto (Pantalonería)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="label-atelier text-white opacity-75">Fecha Estimada de Entrega</label>
+                            <input type="date" class="form-control input-atelier input-atelier-dark bg-transparent">
+                        </div>
+
+                        <button type="button" onclick="alert('✅ Cliente y pedido guardados exitosamente.')" class="btn w-100 py-3 fw-bold text-uppercase" style="background: linear-gradient(90deg, #735c00, #cca72f); color: white; letter-spacing: 2px; font-size: 12px; border-radius: 8px;">
+                            Guardar y Generar Orden
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function cerrarSesion() {
+            if(confirm("¿Estás seguro que deseas cerrar la sesión?")) {
+                localStorage.clear();
+                window.location.href = "/html/login.html"; 
+            }
+        }
+    </script>
+</body>
+</html>

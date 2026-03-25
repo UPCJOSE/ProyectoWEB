@@ -1,0 +1,6 @@
+body { background-color: #fbfaee; font-family: 'Manrope', sans-serif; color: #181f21; }
+        h1, h2, h3, h4, h5, .navbar-brand { font-family: 'Noto Serif', serif; }
+        .text-gold { color: #735c00; }
+        .bg-gold { background-color: #735c00; color: white; }
+        .navbar { background-color: rgba(251, 250, 238, 0.9) !important; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(115, 92, 0, 0.1); }
+        .medida-card { border: 1px solid rgba(115, 92, 0, 0.2); background: transparent; border-radius: 0; }
