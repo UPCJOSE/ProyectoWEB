@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/Principal.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Barra para navegar -->
+
+        <nav class="navbar navbar-light bg-light px-3">
+
+            <!-- boton de las 3 rallitas -->
+            <div id="btnOpciones">
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div>
+                <a class="navbar-brand ms-2" href="Principal.html">Ecomoda</a>
+            </div>
+
+            <!-- botones principales -->
+            <div class="d-flex gap-3 ms-auto">
+
+                <button class="btn p-0 border-0 bg-transparent" id="btnUsuario">
+                    <i class="bi bi-person"></i>
+                </button>
+
+                <button class="btn p-0 border-0 bg-transparent" id="btnBuscar">
+                    <i class="bi bi-search"></i>
+                </button>
+
+                <button class="btn p-0 border-0 bg-transparent" id="btnCarrito">
+                    <i class="bi bi-cart"></i>
+                </button>
+
+            </div>
+
+        </nav>
+
+        <!--  -->
+        <div class="offcanvas offcanvas-start" id="menuLateral">
+
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Menú</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+
+            <div class="offcanvas-body">
+
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/html/Productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+<!-- Carrusel que agregue por que se veia aburrido    -->
+
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="300">
+      <img src="/imagenes/pexels-arina-krasnikova-5418888.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" data-bs-interval="300">
+      <img src="/imagenes/pexels-cottonbro-5319496 (1).jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" >
+      <img src="/imagenes/pexels-shvetsa-5325768.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- Pedido personalizado -->
+
+<div class="container mt-4">
+  <div class="card shadow-sm">
+
+    <div class="row g-0 align-items-center">
+
+      <div class="col-md-6">
+        <img src="/imagenes/venta-moda-plantilla-descuento_23-2148936503.avif"
+             class="img-fluid h-100 w-100"
+             style="object-fit: cover;">
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-body text-center">
+          <h5 class="card-title">¿Cuerpo anormal?</h5>
+          <p class="card-text">
+            No se preocupe, ingrese aquí para realizar un pedido personalizado.
+          </p>
+          <a href="#" class="btn btn-primary">Pedido</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Productos desde API -->
+
+<div class="container-fluid mt-4 mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm rounded-4 h-100">
+                <div class="card-body p-4">
+
+                    <h6 class="text-secondary fw-semibold mb-3 text-center" style="letter-spacing: 0.5px">
+                        PRODUCTOS
+                    </h6>
+
+                    <div class="row g-4" id="productos"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../js/Navegacion.js"></script>
+        <script src="../js/FakeApi.js"></script>
+    </body>
+
+</html>

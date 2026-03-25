@@ -1,0 +1,52 @@
+/* colores para texto y bordes  */
+.naranja { color: #e67e22; }
+    .azul { color: #3498db; }
+    .verde { color: #2ecc71; }
+    .borde { border: 1px solid #eaeaea; }
+    .negro { color: #333; }
+    .blanco { color: #ffffff}
+/* Imagen responsiva sin deformar */
+    .prenda-img {
+        max-height: 250px;    
+        max-width: 250px;
+        object-fit: contain;   /* evita deformación */
+    }
+/* Boton plano */
+    .prenda-btn {
+        background: transparent;
+        border-radius: .75rem;     
+        transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .prenda-btn:hover,
+    .prenda-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 .15rem rgba(13,110,253,.15);
+        transform: translateY(-1px);
+        cursor: pointer;
+    }
+/* cosas del login */
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .bg-gradient-custom {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    /* btn login */
+.btn-custom-login {
+    transition: all 0.3s ease;
+}
+.btn-custom-login:active {
+    transform: scale(0.98);
+}
+.btn-logout {
+    color: #94a3b8; /* text-slate-400 */
+    background-color: transparent;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-logout:hover {
+    color: #ffffff; /* hover:text-white */
+    background-color: #1e293b; /* hover:bg-slate-800 */
+}
