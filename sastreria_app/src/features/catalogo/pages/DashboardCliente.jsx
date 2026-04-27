@@ -1,0 +1,1 @@
+export const DashboardCliente = () => <h1>Dashboard del cliente</h1>;

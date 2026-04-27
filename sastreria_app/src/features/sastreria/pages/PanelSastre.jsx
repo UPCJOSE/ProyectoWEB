@@ -1,0 +1,1 @@
+export const PanelSastre = () => <h1>Panel del Sastre</h1>;
