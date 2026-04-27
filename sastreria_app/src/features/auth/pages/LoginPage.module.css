@@ -1,0 +1,182 @@
+/* src/features/auth/pages/LoginPage.module.css */
+
+.page {
+  display: flex;
+  height: 100vh;
+  font-family: 'Manrope', sans-serif;
+  overflow: hidden;
+}
+
+/* ── Panel izquierdo  ── */
+.brandPanel {
+  width: 42%;
+  background: #181f21;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cornerTL {
+  position: absolute; top: 2rem; left: 2rem;
+  width: 24px; height: 24px;
+  border-top: 1px solid #c9a84c; border-left: 1px solid #c9a84c;
+  opacity: 0.7;
+}
+
+.cornerTR {
+  position: absolute; top: 2rem; right: 2rem;
+  width: 24px; height: 24px;
+  border-top: 1px solid #c9a84c; border-right: 1px solid #c9a84c;
+  opacity: 0.7;
+}
+
+.cornerBL {
+  position: absolute; bottom: 2rem; left: 2rem;
+  width: 24px; height: 24px;
+  border-bottom: 1px solid #c9a84c; border-left: 1px solid #c9a84c;
+  opacity: 0.7;
+}
+
+.cornerBR {
+  position: absolute; bottom: 2rem; right: 2rem;
+  width: 24px; height: 24px;
+  border-bottom: 1px solid #c9a84c; border-right: 1px solid #c9a84c;
+  opacity: 0.7;
+}
+
+.scissorIcon {
+  font-size: 2.2rem;
+  color: #c9a84c;
+  opacity: 0.55;
+  margin-bottom: 2rem;
+  letter-spacing: -2px;
+}
+
+.brandTitle {
+  font-family: 'Noto Serif', serif;
+  color: #fbfaee;
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 1.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.goldLine {
+  width: 40px;
+  height: 1.5px;
+  background: #c9a84c;
+  margin: 0 auto 1.5rem;
+}
+
+.brandTagline {
+  color: #fbfaee;
+  opacity: 0.4;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 9px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* ── Panel derecho  ── */
+.formPanel {
+  flex: 1;
+  background: #fbfaee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.formInner {
+  width: 100%;
+  max-width: 360px;
+}
+
+.portalLabel {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #aaa;
+  margin-bottom: 2.5rem;
+  display: block;
+}
+
+.fieldLabel {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.input, .select {
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #d4d0c4;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #181f21;
+  outline: none;
+  font-family: 'Manrope', sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input:focus, .select:focus {
+  border-bottom-color: #181f21;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.fieldWrap { margin-bottom: 1.5rem; }
+.fieldWrapLast { margin-bottom: 3rem; }
+
+.submitBtn {
+  display: block;
+  width: 100%;
+  background: #181f21;
+  color: #fbfaee;
+  border: none;
+  padding: 14px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorBox {
+  background: #fff5f5;
+  border: 1px solid #f5c6c6;
+  color: #b03030;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: 1.5rem;
+  font-family: 'Manrope', sans-serif;
+}
