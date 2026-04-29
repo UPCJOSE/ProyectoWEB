@@ -1,0 +1,170 @@
+/* src/features/recepcion/pages/DashboardRecepcion.module.css */
+
+.header { margin-bottom: 3rem; }
+
+.title {
+  font-family: 'Noto Serif', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.titleAccent {
+  color: #c9a84c;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  transition: transform 0.3s ease;
+}
+
+.card:hover { transform: translateY(-5px); }
+
+.cardDark {
+  background: #181f21;
+  color: white;
+}
+
+/* ── FORMULARIO ATELIER ── */
+.formSection {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr; 
+  gap: 3rem;
+  align-items: start; 
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 992px) {
+  .formSection { grid-template-columns: 1fr; }
+}
+
+.sectionTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #181f21;
+}
+
+/* Tarjetas de Medidas */
+.measuresCard {
+  background: #f5f4e8;
+  padding: 2.5rem;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2rem 2.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #747879;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.inputLine {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #d4d0c4;
+  background: transparent;
+  padding: 8px 0;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  color: #181f21;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputLine:focus { border-bottom-color: #c9a84c; }
+
+/* ── PANEL DE PEDIDO ── */
+.orderPanel {
+  background: #181f21;
+  padding: 3rem;
+  border-radius: 15px;
+  color: white;
+  position: sticky;
+  top: 100px; 
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.orderPanel .label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.orderPanel .inputLine {
+  color: white;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.orderPanel .inputLine:focus {
+  border-bottom-color: #c9a84c;
+}
+
+.orderPanel option {
+  color: #181f21;
+}
+
+.btnGold {
+  background: linear-gradient(90deg, #735c00, #cca72f);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: opacity 0.3s, transform 0.2s;
+}
+
+.btnGold:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btnDark {
+  background: #181f21;
+  color: #fbfaee;
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 8px;
+  margin-top: 2rem;
+  cursor: pointer;
+  transition: opacity 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.btnDark:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}

@@ -92,3 +92,48 @@
 @media (max-width: 768px) {
   .navGroup { display: none; } 
 }
+
+.cartContainer {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.cartContainer:hover {
+  transform: scale(1.1);
+}
+
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #c9a84c; 
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  pointer-events: none; 
+}
+
+.navSeparator {
+  width: 1px;
+  height: 20px;
+  background: rgba(115, 92, 0, 0.15);
+  margin: 0 0.5rem;
+}
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(115, 92, 0, 0.15);
+}

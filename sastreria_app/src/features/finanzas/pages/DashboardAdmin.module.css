@@ -1,0 +1,140 @@
+/* src/features/finanzas/pages/DashboardAdmin.module.css */
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: 'Noto Serif', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #181f21;
+}
+
+/* ── KPIs ── */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.metricCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-left: 5px solid;
+}
+
+.metricCard.ingreso { border-color: #2ecc71; } /* Verde */
+.metricCard.egreso { border-color: #e74c3c; } /* Rojo */
+.metricCard.saldo { border-color: #c9a84c; background: #181f21; color: white;} /* Dorado/Oscuro */
+
+.iconBox {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background: #f5f4e8;
+  color: #181f21;
+}
+
+.metricValue {
+  font-family: 'Noto Serif', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+.metricLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #747879;
+  font-weight: 800;
+}
+
+.saldo .metricLabel { color: rgba(255,255,255,0.7); }
+
+/* ── TABLAS DE DATOS ── */
+.tablesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 992px) {
+  .tablesGrid { grid-template-columns: 1fr; }
+}
+
+.tableContainer {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f5f4e8;
+  padding-bottom: 1rem;
+}
+
+.btnAction {
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.btnIngreso { background: #e9f7ef; color: #27ae60; }
+.btnEgreso { background: #fdf5f6; color: #e74c3c; }
+.btnAction:hover { opacity: 0.8; }
+
+.atelierTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.atelierTable th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #747879;
+  padding-bottom: 1rem;
+}
+
+.atelierTable td {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f5f4e8;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ── ZONA DE REPORTES ── */
+.reportsBox {
+  background: #f5f4e8;
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}

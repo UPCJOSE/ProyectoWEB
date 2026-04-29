@@ -6,14 +6,11 @@ html, body, #root {
   margin: 0;
   padding: 0;
   
-  /* Esto elimina el límite que pone Vite por defecto */
   max-width: none !important; 
   
-  /* Opcional: asegurarnos de que el fondo base no sea oscuro */
   background-color: #fbfaee; 
 }
 
-/* Evitar que aparezca scroll horizontal si algo se desborda un milímetro */
 body {
   overflow-x: hidden; 
 }
