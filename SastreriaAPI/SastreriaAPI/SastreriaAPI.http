@@ -1,0 +1,6 @@
+@SastreriaAPI_HostAddress = http://localhost:5018
+
+GET {{SastreriaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
