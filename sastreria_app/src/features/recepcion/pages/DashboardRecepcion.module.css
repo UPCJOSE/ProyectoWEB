@@ -168,3 +168,41 @@
   opacity: 0.9;
   transform: translateY(-2px);
 }
+
+.tabContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btnTab {
+  flex: 1; 
+  padding: 12px 24px;
+  border: 2px solid #181f21;
+  background-color: transparent;
+  color: #181f21;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnTabActive {
+  flex: 1;
+  padding: 12px 24px;
+  border: 2px solid #181f21;
+  background-color: #181f21;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnTab:hover {
+  background-color: rgba(24, 31, 33, 0.1);
+}

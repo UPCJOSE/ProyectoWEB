@@ -1,37 +1,62 @@
 // src/features/auth/pages/LoginPage.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './LoginPage.module.css'; // <-- Importamos los estilos encapsulados
+import styles from './LoginPage.module.css'; 
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('recepcionista');
+  const [role, setRole] = useState('Recepcionista');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+
+    if (!role) {
+      setError("Por favor, selecciona un rol.");
+      return;
+    }
+
     setLoading(true);
+    setError('');
 
-    setTimeout(() => {
-      if (email === "admin@unicesar.com" && password === "1234") {
+    try {
+      const credenciales = {
+        correo: email,       
+        password: password,
+        rol: role
+      };
+      // api resquest to login endpoint
+      const respuesta = await fetch("https://localhost:7196/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(credenciales)
+      });
+
+      if (respuesta.ok) {
+        const datosDelUsuario = await respuesta.json();
+        localStorage.setItem("rol", datosDelUsuario.rol); 
         localStorage.setItem("login", "true");
-        localStorage.setItem("rol", role);
-        localStorage.setItem("usuario", email);
-
-        if (role === "administrador") navigate('/finanzas');
-        else if (role === "sastre") navigate('/sastreria');
-        else if (role === "recepcionista") navigate('/recepcion');
-        else navigate('/cliente');
+        if (role === "Administrador") navigate('/finanzas');
+        else if (role === "Sastre") navigate('/sastreria');
+        else if (role === "Recepcionista") navigate('/recepcion');
+        else navigate('/Cliente');
+        
       } else {
-        setError("Credenciales incorrectas. Verifica tu correo y contraseña.");
+        alert("Credenciales incorrectas. Por favor, verifica tu correo y contraseña.");
       }
-      setLoading(false);
-    }, 600);
+
+    } catch (error) {
+      console.error("Error al conectar con la API:", error);
+      alert("Error de conexión");
+    } finally {
+      setLoading(false); 
+    }
   };
 
   return (
@@ -96,10 +121,10 @@ export const LoginPage = () => {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
-                <option value="recepcionista">Recepcionista</option>
-                <option value="sastre">Sastre / Modista</option>
-                <option value="administrador">Administrador</option>
-                <option value="cliente">Cliente</option>
+                <option value="Recepcionista">Recepcionista</option>
+                <option value="Sastre">Sastre / Modista</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Cliente">Cliente</option>
               </select>
             </div>
 
