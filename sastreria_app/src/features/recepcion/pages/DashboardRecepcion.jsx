@@ -219,13 +219,24 @@ export const DashboardRecepcion = () => {
       !sastreAsignado ||
       !fechaEntrega
     ) {
-      alert(
-        "Por favor, completa todos los campos requeridos antes de generar la orden.",
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Faltan datos",
+        text: "Por favor, completa todos los campos requeridos antes de generar la orden.",
+        confirmButtonColor: "#181f21",
+      });
       return;
     }
 
-    alert("Orden generada y asignada al sastre correctamente.");
+    Swal.fire({
+      icon: "success",
+      title: "Orden generada y asignada al sastre correctamente.",
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
 
     setClienteAsignado("");
     setPrendaSeleccionada("");
