@@ -1,13 +1,13 @@
 // src/features/auth/pages/LoginPage.jsx
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './LoginPage.module.css'; 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./LoginPage.module.css";
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Recepcionista');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Recepcionista");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -21,47 +21,46 @@ export const LoginPage = () => {
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       const credenciales = {
-        correo: email,       
+        correo: email,
         password: password,
-        rol: role
+        rol: role,
       };
       // api resquest to login endpoint
       const respuesta = await fetch("https://localhost:7196/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json" 
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(credenciales)
+        body: JSON.stringify(credenciales),
       });
 
       if (respuesta.ok) {
         const datosDelUsuario = await respuesta.json();
-        localStorage.setItem("rol", datosDelUsuario.rol); 
+        localStorage.setItem("rol", datosDelUsuario.rol);
         localStorage.setItem("login", "true");
-        if (role === "Administrador") navigate('/finanzas');
-        else if (role === "Sastre") navigate('/sastreria');
-        else if (role === "Recepcionista") navigate('/recepcion');
-        else navigate('/Cliente');
-        
+        if (role === "Administrador") navigate("/finanzas");
+        else if (role === "Sastre") navigate("/sastreria");
+        else if (role === "Recepcionista") navigate("/recepcion");
+        else navigate("/Cliente");
       } else {
-        alert("Credenciales incorrectas. Por favor, verifica tu correo y contraseña.");
+        alert(
+          "Credenciales incorrectas. Por favor, verifica tu correo y contraseña.",
+        );
       }
-
     } catch (error) {
       console.error("Error al conectar con la API:", error);
       alert("Error de conexión");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   return (
     <div className={styles.page}>
-
       {/* ── Panel Izquierdo ── */}
       <div className={styles.brandPanel}>
         <div className={styles.cornerTL} />
@@ -72,7 +71,8 @@ export const LoginPage = () => {
         <div className={styles.scissorIcon}>✂</div>
 
         <h1 className={styles.brandTitle}>
-          Elegancia<br />y Estilo
+          Elegancia
+          <br />y Estilo
         </h1>
 
         <div className={styles.goldLine} />
@@ -83,13 +83,11 @@ export const LoginPage = () => {
       {/* ── Panel Derecho ── */}
       <div className={styles.formPanel}>
         <div className={styles.formInner}>
-
           <span className={styles.portalLabel}>Portal de Acceso</span>
 
           {error && <div className={styles.errorBox}>{error}</div>}
 
           <form onSubmit={handleLogin}>
-
             <div className={styles.fieldWrap}>
               <label className={styles.fieldLabel}>Correo Electrónico</label>
               <input
@@ -133,13 +131,11 @@ export const LoginPage = () => {
               className={styles.submitBtn}
               disabled={loading}
             >
-              {loading ? 'Verificando...' : 'Iniciar Sesión'}
+              {loading ? "Verificando..." : "Iniciar Sesión"}
             </button>
-
           </form>
         </div>
       </div>
-
     </div>
   );
 };
