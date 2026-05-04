@@ -1,24 +1,25 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\",
+  "WorkspaceRootPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\proyectoweb-api\\proyectoweb-api\\sastreriaapi\\sastreriaapi\\models\\medida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|solutionrelative:sastreriaapi\\models\\medida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/SastreriaDB/True/SqlTable/dbo.Egresos.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504013127_NuevaMedida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SastreriaAPI\\Migrations\\20260504013127_NuevaMedida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504232505_Correccion_Egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SastreriaAPI\\Migrations\\20260504232505_Correccion_Egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\proyectoweb-api\\proyectoweb-api\\sastreriaapi\\sastreriaapi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|solutionrelative:sastreriaapi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\proyecto\\proyectoweb\\sastreriaapi\\sastreriaapi\\controllers\\egresoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|solutionrelative:sastreriaapi\\controllers\\egresoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/SastreriaDB/True/SqlTable/dbo.Medidas.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\proyecto\\proyectoweb\\sastreriaapi\\sastreriaapi\\migrations\\20260504230650_egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|solutionrelative:sastreriaapi\\migrations\\20260504230650_egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/SastreriaDB/True/SqlTable/dbo.Clientes.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\proyecto\\proyectoweb\\sastreriaapi\\sastreriaapi\\models\\egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2838FBD1-0A95-0F86-D2B0-826DF4442BA7}|SastreriaAPI\\SastreriaAPI.csproj|solutionrelative:sastreriaapi\\models\\egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,48 +29,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 9,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Medida.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Models\\Medida.cs",
-              "RelativeDocumentMoniker": "SastreriaAPI\\Models\\Medida.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Models\\Medida.cs",
-              "RelativeToolTip": "SastreriaAPI\\Models\\Medida.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAcwCIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T00:07:05.51Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "20260504013127_NuevaMedida.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504013127_NuevaMedida.cs",
-              "RelativeDocumentMoniker": "SastreriaAPI\\Migrations\\20260504013127_NuevaMedida.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504013127_NuevaMedida.cs",
-              "RelativeToolTip": "SastreriaAPI\\Migrations\\20260504013127_NuevaMedida.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T01:31:27.836Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ApplicationDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "SastreriaAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeToolTip": "SastreriaAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAQwIEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T01:29:45.276Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -108,22 +69,64 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "dbo.Clientes [Datos]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/SastreriaDB/True/SqlTable/dbo.Clientes.sql",
-              "ToolTip": "dbo.Clientes [Datos]",
+              "DocumentIndex": 0,
+              "Title": "dbo.Egresos [Datos]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/SastreriaDB/True/SqlTable/dbo.Egresos.sql",
+              "ToolTip": "dbo.Egresos [Datos]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-05-04T01:19:59.377Z",
+              "WhenOpened": "2026-05-04T23:26:11.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20260504232505_Correccion_Egreso.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504232505_Correccion_Egreso.cs",
+              "RelativeDocumentMoniker": "SastreriaAPI\\Migrations\\20260504232505_Correccion_Egreso.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504232505_Correccion_Egreso.cs",
+              "RelativeToolTip": "SastreriaAPI\\Migrations\\20260504232505_Correccion_Egreso.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T23:25:05.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EgresosController.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Controllers\\EgresosController.cs",
+              "RelativeDocumentMoniker": "SastreriaAPI\\Controllers\\EgresosController.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Controllers\\EgresosController.cs",
+              "RelativeToolTip": "SastreriaAPI\\Controllers\\EgresosController.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T23:21:21.126Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "dbo.Medidas [Datos]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/SastreriaDB/True/SqlTable/dbo.Medidas.sql",
-              "ToolTip": "dbo.Medidas [Datos]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-05-04T01:19:49.656Z",
+              "Title": "20260504230650_Egreso.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504230650_Egreso.cs",
+              "RelativeDocumentMoniker": "SastreriaAPI\\Migrations\\20260504230650_Egreso.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Migrations\\20260504230650_Egreso.cs",
+              "RelativeToolTip": "SastreriaAPI\\Migrations\\20260504230650_Egreso.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T23:06:51.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Egreso.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Models\\Egreso.cs",
+              "RelativeDocumentMoniker": "SastreriaAPI\\Models\\Egreso.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\Models\\Egreso.cs",
+              "RelativeToolTip": "SastreriaAPI\\Models\\Egreso.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T22:52:23.226Z",
               "EditorCaption": ""
             }
           ]
