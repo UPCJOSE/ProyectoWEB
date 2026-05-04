@@ -1,48 +1,100 @@
-// src/features/sastreria/pages/PanelSastre.jsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './PanelSastre.module.css';
 
-export const PanelSastre = () => {
-  const [pedidos, setPedidos] = useState([
-    { id: 'ORD-2026-001', cliente: 'Julian Casablancas', prenda: 'Traje Lana Merina', estado: 'pendiente' },
-    { id: 'ORD-2026-002', cliente: 'Roberto Gómez', prenda: 'Esmóquin de Gala', estado: 'pendiente' },
-    { id: 'ORD-2026-003', cliente: 'Ana Silva', prenda: 'Blusa de Seda', estado: 'proceso' },
-    { id: 'ORD-2026-004', cliente: 'Carlos Ruiz', prenda: 'Pantalón de Lino', estado: 'terminado' },
-  ]);
+const API_URL = "https://localhost:7196/api/pedidos";
 
-  const moverPedido = (id, nuevoEstado) => {
-    const nuevosPedidos = pedidos.map(pedido => 
-      pedido.id === id ? { ...pedido, estado: nuevoEstado } : pedido
-    );
-    setPedidos(nuevosPedidos);
+export const PanelSastre = () => {
+  const [pedidos, setPedidos] = useState([]);
+
+  // 🔄 CARGAR DESDE API
+  const cargarPedidos = async () => {
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      setPedidos(data);
+    } catch (error) {
+      console.error("Error cargando pedidos:", error);
+    }
+  };
+
+  useEffect(() => {
+    cargarPedidos();
+  }, []);
+
+  // 🔁 ACTUALIZAR ESTADO EN BACKEND
+  const moverPedido = async (id, nuevoEstado) => {
+    try {
+      const pedido = pedidos.find(p => p.id === id);
+      if (!pedido) return;
+
+      const actualizado = {
+        ...pedido,
+        estado: nuevoEstado
+      };
+
+      await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(actualizado)
+      });
+
+      // actualizar UI local
+      setPedidos(prev =>
+        prev.map(p =>
+          p.id === id ? { ...p, estado: nuevoEstado } : p
+        )
+      );
+
+    } catch (error) {
+      console.error("Error actualizando pedido:", error);
+    }
   };
 
   const verMedidas = (cliente) => {
-    alert(`📐 Abriendo ficha de medidas para: ${cliente}\n(Aquí se mostraría el modal con Busto, Cintura, etc.)`);
+    alert(`📐 Cliente: ${cliente?.nombre}`);
   };
 
-  const pendientes = pedidos.filter(p => p.estado === 'pendiente');
-  const enProceso = pedidos.filter(p => p.estado === 'proceso');
-  const terminados = pedidos.filter(p => p.estado === 'terminado');
+  // 📌 FILTROS CORRECTOS
+  const pendientes = pedidos.filter(p => p.estado === 'Pendiente');
+  const enProceso = pedidos.filter(p => p.estado === 'EnProceso');
+  const terminados = pedidos.filter(p => p.estado === 'Terminado');
 
   const Ticket = ({ pedido }) => (
     <div className={styles.ticket}>
-      <div className={styles.ticketId}>{pedido.id}</div>
-      <h4 className={styles.ticketPrenda}>{pedido.prenda}</h4>
-      <p className={styles.ticketCliente}><i className="bi bi-person"></i> {pedido.cliente}</p>
-      
+      <div className={styles.ticketId}>#{pedido.id}</div>
+
+      <h4 className={styles.ticketPrenda}>
+        {pedido.tipoPrenda}
+      </h4>
+
+      <p className={styles.ticketCliente}>
+        <i className="bi bi-person"></i> {pedido.cliente?.nombre}
+      </p>
+
       <div className={styles.actions}>
-        <button className={styles.btnAction} onClick={() => verMedidas(pedido.cliente)}>
-          Ver Medidas
+        <button
+          className={styles.btnAction}
+          onClick={() => verMedidas(pedido.cliente)}
+        >
+          Ver Cliente
         </button>
-        
-        {pedido.estado === 'pendiente' && (
-          <button className={`${styles.btnAction} ${styles.btnGold}`} onClick={() => moverPedido(pedido.id, 'proceso')}>
+
+        {pedido.estado === "Pendiente" && (
+          <button
+            className={styles.btnGold}
+            onClick={() => moverPedido(pedido.id, "EnProceso")}
+          >
             Iniciar
           </button>
         )}
-        {pedido.estado === 'proceso' && (
-          <button className={`${styles.btnAction} ${styles.btnGold}`} onClick={() => moverPedido(pedido.id, 'terminado')}>
+
+        {pedido.estado === "EnProceso" && (
+          <button
+            className={styles.btnGold}
+            onClick={() => moverPedido(pedido.id, "Terminado")}
+          >
             Finalizar
           </button>
         )}
@@ -51,44 +103,33 @@ export const PanelSastre = () => {
   );
 
   return (
-    <div className="animate__animated animate__fadeIn">
-      
+    <div>
+
       <header className={styles.header}>
         <h1 className={styles.title}>Atelier de Confección</h1>
-        <p className="text-muted">Panel de producción Kanban. Maestro Sastre asignado.</p>
       </header>
 
       <main className={styles.kanbanBoard}>
-        
+
         {/* PENDIENTES */}
         <section className={styles.kanbanColumn}>
-          <div className={styles.columnHeader}>
-            <h3 className={styles.columnTitle}>Pendientes</h3>
-            <span className={styles.badgeQty}>{pendientes.length}</span>
-          </div>
-          {pendientes.map(pedido => <Ticket key={pedido.id} pedido={pedido} />)}
+          <h3>Pendientes ({pendientes.length})</h3>
+          {pendientes.map(p => <Ticket key={p.id} pedido={p} />)}
         </section>
 
         {/* EN PROCESO */}
-        <section className={styles.kanbanColumn} style={{ backgroundColor: '#e8ecea' }}>
-          <div className={styles.columnHeader}>
-            <h3 className={styles.columnTitle}>En Proceso</h3>
-            <span className={styles.badgeQty}>{enProceso.length}</span>
-          </div>
-          {enProceso.map(pedido => <Ticket key={pedido.id} pedido={pedido} />)}
+        <section className={styles.kanbanColumn}>
+          <h3>En Proceso ({enProceso.length})</h3>
+          {enProceso.map(p => <Ticket key={p.id} pedido={p} />)}
         </section>
 
         {/* TERMINADOS */}
         <section className={styles.kanbanColumn}>
-          <div className={styles.columnHeader}>
-            <h3 className={styles.columnTitle}>Terminados</h3>
-            <span className={styles.badgeQty}>{terminados.length}</span>
-          </div>
-          {terminados.map(pedido => <Ticket key={pedido.id} pedido={pedido} />)}
+          <h3>Terminados ({terminados.length})</h3>
+          {terminados.map(p => <Ticket key={p.id} pedido={p} />)}
         </section>
 
       </main>
-
     </div>
   );
 };
