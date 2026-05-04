@@ -3483,11 +3483,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\SastreriaAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\SastreriaAPI.csproj",
       "projectName": "SastreriaAPI",
-      "projectPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\SastreriaAPI.csproj",
+      "projectPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\SastreriaAPI.csproj",
       "packagesPath": "C:\\Users\\Jose Tomas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\obj\\",
+      "outputPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

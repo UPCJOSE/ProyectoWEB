@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pM/sU8r865k=",
+  "dgSpecHash": "LhCgyWopYcQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\ProyectoWEB-API\\ProyectoWEB-API\\SastreriaAPI\\SastreriaAPI\\SastreriaAPI.csproj",
+  "projectFilePath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\PROYECTO\\ProyectoWEB\\SastreriaAPI\\SastreriaAPI\\SastreriaAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jose Tomas\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Jose Tomas\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
