@@ -83,6 +83,12 @@ namespace SastreriaAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("AltoCadera")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AnchoBajo")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("Cadera")
                         .HasColumnType("decimal(18,2)");
 
@@ -92,18 +98,37 @@ namespace SastreriaAPI.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Cuello")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Entrepeirna")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("Hombros")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("LargoBrazo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LargoTalle")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LargoTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LargoTotalSuperior")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Pecho")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<DateOnly>("UltimaMedida")
+                        .HasColumnType("date");
 
-                    b.HasIndex("ClienteId");
+                    b.HasKey("Id");
 
                     b.ToTable("Medidas");
                 });
@@ -197,17 +222,6 @@ namespace SastreriaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("SastreriaAPI.Models.Medida", b =>
-                {
-                    b.HasOne("SastreriaAPI.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("SastreriaAPI.Models.Pago", b =>
