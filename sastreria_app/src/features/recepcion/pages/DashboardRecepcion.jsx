@@ -16,11 +16,11 @@ export const DashboardRecepcion = () => {
   const [sastreAsignado, setSastreAsignado] = useState("");
   const [fechaEntrega, setFechaEntrega] = useState("");
 
-  // Estados del formulario principal
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [direccion, setDireccion] = useState("");
 
-  // Estado unificado para las medidas
   const [medidas, setMedidas] = useState({
     cuello: "",
     pecho: "",
@@ -81,6 +81,8 @@ export const DashboardRecepcion = () => {
     setClienteEdit(null);
     setNombre("");
     setTelefono("");
+    setCorreo("test@test.com");
+    setDireccion("calle falsa 123");
     setMedidaId(null);
     setMostrarMedidas(false);
 
@@ -133,22 +135,49 @@ export const DashboardRecepcion = () => {
     }
 
     try {
-      let clienteId = clienteEdit;
+      const fechaActual = new Date();
+      const stringFechaCorta = fechaActual.toISOString().split("T")[0];
+
+      const medidasPayload = mostrarMedidas
+        ? {
+            id: medidaId || 0,
+            pecho: Number(medidas.pecho || 0),
+            cintura: Number(medidas.cintura || 0),
+            cadera: Number(medidas.cadera || 0),
+            altoCadera: Number(medidas.altoCadera || 0),
+            entrepeirna: Number(medidas.entrepierna || 0),
+            largoTotal: Number(medidas.largoTotalInf || 0),
+            anchoBajo: Number(medidas.anchoBajo || 0),
+            largoBrazo: Number(medidas.largoManga || 0),
+            cuello: Number(medidas.cuello || 0),
+            hombros: Number(medidas.hombros || 0),
+            largoTalle: Number(medidas.largoTalle || 0),
+            largoTotalSuperior: Number(medidas.largoTotalSup || 0),
+            ultimaMedida: stringFechaCorta,
+            fechaRegistro: fechaActual.toISOString(),
+          }
+        : null;
 
       const clientePayload = {
         id: clienteEdit || 0,
         nombre,
         telefono,
-        correo: "",
-        direccion: "",
+        correo: correo,
+        direccion: direccion,
+        medidas: medidasPayload,
       };
 
       if (clienteEdit) {
-        await fetch(`${API}/Clientes/${clienteEdit}`, {
+        const res = await fetch(`${API}/Clientes/${clienteEdit}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(clientePayload),
         });
+
+        if (!res.ok) {
+          const errorDetalle = await res.text();
+          throw new Error(errorDetalle);
+        }
       } else {
         const res = await fetch(`${API}/Clientes`, {
           method: "POST",
@@ -156,45 +185,9 @@ export const DashboardRecepcion = () => {
           body: JSON.stringify(clientePayload),
         });
 
-        const nuevo = await res.json();
-        clienteId = nuevo.id;
-      }
-
-      if (mostrarMedidas) {
-        const fechaActual = new Date();
-        const stringFechaCorta = fechaActual.toISOString().split("T")[0];
-
-        const medidasPayload = {
-          id: medidaId || 0,
-          pecho: Number(medidas.pecho || 0),
-          cintura: Number(medidas.cintura || 0),
-          cadera: Number(medidas.cadera || 0),
-          altoCadera: Number(medidas.altoCadera || 0),
-          entrepeirna: Number(medidas.entrepierna || 0),
-          largoTotal: Number(medidas.largoTotalInf || 0),
-          anchoBajo: Number(medidas.anchoBajo || 0),
-          largoBrazo: Number(medidas.largoManga || 0),
-          cuello: Number(medidas.cuello || 0),
-          hombros: Number(medidas.hombros || 0),
-          largoTalle: Number(medidas.largoTalle || 0),
-          largoTotalSuperior: Number(medidas.largoTotalSup || 0),
-          ultimaMedida: stringFechaCorta,
-          fechaRegistro: fechaActual.toISOString(),
-          clienteId: clienteId,
-        };
-
-        if (medidaId) {
-          await fetch(`${API}/Medidas/${medidaId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(medidasPayload),
-          });
-        } else {
-          await fetch(`${API}/Medidas`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(medidasPayload),
-          });
+        if (!res.ok) {
+          const errorDetalle = await res.text();
+          throw new Error(errorDetalle);
         }
       }
 
@@ -212,8 +205,13 @@ export const DashboardRecepcion = () => {
       NuevoCliente();
       setVistaAct("tabla");
     } catch (error) {
-      console.error(error);
-      Swal.fire("Error", "No se pudo guardar", "error");
+      console.error("Error devuelto por el servidor:", error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error de validación",
+        text: "El servidor rechazó los datos. Recuerda pedirle al backend que haga las medidas opcionales.",
+        confirmButtonColor: "#181f21",
+      });
     }
   };
 
@@ -235,33 +233,31 @@ export const DashboardRecepcion = () => {
   };
 
   const Edicion = (cliente) => {
-    console.log("Datos del cliente a editar:", cliente);
-    let datosMedida = null;
-    if (cliente.medidas && Array.isArray(cliente.medidas)) {
-      datosMedida = cliente.medidas[0];
-    } else if (cliente.medidas) {
-      datosMedida = cliente.medidas;
-    }
+    console.log("debug ", cliente);
 
     setClienteEdit(cliente.id);
-    setMedidaId(datosMedida?.id || null);
-
     setNombre(cliente.nombre);
     setTelefono(cliente.telefono);
+    setCorreo(cliente.correo || "");
+    setDireccion(cliente.direccion || "");
+
+    const datosMedida = cliente.medidas;
+
+    setMedidaId(datosMedida?.id || null);
 
     setMedidas({
-      cuello: datosMedida?.cuello || "",
-      pecho: datosMedida?.pecho || "",
-      hombros: datosMedida?.hombros || "",
-      largoManga: datosMedida?.largoBrazo || "",
-      largoTalle: datosMedida?.largoTalle || "",
-      largoTotalSup: datosMedida?.largoTotalSuperior || "",
-      cintura: datosMedida?.cintura || "",
-      cadera: datosMedida?.cadera || "",
-      altoCadera: datosMedida?.altoCadera || "",
-      entrepierna: datosMedida?.entrepeirna || "",
-      largoTotalInf: datosMedida?.largoTotal || "",
-      anchoBajo: datosMedida?.anchoBajo || "",
+      cuello: datosMedida?.cuello ?? "",
+      pecho: datosMedida?.pecho ?? "",
+      hombros: datosMedida?.hombros ?? "",
+      largoManga: datosMedida?.largoBrazo ?? "",
+      largoTalle: datosMedida?.largoTalle ?? "",
+      largoTotalSup: datosMedida?.largoTotalSuperior ?? "",
+      cintura: datosMedida?.cintura ?? "",
+      cadera: datosMedida?.cadera ?? "",
+      altoCadera: datosMedida?.altoCadera ?? "",
+      entrepierna: datosMedida?.entrepeirna ?? "",
+      largoTotalInf: datosMedida?.largoTotal ?? "",
+      anchoBajo: datosMedida?.anchoBajo ?? "",
     });
 
     setVistaAct("formulario");

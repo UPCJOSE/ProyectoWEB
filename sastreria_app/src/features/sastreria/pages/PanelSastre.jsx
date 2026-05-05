@@ -72,14 +72,34 @@ export const PanelSastre = () => {
       if (medidas) {
         Swal.fire({
           title: `📏 Medidas de ${data.nombre}`,
+          width: "600px",
           html: `
-            <div style="text-align: left; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <p><strong>Cuello:</strong> ${medidas.cuello || 0} cm</p>
-              <p><strong>Pecho:</strong> ${medidas.pecho || 0} cm</p>
-              <p><strong>Cintura:</strong> ${medidas.cintura || 0} cm</p>
-              <p><strong>Cadera:</strong> ${medidas.cadera || 0} cm</p>
-              <p><strong>Hombros:</strong> ${medidas.hombros || 0} cm</p>
-              <p><strong>Largo Total:</strong> ${medidas.largoTotal || 0} cm</p>
+            <div style="text-align: left; font-size: 1rem; color: #181f21;">
+              
+              <h4 style="color: #c9a84c; margin-bottom: 10px; border-bottom: 1px solid #f5f4e8; padding-bottom: 5px;">
+                Medidas Superiores
+              </h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+                <p style="margin: 0;"><strong>Cuello:</strong> ${medidas.cuello ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Pecho:</strong> ${medidas.pecho ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Hombros:</strong> ${medidas.hombros ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Largo Manga:</strong> ${medidas.largoBrazo ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Largo Talle:</strong> ${medidas.largoTalle ?? 0} cm</p>
+                <p style="margin: 0;"><strong>L. Total Sup:</strong> ${medidas.largoTotalSuperior ?? 0} cm</p>
+              </div>
+
+              <h4 style="color: #c9a84c; margin-bottom: 10px; border-bottom: 1px solid #f5f4e8; padding-bottom: 5px;">
+                Medidas Inferiores
+              </h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <p style="margin: 0;"><strong>Cintura:</strong> ${medidas.cintura ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Cadera:</strong> ${medidas.cadera ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Alto Cadera:</strong> ${medidas.altoCadera ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Entrepierna:</strong> ${medidas.entrepeirna ?? 0} cm</p>
+                <p style="margin: 0;"><strong>Ancho Bajo:</strong> ${medidas.anchoBajo ?? 0} cm</p>
+                <p style="margin: 0;"><strong>L. Total Inf:</strong> ${medidas.largoTotal ?? 0} cm</p>
+              </div>
+
             </div>
           `,
           confirmButtonText: "Cerrar",
