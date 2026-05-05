@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // src/features/finanzas/pages/DashboardAdmin.jsx
+=======
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardAdmin.module.css";
@@ -10,6 +13,12 @@ export const DashboardAdmin = () => {
 
   const API = "https://localhost:7196/api";
 
+<<<<<<< HEAD
+=======
+  // =========================
+  // CARGAR DATOS
+  // =========================
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
   const cargarDatos = async () => {
     try {
       const [respPagos, respEgresos] = await Promise.all([
@@ -40,6 +49,12 @@ export const DashboardAdmin = () => {
     cargarDatos();
   }, []);
 
+<<<<<<< HEAD
+=======
+  // =========================
+  // TOTALES
+  // =========================
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
   const totalIngresos = pagos.reduce(
     (acc, curr) => acc + Number(curr.monto),
     0,
@@ -52,6 +67,12 @@ export const DashboardAdmin = () => {
 
   const saldoFinal = totalIngresos - totalEgresos;
 
+<<<<<<< HEAD
+=======
+  // =========================
+  // FORMATO MONEDA
+  // =========================
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
   const formatoMoneda = (valor) => {
     return new Intl.NumberFormat("es-CO", {
       style: "currency",
@@ -60,18 +81,29 @@ export const DashboardAdmin = () => {
     }).format(valor);
   };
 
+<<<<<<< HEAD
+=======
+  // =========================
+  // REGISTRAR PAGO
+  // =========================
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
   const registrarPago = async () => {
     const { value: formValues } = await Swal.fire({
       title: "Registrar Pago",
       html: `
         <input id="pedido" class="swal2-input" placeholder="ID Pedido">
+<<<<<<< HEAD
         
         <select id="metodo" class="swal2-select" style="display: flex; margin: 1em auto; width: 73%; color: #545454;">
           <option value="" disabled selected>Seleccione el método</option>
+=======
+        <select id="metodo" class="swal2-input">
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
           <option value="Efectivo">Efectivo</option>
           <option value="Transferencia">Transferencia</option>
           <option value="Tarjeta">Tarjeta</option>
         </select>
+<<<<<<< HEAD
 
         <input id="monto" type="number" class="swal2-input" placeholder="Monto">
       `,
@@ -92,6 +124,19 @@ export const DashboardAdmin = () => {
         }
 
         return { pedidoId, metodoPago, monto };
+=======
+        <input id="monto" type="number" class="swal2-input" placeholder="Monto">
+      `,
+      focusConfirm: false,
+      confirmButtonText: "Guardar",
+      confirmButtonColor: "#181f21",
+      preConfirm: () => {
+        return {
+          pedidoId: document.getElementById("pedido").value,
+          metodoPago: document.getElementById("metodo").value,
+          monto: document.getElementById("monto").value,
+        };
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
       },
     });
 
@@ -134,6 +179,12 @@ export const DashboardAdmin = () => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // =========================
+  // REGISTRAR EGRESO
+  // =========================
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
   const registrarEgreso = async () => {
     const { value: formValues } = await Swal.fire({
       title: "Registrar Egreso",
@@ -143,11 +194,16 @@ export const DashboardAdmin = () => {
         <input id="costo" type="number" class="swal2-input" placeholder="Costo">
       `,
       focusConfirm: false,
+<<<<<<< HEAD
       showCancelButton: true,
       confirmButtonText: "Guardar",
       confirmButtonColor: "#c5a880",
       cancelButtonColor: "#181f21",
       cancelButtonText: "Cancelar",
+=======
+      confirmButtonText: "Guardar",
+      confirmButtonColor: "#181f21",
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
       preConfirm: () => {
         return {
           concepto: document.getElementById("concepto").value,
@@ -241,13 +297,20 @@ export const DashboardAdmin = () => {
           </div>
           <div>
             <p className={styles.metricLabel}>Saldo Neto en Caja</p>
-            <h3 className={styles.metricValue} style={{ color: "#c9a84c" }}>
+            <h3
+              className={styles.metricValue}
+              style={{ color: "#c9a84c" }}
+            >
               {formatoMoneda(saldoFinal)}
             </h3>
           </div>
         </div>
       </section>
+<<<<<<< HEAD
       <section className={styles.tablesGrid}>
+=======
+            <section className={styles.tablesGrid}>
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
         {/* TABLA PAGOS */}
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
@@ -335,7 +398,13 @@ export const DashboardAdmin = () => {
                   <tr key={egreso.id}>
                     <td>{egreso.concepto}</td>
 
+<<<<<<< HEAD
                     <td style={{ color: "#747879" }}>{egreso.proveedor}</td>
+=======
+                    <td style={{ color: "#747879" }}>
+                      {egreso.proveedor}
+                    </td>
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
 
                     <td style={{ color: "#e74c3c" }}>
                       - {formatoMoneda(egreso.costo)}
@@ -362,7 +431,13 @@ export const DashboardAdmin = () => {
 
       {/* REPORTES */}
       <section className={styles.reportsBox}>
+<<<<<<< HEAD
         <h4 className="font-headline m-0 me-4">Exportar Reportes</h4>
+=======
+        <h4 className="font-headline m-0 me-4">
+          Exportar Reportes
+        </h4>
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
 
         <input
           type="date"
@@ -395,7 +470,15 @@ export const DashboardAdmin = () => {
         <button
           className="btn btn-outline-dark d-flex align-items-center gap-2"
           onClick={() =>
+<<<<<<< HEAD
             Swal.fire("Próximamente", "Exportación a PDF en desarrollo", "info")
+=======
+            Swal.fire(
+              "Próximamente",
+              "Exportación a PDF en desarrollo",
+              "info",
+            )
+>>>>>>> 6127e3ab5d77dca0edb660e616103a801bd8adde
           }
         >
           <i className="bi bi-filetype-pdf"></i>
