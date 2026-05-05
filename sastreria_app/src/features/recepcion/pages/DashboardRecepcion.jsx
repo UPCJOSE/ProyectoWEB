@@ -1,12 +1,16 @@
 // src/features/recepcion/pages/DashboardRecepcion.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./DashboardRecepcion.module.css";
 import Swal from "sweetalert2";
+
+const API = "https://localhost:7196/api";
 
 export const DashboardRecepcion = () => {
   const [vistaAct, setVistaAct] = useState("formulario");
   const [clienteEdit, setClienteEdit] = useState(null);
   const [mostrarMedidas, setMostrarMedidas] = useState(false);
+  const [medidaId, setMedidaId] = useState(null);
+
   const [clienteAsignado, setClienteAsignado] = useState("");
   const [prendaSeleccionada, setPrendaSeleccionada] = useState("");
   const [sastreAsignado, setSastreAsignado] = useState("");
@@ -32,24 +36,36 @@ export const DashboardRecepcion = () => {
     anchoBajo: "",
   });
 
-  // Simulamos una base de datos más real
-  const [clientes, setClientes] = useState([
-    {
-      id: 1,
-      nombre: "Sebastián Maestre",
-      telefono: "+57 300 000 000",
-      medidas: { cuello: 40, pecho: 100, hombros: 45 /* ... */ },
-    },
-    {
-      id: 2,
-      nombre: "María González",
-      telefono: "+57 301 111 111",
-      medidas: { cuello: 36, pecho: 90, hombros: 40 },
-    },
-  ]);
+  const [clientes, setClientes] = useState([]);
+  const [pedidos, setPedidos] = useState([]);
 
   const [busquedaDirectorio, setDirectorio] = useState("");
   const [busquedaPedido, setBusqueda] = useState("");
+
+  useEffect(() => {
+    cargarClientes();
+    cargarPedidos();
+  }, []);
+
+  const cargarClientes = async () => {
+    try {
+      const res = await fetch(`${API}/Clientes`);
+      const data = await res.json();
+      setClientes(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const cargarPedidos = async () => {
+    try {
+      const res = await fetch(`${API}/Pedidos`);
+      const data = await res.json();
+      setPedidos(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const clientesEnDirectorio = clientes.filter(
     (cliente) =>
@@ -61,59 +77,11 @@ export const DashboardRecepcion = () => {
     cliente.nombre.toLowerCase().includes(busquedaPedido.toLowerCase()),
   );
 
-  // Carga los datos de un cliente existente
-  const Edicion = (cliente) => {
-    setClienteEdit(cliente.id);
-    setNombre(cliente.nombre);
-    setTelefono(cliente.telefono);
-
-    // Llenamos el objeto de medidas con los datos del cliente
-    setMedidas({
-      cuello: cliente.medidas?.cuello || "",
-      pecho: cliente.medidas?.pecho || "",
-      hombros: cliente.medidas?.hombros || "",
-      largoManga: cliente.medidas?.largoManga || "",
-      largoTalle: cliente.medidas?.largoTalle || "",
-      largoTotalSup: cliente.medidas?.largoTotalSup || "",
-      cintura: cliente.medidas?.cintura || "",
-      cadera: cliente.medidas?.cadera || "",
-      altoCadera: cliente.medidas?.altoCadera || "",
-      entrepierna: cliente.medidas?.entrepierna || "",
-      largoTotalInf: cliente.medidas?.largoTotalInf || "",
-      anchoBajo: cliente.medidas?.anchoBajo || "",
-    });
-
-    setMostrarMedidas(true);
-    setVistaAct("formulario");
-  };
-
-  const Eliminacion = async (id) => {
-    const resultado = await Swal.fire({
-      title: "¿Eliminar cliente?",
-      text: "Esta acción no se puede deshacer.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#181f21",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    });
-
-    if (resultado.isConfirmed) {
-      setClientes(clientes.filter((c) => c.id !== id));
-      Swal.fire({
-        icon: "success",
-        title: "Eliminado!",
-        text: "El cliente ha sido eliminado del directorio.",
-        confirmButtonColor: "#181f21",
-      });
-    }
-  };
-
   const NuevoCliente = () => {
     setClienteEdit(null);
     setNombre("");
     setTelefono("");
+    setMedidaId(null);
     setMostrarMedidas(false);
 
     setMedidas({
@@ -134,11 +102,10 @@ export const DashboardRecepcion = () => {
     setVistaAct("formulario");
   };
 
-  // Función universal para actualizar cualquier input de medidas
   const CambioMedida = (e) => {
     const { name, value } = e.target;
-    setMedidas((medidasPrev) => ({
-      ...medidasPrev,
+    setMedidas((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
@@ -147,102 +114,211 @@ export const DashboardRecepcion = () => {
     e.preventDefault();
     const resultado = await Swal.fire({
       title: "¿Añadir medidas?",
-      text: "¿Desea registrar las medidas del cliente en este momento?",
+      text: "¿Desea registrar medidas ahora?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#c5a880",
       cancelButtonColor: "#181f21",
-      confirmButtonText: "Sí, registrar ahora",
-      cancelButtonText: "Quizás después",
+      confirmButtonText: "Sí",
+      cancelButtonText: "Después",
     });
 
-    if (resultado.isConfirmed) {
-      setMostrarMedidas(true);
-    }
+    if (resultado.isConfirmed) setMostrarMedidas(true);
   };
 
-  const guardarCliente = () => {
-    if (nombre.trim() === "" || telefono.trim() === "") {
-      Swal.fire({
-        icon: "error",
-        title: "Faltan datos",
-        text: "Por favor, ingresa el nombre y el teléfono del cliente.",
-        confirmButtonColor: "#181f21",
-      });
+  const guardarCliente = async () => {
+    if (!nombre || !telefono) {
+      Swal.fire("Error", "Nombre y teléfono son obligatorios", "error");
       return;
     }
 
-    if (clienteEdit) {
-      setClientes(
-        clientes.map((c) =>
-          c.id === clienteEdit
-            ? { ...c, nombre, telefono, medidas: { ...medidas } }
-            : c,
-        ),
-      );
-      Swal.fire({
-        icon: "success",
-        title: "Cliente actualizado",
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-    } else {
-      const nuevoCliente = {
-        id: Date.now(),
+    try {
+      let clienteId = clienteEdit;
+
+      const clientePayload = {
+        id: clienteEdit || 0,
         nombre,
         telefono,
-        medidas: { ...medidas },
+        correo: "",
+        direccion: "",
       };
-      setClientes([...clientes, nuevoCliente]);
+
+      if (clienteEdit) {
+        await fetch(`${API}/Clientes/${clienteEdit}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(clientePayload),
+        });
+      } else {
+        const res = await fetch(`${API}/Clientes`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(clientePayload),
+        });
+
+        const nuevo = await res.json();
+        clienteId = nuevo.id;
+      }
+
+      if (mostrarMedidas) {
+        const fechaActual = new Date();
+        const stringFechaCorta = fechaActual.toISOString().split("T")[0];
+
+        const medidasPayload = {
+          id: medidaId || 0,
+          pecho: Number(medidas.pecho || 0),
+          cintura: Number(medidas.cintura || 0),
+          cadera: Number(medidas.cadera || 0),
+          altoCadera: Number(medidas.altoCadera || 0),
+          entrepeirna: Number(medidas.entrepierna || 0),
+          largoTotal: Number(medidas.largoTotalInf || 0),
+          anchoBajo: Number(medidas.anchoBajo || 0),
+          largoBrazo: Number(medidas.largoManga || 0),
+          cuello: Number(medidas.cuello || 0),
+          hombros: Number(medidas.hombros || 0),
+          largoTalle: Number(medidas.largoTalle || 0),
+          largoTotalSuperior: Number(medidas.largoTotalSup || 0),
+          ultimaMedida: stringFechaCorta,
+          fechaRegistro: fechaActual.toISOString(),
+          clienteId: clienteId,
+        };
+
+        if (medidaId) {
+          await fetch(`${API}/Medidas/${medidaId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(medidasPayload),
+          });
+        } else {
+          await fetch(`${API}/Medidas`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(medidasPayload),
+          });
+        }
+      }
+
+      await cargarClientes();
+
       Swal.fire({
         icon: "success",
         title: "Cliente guardado",
         toast: true,
         position: "top-end",
+        timer: 2500,
         showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
       });
-    }
 
-    NuevoCliente();
-    setVistaAct("tabla");
+      NuevoCliente();
+      setVistaAct("tabla");
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "No se pudo guardar", "error");
+    }
   };
 
-  const generarOrden = () => {
+  const Eliminacion = async (id) => {
+    const resultado = await Swal.fire({
+      title: "¿Eliminar cliente?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+    });
+
+    if (!resultado.isConfirmed) return;
+
+    await fetch(`${API}/Clientes/${id}`, {
+      method: "DELETE",
+    });
+
+    cargarClientes();
+  };
+
+  const Edicion = (cliente) => {
+    console.log("Datos del cliente a editar:", cliente);
+    let datosMedida = null;
+    if (cliente.medidas && Array.isArray(cliente.medidas)) {
+      datosMedida = cliente.medidas[0];
+    } else if (cliente.medidas) {
+      datosMedida = cliente.medidas;
+    }
+
+    setClienteEdit(cliente.id);
+    setMedidaId(datosMedida?.id || null);
+
+    setNombre(cliente.nombre);
+    setTelefono(cliente.telefono);
+
+    setMedidas({
+      cuello: datosMedida?.cuello || "",
+      pecho: datosMedida?.pecho || "",
+      hombros: datosMedida?.hombros || "",
+      largoManga: datosMedida?.largoBrazo || "",
+      largoTalle: datosMedida?.largoTalle || "",
+      largoTotalSup: datosMedida?.largoTotalSuperior || "",
+      cintura: datosMedida?.cintura || "",
+      cadera: datosMedida?.cadera || "",
+      altoCadera: datosMedida?.altoCadera || "",
+      entrepierna: datosMedida?.entrepeirna || "",
+      largoTotalInf: datosMedida?.largoTotal || "",
+      anchoBajo: datosMedida?.anchoBajo || "",
+    });
+
+    setVistaAct("formulario");
+
+    if (datosMedida) {
+      setMostrarMedidas(true);
+    } else {
+      setMostrarMedidas(false);
+    }
+  };
+
+  const generarOrden = async () => {
     if (
       !clienteAsignado ||
       !prendaSeleccionada ||
       !sastreAsignado ||
       !fechaEntrega
     ) {
-      Swal.fire({
-        icon: "error",
-        title: "Faltan datos",
-        text: "Por favor, completa todos los campos requeridos antes de generar la orden.",
-        confirmButtonColor: "#181f21",
-      });
+      Swal.fire("Error", "Completa todos los campos", "error");
       return;
     }
 
-    Swal.fire({
-      icon: "success",
-      title: "Orden generada y asignada al sastre correctamente.",
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-    });
+    try {
+      await fetch(`${API}/Pedidos`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tipoPrenda: prendaSeleccionada,
+          costoTotal: 0,
+          saldoPendiente: 0,
+          estado: "Pendiente",
+          fechaEntrega,
+          clienteId: Number(clienteAsignado),
+        }),
+      });
 
-    setClienteAsignado("");
-    setPrendaSeleccionada("");
-    setSastreAsignado("");
-    setFechaEntrega("");
-    setBusqueda("");
+      await cargarPedidos();
+
+      Swal.fire({
+        icon: "success",
+        title: "Orden generada",
+        toast: true,
+        position: "top-end",
+        timer: 2500,
+        showConfirmButton: false,
+      });
+
+      setClienteAsignado("");
+      setPrendaSeleccionada("");
+      setSastreAsignado("");
+      setFechaEntrega("");
+      setBusqueda("");
+    } catch (error) {
+      Swal.fire("Error", "No se pudo crear pedido", "error");
+    }
   };
 
   return (
@@ -261,18 +337,18 @@ export const DashboardRecepcion = () => {
       {/* Métricas rápidas */}
       <section className={styles.metricsGrid}>
         <div className={styles.card}>
-          <small className={styles.label}>Clientes Hoy</small>
-          <h2>24</h2>
+          <small className={styles.label}>Clientes</small>
+          <h2>{clientes.length}</h2>
         </div>
         <div className={`${styles.card} ${styles.cardDark}`}>
           <small className={styles.label} style={{ color: "#aaa" }}>
             Pedidos Activos
           </small>
-          <h2>156</h2>
+          <h2>{pedidos.length}</h2>
         </div>
         <div className={styles.card}>
           <small className={styles.label}>En Sastrería</small>
-          <h2>8</h2>
+          <h2>{pedidos.filter((p) => p.estado === "Pendiente").length}</h2>
         </div>
       </section>
 
@@ -284,9 +360,7 @@ export const DashboardRecepcion = () => {
             <button
               onClick={NuevoCliente}
               className={
-                vistaAct === "formulario" && !clienteEdit
-                  ? styles.btnTabActive
-                  : styles.btnTab
+                vistaAct === "formulario" ? styles.btnTabActive : styles.btnTab
               }
             >
               + Nuevo Cliente
@@ -364,7 +438,7 @@ export const DashboardRecepcion = () => {
                         colSpan="4"
                         style={{ textAlign: "center", padding: "2rem" }}
                       >
-                        No se encontraron clientes con esa búsqueda.
+                        No se encontraron clientes.
                       </td>
                     </tr>
                   )}
@@ -656,21 +730,13 @@ export const DashboardRecepcion = () => {
                 value={prendaSeleccionada}
                 onChange={(e) => setPrendaSeleccionada(e.target.value)}
               >
-                <option value="" disabled>
-                  Seleccione una opción
-                </option>
-                <option value="traje" style={{ color: "black" }}>
-                  Traje Lana Merina
-                </option>
-                <option value="esmoquin" style={{ color: "black" }}>
-                  Esmóquin de Gala
-                </option>
-                <option value="camisa" style={{ color: "black" }}>
-                  Camisa Popelina
-                </option>
-                <option value="pantalon" style={{ color: "black" }}>
-                  Pantalón de Vestir
-                </option>
+                <option value="">Seleccione una opción</option>
+                <option value="Traje">Traje</option>
+                <option value="Esmoquin">Esmóquin</option>
+                <option value="Camisa">Camisa</option>
+                <option value="Pantalón">Chaqueta</option>
+                <option value="Pantalón">Bolso</option>
+                <option value="Pantalón">Otro</option>
               </select>
             </div>
 
