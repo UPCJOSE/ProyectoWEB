@@ -31,7 +31,7 @@ export const LoginPage = () => {
             nombre: nombre,
             correo: email,
             password: password,
-            rol: 0,
+            rol: 3, // Asignar rol de cliente por defecto
           }),
         });
 
@@ -188,7 +188,7 @@ export const LoginPage = () => {
             >
               {isRegister
                 ? "¿Ya tienes una cuenta? Inicia sesión aquí"
-                : "¿Eres cliente nuevo? Regístrate aquí"}
+                : "¿Eres nuevo? Regístrate aquí"}
             </button>
           </div>
         </div>

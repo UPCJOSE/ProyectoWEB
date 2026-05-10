@@ -11,6 +11,8 @@ import { DashboardRecepcion } from "./features/recepcion/pages/DashboardRecepcio
 import { PanelSastre } from "./features/sastreria/pages/PanelSastre";
 import { DashboardAdmin } from "./features/finanzas/pages/DashboardAdmin";
 import { MainLayout } from "./core/layouts/MainLayout";
+import { PortalCliente } from "./features/portal/pages/PortalCliente";
+import { DashboardMedidas } from "./features/medidas/pages/DashboardMedidas";
 
 const PrivateRoute = () => {
   const isLogged = localStorage.getItem("usuario") !== null;
@@ -32,6 +34,8 @@ function App() {
             <Route path="/recepcion" element={<DashboardRecepcion />} />
             <Route path="/sastreria" element={<PanelSastre />} />
             <Route path="/finanzas" element={<DashboardAdmin />} />
+            <Route path="/portal" element={<PortalCliente />} />
+            <Route path="/medidas" element={<DashboardMedidas />} />
           </Route>
         </Route>
 
