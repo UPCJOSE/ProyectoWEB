@@ -1,4 +1,3 @@
-// src/features/finanzas/pages/DashboardAdmin.jsx
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardAdmin.module.css";
@@ -65,8 +64,12 @@ export const DashboardAdmin = () => {
       title: "Registrar Pago",
       html: `
         <input id="pedido" class="swal2-input" placeholder="ID Pedido">
-        
-        <select id="metodo" class="swal2-select" style="display: flex; margin: 1em auto; width: 73%; color: #545454;">
+
+        <select
+          id="metodo"
+          class="swal2-select"
+          style="display:flex; margin:1em auto; width:73%; color:#545454;"
+        >
           <option value="" disabled selected>Seleccione el método</option>
           <option value="Efectivo">Efectivo</option>
           <option value="Transferencia">Transferencia</option>
@@ -81,17 +84,22 @@ export const DashboardAdmin = () => {
       confirmButtonColor: "#c5a880",
       cancelButtonText: "Cancelar",
       cancelButtonColor: "#181f21",
+
       preConfirm: () => {
         const pedidoId = document.getElementById("pedido").value;
         const metodoPago = document.getElementById("metodo").value;
         const monto = document.getElementById("monto").value;
 
         if (!pedidoId || !metodoPago || !monto) {
-          Swal.showValidationMessage("Por favor, complete todos los campos");
+          Swal.showValidationMessage("Por favor complete todos los campos");
           return false;
         }
 
-        return { pedidoId, metodoPago, monto };
+        return {
+          pedidoId,
+          metodoPago,
+          monto,
+        };
       },
     });
 
@@ -148,11 +156,21 @@ export const DashboardAdmin = () => {
       confirmButtonColor: "#c5a880",
       cancelButtonColor: "#181f21",
       cancelButtonText: "Cancelar",
+
       preConfirm: () => {
+        const concepto = document.getElementById("concepto").value;
+        const proveedor = document.getElementById("proveedor").value;
+        const costo = document.getElementById("costo").value;
+
+        if (!concepto || !proveedor || !costo) {
+          Swal.showValidationMessage("Por favor complete todos los campos");
+          return false;
+        }
+
         return {
-          concepto: document.getElementById("concepto").value,
-          proveedor: document.getElementById("proveedor").value,
-          costo: document.getElementById("costo").value,
+          concepto,
+          proveedor,
+          costo,
         };
       },
     });
@@ -247,8 +265,8 @@ export const DashboardAdmin = () => {
           </div>
         </div>
       </section>
+
       <section className={styles.tablesGrid}>
-        {/* TABLA PAGOS */}
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
             <h4 className="font-headline m-0">Pagos Recibidos</h4>
@@ -274,12 +292,7 @@ export const DashboardAdmin = () => {
               {pagos.length > 0 ? (
                 pagos.map((pago) => (
                   <tr key={pago.id}>
-                    <td
-                      style={{
-                        color: "#c9a84c",
-                        fontWeight: "bold",
-                      }}
-                    >
+                    <td style={{ color: "#c9a84c", fontWeight: "bold" }}>
                       ORD-{pago.pedidoId}
                     </td>
 
@@ -294,10 +307,7 @@ export const DashboardAdmin = () => {
                 <tr>
                   <td
                     colSpan="3"
-                    style={{
-                      textAlign: "center",
-                      padding: "2rem",
-                    }}
+                    style={{ textAlign: "center", padding: "2rem" }}
                   >
                     No hay pagos registrados.
                   </td>
@@ -307,7 +317,6 @@ export const DashboardAdmin = () => {
           </table>
         </div>
 
-        {/* TABLA EGRESOS */}
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
             <h4 className="font-headline m-0">Egresos de Inventario</h4>
@@ -334,9 +343,7 @@ export const DashboardAdmin = () => {
                 egresos.map((egreso) => (
                   <tr key={egreso.id}>
                     <td>{egreso.concepto}</td>
-
                     <td style={{ color: "#747879" }}>{egreso.proveedor}</td>
-
                     <td style={{ color: "#e74c3c" }}>
                       - {formatoMoneda(egreso.costo)}
                     </td>
@@ -346,10 +353,7 @@ export const DashboardAdmin = () => {
                 <tr>
                   <td
                     colSpan="3"
-                    style={{
-                      textAlign: "center",
-                      padding: "2rem",
-                    }}
+                    style={{ textAlign: "center", padding: "2rem" }}
                   >
                     No hay egresos registrados.
                   </td>
@@ -360,7 +364,6 @@ export const DashboardAdmin = () => {
         </div>
       </section>
 
-      {/* REPORTES */}
       <section className={styles.reportsBox}>
         <h4 className="font-headline m-0 me-4">Exportar Reportes</h4>
 
