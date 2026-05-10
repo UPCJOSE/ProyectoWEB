@@ -278,3 +278,4 @@ C:\Users\Jose Tomas\Documents\2026-1 UPC\WEB\NUEVA API\SastreriaAPI\bin\Debug\ne
 C:\Users\Jose Tomas\Documents\2026-1 UPC\WEB\NUEVA API\SastreriaAPI\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\Jose Tomas\Documents\2026-1 UPC\WEB\NUEVA API\SastreriaAPI\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\Jose Tomas\Documents\2026-1 UPC\WEB\NUEVA API\SastreriaAPI\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\Jose Tomas\Documents\2026-1 UPC\WEB\NUEVA API\SastreriaAPI\obj\Debug\net8.0\SastreriaAPI.sourcelink.json

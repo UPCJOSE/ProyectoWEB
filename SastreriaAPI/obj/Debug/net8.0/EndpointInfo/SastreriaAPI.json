@@ -221,10 +221,10 @@
         }
       }
     },
-    "/api/Egresoes": {
+    "/api/Egresos": {
       "get": {
         "tags": [
-          "Egresoes"
+          "Egresos"
         ],
         "responses": {
           "200": {
@@ -260,7 +260,7 @@
       },
       "post": {
         "tags": [
-          "Egresoes"
+          "Egresos"
         ],
         "requestBody": {
           "content": {
@@ -305,10 +305,10 @@
         }
       }
     },
-    "/api/Egresoes/{id}": {
+    "/api/Egresos/{id}": {
       "get": {
         "tags": [
-          "Egresoes"
+          "Egresos"
         ],
         "parameters": [
           {
@@ -346,7 +346,7 @@
       },
       "put": {
         "tags": [
-          "Egresoes"
+          "Egresos"
         ],
         "parameters": [
           {
@@ -386,7 +386,7 @@
       },
       "delete": {
         "tags": [
-          "Egresoes"
+          "Egresos"
         ],
         "parameters": [
           {
@@ -776,10 +776,10 @@
         }
       }
     },
-    "/api/Pagoes": {
+    "/api/Pagos": {
       "get": {
         "tags": [
-          "Pagoes"
+          "Pagos"
         ],
         "responses": {
           "200": {
@@ -815,7 +815,7 @@
       },
       "post": {
         "tags": [
-          "Pagoes"
+          "Pagos"
         ],
         "requestBody": {
           "content": {
@@ -860,10 +860,10 @@
         }
       }
     },
-    "/api/Pagoes/{id}": {
+    "/api/Pagos/{id}": {
       "get": {
         "tags": [
-          "Pagoes"
+          "Pagos"
         ],
         "parameters": [
           {
@@ -901,7 +901,7 @@
       },
       "put": {
         "tags": [
-          "Pagoes"
+          "Pagos"
         ],
         "parameters": [
           {
@@ -941,7 +941,7 @@
       },
       "delete": {
         "tags": [
-          "Pagoes"
+          "Pagos"
         ],
         "parameters": [
           {
@@ -961,10 +961,10 @@
         }
       }
     },
-    "/api/Pedidoes": {
+    "/api/Pedidos": {
       "get": {
         "tags": [
-          "Pedidoes"
+          "Pedidos"
         ],
         "responses": {
           "200": {
@@ -1000,7 +1000,7 @@
       },
       "post": {
         "tags": [
-          "Pedidoes"
+          "Pedidos"
         ],
         "requestBody": {
           "content": {
@@ -1045,10 +1045,10 @@
         }
       }
     },
-    "/api/Pedidoes/{id}": {
+    "/api/Pedidos/{id}": {
       "get": {
         "tags": [
-          "Pedidoes"
+          "Pedidos"
         ],
         "parameters": [
           {
@@ -1086,7 +1086,7 @@
       },
       "put": {
         "tags": [
-          "Pedidoes"
+          "Pedidos"
         ],
         "parameters": [
           {
@@ -1126,7 +1126,7 @@
       },
       "delete": {
         "tags": [
-          "Pedidoes"
+          "Pedidos"
         ],
         "parameters": [
           {

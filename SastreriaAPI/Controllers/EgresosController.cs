@@ -12,23 +12,23 @@ namespace SastreriaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EgresoesController : ControllerBase
+    public class EgresosController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public EgresoesController(ApplicationDbContext context)
+        public EgresosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Egresoes
+        // GET: api/Egresos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Egreso>>> GetEgresos()
         {
             return await _context.Egresos.ToListAsync();
         }
 
-        // GET: api/Egresoes/5
+        // GET: api/Egresos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Egreso>> GetEgreso(int id)
         {
@@ -42,7 +42,7 @@ namespace SastreriaAPI.Controllers
             return egreso;
         }
 
-        // PUT: api/Egresoes/5
+        // PUT: api/Egresos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEgreso(int id, Egreso egreso)
@@ -73,7 +73,7 @@ namespace SastreriaAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Egresoes
+        // POST: api/Egresos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Egreso>> PostEgreso(Egreso egreso)
@@ -84,7 +84,7 @@ namespace SastreriaAPI.Controllers
             return CreatedAtAction("GetEgreso", new { id = egreso.Id }, egreso);
         }
 
-        // DELETE: api/Egresoes/5
+        // DELETE: api/Egresos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEgreso(int id)
         {

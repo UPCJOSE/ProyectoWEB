@@ -125,9 +125,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.EgresoesController",
+    "ContainingType": "SastreriaAPI.Controllers.EgresosController",
     "Method": "GetEgresos",
-    "RelativePath": "api/Egresoes",
+    "RelativePath": "api/Egresos",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -145,9 +145,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.EgresoesController",
+    "ContainingType": "SastreriaAPI.Controllers.EgresosController",
     "Method": "PostEgreso",
-    "RelativePath": "api/Egresoes",
+    "RelativePath": "api/Egresos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -171,9 +171,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.EgresoesController",
+    "ContainingType": "SastreriaAPI.Controllers.EgresosController",
     "Method": "GetEgreso",
-    "RelativePath": "api/Egresoes/{id}",
+    "RelativePath": "api/Egresos/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -197,9 +197,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.EgresoesController",
+    "ContainingType": "SastreriaAPI.Controllers.EgresosController",
     "Method": "PutEgreso",
-    "RelativePath": "api/Egresoes/{id}",
+    "RelativePath": "api/Egresos/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -218,9 +218,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.EgresoesController",
+    "ContainingType": "SastreriaAPI.Controllers.EgresosController",
     "Method": "DeleteEgreso",
-    "RelativePath": "api/Egresoes/{id}",
+    "RelativePath": "api/Egresos/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -452,9 +452,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PagoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PagosController",
     "Method": "GetPagos",
-    "RelativePath": "api/Pagoes",
+    "RelativePath": "api/Pagos",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -472,9 +472,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PagoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PagosController",
     "Method": "PostPago",
-    "RelativePath": "api/Pagoes",
+    "RelativePath": "api/Pagos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -498,9 +498,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PagoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PagosController",
     "Method": "GetPago",
-    "RelativePath": "api/Pagoes/{id}",
+    "RelativePath": "api/Pagos/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -524,9 +524,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PagoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PagosController",
     "Method": "PutPago",
-    "RelativePath": "api/Pagoes/{id}",
+    "RelativePath": "api/Pagos/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -545,9 +545,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PagoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PagosController",
     "Method": "DeletePago",
-    "RelativePath": "api/Pagoes/{id}",
+    "RelativePath": "api/Pagos/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -561,9 +561,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PedidoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PedidosController",
     "Method": "GetPedidos",
-    "RelativePath": "api/Pedidoes",
+    "RelativePath": "api/Pedidos",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -581,9 +581,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PedidoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PedidosController",
     "Method": "PostPedido",
-    "RelativePath": "api/Pedidoes",
+    "RelativePath": "api/Pedidos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -607,9 +607,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PedidoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PedidosController",
     "Method": "GetPedido",
-    "RelativePath": "api/Pedidoes/{id}",
+    "RelativePath": "api/Pedidos/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -633,9 +633,9 @@
     ]
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PedidoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PedidosController",
     "Method": "PutPedido",
-    "RelativePath": "api/Pedidoes/{id}",
+    "RelativePath": "api/Pedidos/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -654,9 +654,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SastreriaAPI.Controllers.PedidoesController",
+    "ContainingType": "SastreriaAPI.Controllers.PedidosController",
     "Method": "DeletePedido",
-    "RelativePath": "api/Pedidoes/{id}",
+    "RelativePath": "api/Pedidos/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

@@ -3,96 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\sastreriaapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:sastreriaapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\PedidosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\PagosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\pedidoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\pedidoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\pagoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\pagoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\medidascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\medidascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\materialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\materialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\egresoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\egresoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\migrations\\20260509172212_inicial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:migrations\\20260509172212_inicial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\egreso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\medida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\medida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\pago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\pago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\pedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\pedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\sastre.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\sastre.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\EgresosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -102,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -142,281 +62,42 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAYwBAAAAAfAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "PedidosController.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PedidosController.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidosController.cs",
+              "RelativeToolTip": "Controllers\\PedidosController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:27:50.319Z",
+              "WhenOpened": "2026-05-10T22:07:21.952Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PagoesController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagoesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PagoesController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagoesController.cs",
-              "RelativeToolTip": "Controllers\\PagoesController.cs",
+              "DocumentIndex": 1,
+              "Title": "PagosController.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PagosController.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagosController.cs",
+              "RelativeToolTip": "Controllers\\PagosController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:26:47.459Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MedidasController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\MedidasController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MedidasController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\MedidasController.cs",
-              "RelativeToolTip": "Controllers\\MedidasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:26:11.819Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MaterialsController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\MaterialsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MaterialsController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\MaterialsController.cs",
-              "RelativeToolTip": "Controllers\\MaterialsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:25:41.769Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "EgresoesController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresoesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EgresoesController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresoesController.cs",
-              "RelativeToolTip": "Controllers\\EgresoesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:24:09.266Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ClientesController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\ClientesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ClientesController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\ClientesController.cs",
-              "RelativeToolTip": "Controllers\\ClientesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:23:09.533Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SastreriaAPI.csproj",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\SastreriaAPI.csproj",
-              "RelativeDocumentMoniker": "SastreriaAPI.csproj",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\SastreriaAPI.csproj",
-              "RelativeToolTip": "SastreriaAPI.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-05-09T17:09:48.175Z",
+              "WhenOpened": "2026-05-10T22:06:54.801Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "PedidoesController.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidoesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PedidoesController.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidoesController.cs",
-              "RelativeToolTip": "Controllers\\PedidoesController.cs",
+              "Title": "EgresosController.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EgresosController.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresosController.cs",
+              "RelativeToolTip": "Controllers\\EgresosController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:27:13.033Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "20260509172212_inicial.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Migrations\\20260509172212_inicial.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260509172212_inicial.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Migrations\\20260509172212_inicial.cs",
-              "RelativeToolTip": "Migrations\\20260509172212_inicial.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:22:13.611Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAYwFQAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:21:35.27Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ApplicationDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoBAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:20:13.193Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Egreso.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Egreso.cs",
-              "RelativeDocumentMoniker": "Models\\Egreso.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Egreso.cs",
-              "RelativeToolTip": "Models\\Egreso.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:15:30.133Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Material.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Material.cs",
-              "RelativeDocumentMoniker": "Models\\Material.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Material.cs",
-              "RelativeToolTip": "Models\\Material.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:15:12.936Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Medida.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Medida.cs",
-              "RelativeDocumentMoniker": "Models\\Medida.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Medida.cs",
-              "RelativeToolTip": "Models\\Medida.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAYwCgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:14:44.906Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Pago.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Pago.cs",
-              "RelativeDocumentMoniker": "Models\\Pago.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Pago.cs",
-              "RelativeToolTip": "Models\\Pago.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:14:26.446Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Pedido.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Pedido.cs",
-              "RelativeDocumentMoniker": "Models\\Pedido.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Pedido.cs",
-              "RelativeToolTip": "Models\\Pedido.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:14:07.087Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Sastre.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Sastre.cs",
-              "RelativeDocumentMoniker": "Models\\Sastre.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Sastre.cs",
-              "RelativeToolTip": "Models\\Sastre.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:13:44.836Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Rol.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Rol.cs",
-              "RelativeDocumentMoniker": "Models\\Rol.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Rol.cs",
-              "RelativeToolTip": "Models\\Rol.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:12:59.42Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-09T17:09:16.166Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Cliente.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Cliente.cs",
-              "RelativeDocumentMoniker": "Models\\Cliente.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Cliente.cs",
-              "RelativeToolTip": "Models\\Cliente.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:15:47.521Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "LoginDto.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\DTOs\\LoginDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\LoginDto.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\DTOs\\LoginDto.cs",
-              "RelativeToolTip": "DTOs\\LoginDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:16:58.419Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Usuario.cs",
-              "RelativeDocumentMoniker": "Models\\Usuario.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Models\\Usuario.cs",
-              "RelativeToolTip": "Models\\Usuario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:12:18.214Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T17:11:11.475Z"
+              "WhenOpened": "2026-05-10T22:06:29.966Z",
+              "EditorCaption": ""
             }
           ]
         }
