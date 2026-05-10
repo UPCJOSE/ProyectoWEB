@@ -8,7 +8,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "login",
+        "Name": "loginDto",
         "Type": "SastreriaAPI.DTOs.LoginDto",
         "IsRequired": true
       }
@@ -101,7 +101,7 @@
         "IsRequired": true
       },
       {
-        "Name": "cliente",
+        "Name": "clienteActualizado",
         "Type": "SastreriaAPI.Models.Cliente",
         "IsRequired": true
       }

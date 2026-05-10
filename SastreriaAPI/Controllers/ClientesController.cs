@@ -32,7 +32,9 @@ namespace SastreriaAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Clientes
+                .Include(c => c.Medidas)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (cliente == null)
             {
@@ -45,14 +47,29 @@ namespace SastreriaAPI.Controllers
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(int id, Cliente clienteActualizado)
         {
-            if (id != cliente.Id)
-            {
-                return BadRequest();
-            }
+            if (id != clienteActualizado.Id) return BadRequest();
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            var clienteDb = await _context.Clientes
+                .Include(c => c.Medidas)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (clienteDb == null) return NotFound();
+
+            _context.Entry(clienteDb).CurrentValues.SetValues(clienteActualizado);
+
+            if (clienteActualizado.Medidas != null)
+            {
+                if (clienteDb.Medidas == null)
+                {
+                    clienteDb.Medidas = clienteActualizado.Medidas;
+                }
+                else
+                {
+                    _context.Entry(clienteDb.Medidas).CurrentValues.SetValues(clienteActualizado.Medidas);
+                }
+            }
 
             try
             {
@@ -60,14 +77,8 @@ namespace SastreriaAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!ClienteExists(id)) return NotFound();
+                else throw;
             }
 
             return NoContent();

@@ -18,16 +18,12 @@ namespace SastreriaAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto login)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u =>
-                u.Correo == login.Correo &&
-                u.Password == login.Password);
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Correo == loginDto.Email && u.Password == loginDto.Password);
 
-            if (usuario == null)
-            {
-                return Unauthorized("Credenciales incorrectas");
-            }
+            if (usuario == null) return Unauthorized("Credenciales inválidas");
 
             return Ok(new
             {

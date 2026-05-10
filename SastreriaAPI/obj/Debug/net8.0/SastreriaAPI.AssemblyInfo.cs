@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SastreriaAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26749c629917b36e579f88b6e2b335f0f5a7750b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01d1abd9fe7e97d54ca6b082992de473483a1278")]
 [assembly: System.Reflection.AssemblyProductAttribute("SastreriaAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SastreriaAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

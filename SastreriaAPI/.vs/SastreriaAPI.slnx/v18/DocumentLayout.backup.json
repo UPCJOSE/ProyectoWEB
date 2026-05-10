@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\PedidosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\pedidoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\PagosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\EgresosController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\pagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\pagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|c:\\users\\jose tomas\\documents\\2026-1 upc\\web\\nueva api\\sastreriaapi\\controllers\\egresoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E2DD0BE-2830-EF33-B103-30558F262786}|SastreriaAPI.csproj|solutionrelative:controllers\\egresoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +34,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 12,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T22:14:03.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ClientesController.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\ClientesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ClientesController.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\ClientesController.cs",
+              "RelativeToolTip": "Controllers\\ClientesController.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwFQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T22:12:04.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\DTOs\\LoginDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\DTOs\\LoginDto.cs",
+              "RelativeToolTip": "DTOs\\LoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T22:10:43.488Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -68,14 +119,14 @@
               "RelativeDocumentMoniker": "Controllers\\PedidosController.cs",
               "ToolTip": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PedidosController.cs",
               "RelativeToolTip": "Controllers\\PedidosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-10T22:07:21.952Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "PagosController.cs",
               "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\PagosController.cs",
               "RelativeDocumentMoniker": "Controllers\\PagosController.cs",
@@ -83,12 +134,11 @@
               "RelativeToolTip": "Controllers\\PagosController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-10T22:06:54.801Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-10T22:06:54.801Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "EgresosController.cs",
               "DocumentMoniker": "C:\\Users\\Jose Tomas\\Documents\\2026-1 UPC\\WEB\\NUEVA API\\SastreriaAPI\\Controllers\\EgresosController.cs",
               "RelativeDocumentMoniker": "Controllers\\EgresosController.cs",
@@ -96,8 +146,7 @@
               "RelativeToolTip": "Controllers\\EgresosController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-10T22:06:29.966Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-10T22:06:29.966Z"
             }
           ]
         }

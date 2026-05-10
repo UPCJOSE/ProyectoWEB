@@ -1250,15 +1250,11 @@
       "LoginDto": {
         "type": "object",
         "properties": {
-          "correo": {
+          "email": {
             "type": "string",
             "nullable": true
           },
           "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "rol": {
             "type": "string",
             "nullable": true
           }
