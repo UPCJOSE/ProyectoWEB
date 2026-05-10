@@ -6,6 +6,7 @@ import { PanelSastre } from "./features/sastreria/pages/PanelSastre";
 import { DashboardAdmin } from "./features/finanzas/pages/DashboardAdmin";
 import { MainLayout } from "./core/layouts/MainLayout";
 import { PortalCliente } from "./features/portal/PortalCliente";
+import { DashboardMedidas } from "./features/medidas/DashboardMedidas";
 
 const PrivateRoute = ({ children }) => {
   const isLogged = localStorage.getItem("login") === "true";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/sastreria" element={<PanelSastre />} />
           <Route path="/finanzas" element={<DashboardAdmin />} />
           <Route path="/portal" element={<PortalCliente />} />
+          <Route path="/medidas" element={<DashboardMedidas />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" />} />
