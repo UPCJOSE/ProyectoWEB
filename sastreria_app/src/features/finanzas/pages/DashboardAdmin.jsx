@@ -7,7 +7,7 @@ export const DashboardAdmin = () => {
   const [egresos, setEgresos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  const API = "https://localhost:7196/api";
+  const API = "https://localhost:7065/api";
 
   const cargarDatos = async () => {
     try {

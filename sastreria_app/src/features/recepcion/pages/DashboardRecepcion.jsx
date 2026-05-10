@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "./DashboardRecepcion.module.css";
 import Swal from "sweetalert2";
 
-const API = "https://localhost:7196/api";
+const API = "https://localhost:7065/api";
 
 export const DashboardRecepcion = () => {
   const [vistaAct, setVistaAct] = useState("formulario");
