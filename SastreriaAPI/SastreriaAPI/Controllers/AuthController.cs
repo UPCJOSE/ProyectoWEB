@@ -18,29 +18,22 @@ namespace SastreriaAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto login)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            if (!Enum.TryParse<Rol>(login.Rol, true, out var rolEnum))
-            {
-                return BadRequest("Rol inválido");
-            }
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Correo == loginDto.Email && u.Password == loginDto.Password);
 
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u =>
-                u.Correo == login.Correo &&
-                u.Password == login.Password &&
-                u.Rol == rolEnum);
-
-            if (usuario == null)
-            {
-                return Unauthorized("Credenciales incorrectas");
-            }
+            if (usuario == null) return Unauthorized("Credenciales inválidas");
 
             return Ok(new
             {
                 usuario.Id,
                 usuario.Nombre,
                 usuario.Correo,
-                Rol = usuario.Rol.ToString()
+                rol = new
+                {
+                    nombre = usuario.Rol.ToString()
+                }
             });
         }
     }

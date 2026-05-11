@@ -29,7 +29,6 @@ namespace SastreriaAPI.Controllers
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
             var cliente = await _context.Clientes
-                .Include(c => c.Pedidos)
                 .Include(c => c.Medidas)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
@@ -53,24 +52,50 @@ namespace SastreriaAPI.Controllers
 
         // PUT: api/Clientes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, ClienteUpdateDto dto)
+public async Task<IActionResult> PutCliente(int id, Cliente clienteActualizado)
+{
+    if (id != clienteActualizado.Id) return BadRequest();
+
+    var clienteDb = await _context.Clientes
+        .Include(c => c.Medidas)
+        .FirstOrDefaultAsync(c => c.Id == id);
+
+    if (clienteDb == null) return NotFound();
+
+    _context.Entry(clienteDb).CurrentValues.SetValues(clienteActualizado);
+
+    if (clienteActualizado.Medidas != null)
+    {
+        if (clienteDb.Medidas == null)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-
-            cliente.Nombre = dto.Nombre;
-            cliente.Telefono = dto.Telefono;
-            cliente.Correo = dto.Correo;
-            cliente.Direccion = dto.Direccion;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            clienteDb.Medidas = clienteActualizado.Medidas;
         }
+        else
+        {
+            _context.Entry(clienteDb.Medidas)
+                .CurrentValues
+                .SetValues(clienteActualizado.Medidas);
+        }
+    }
+
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!ClienteExists(id)) return NotFound();
+        else throw;
+    }
+
+    return NoContent();
+}
+
+private bool ClienteExists(int id)
+{
+    return _context.Clientes.Any(e => e.Id == id);
+}
+
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
