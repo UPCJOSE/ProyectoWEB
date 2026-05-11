@@ -1,46 +1,26 @@
 // src/features/recepcion/pages/DashboardRecepcion.jsx
 import { useState, useEffect } from "react";
-import styles from "./DashboardRecepcion.module.css";
 import Swal from "sweetalert2";
+import styles from "./DashboardRecepcion.module.css";
+import { useNavigate } from "react-router-dom";
 
 const API = "https://localhost:7196/api";
 
 export const DashboardRecepcion = () => {
-  const [vistaAct, setVistaAct] = useState("formulario");
-  const [clienteEdit, setClienteEdit] = useState(null);
-  const [mostrarMedidas, setMostrarMedidas] = useState(false);
-  const [medidaId, setMedidaId] = useState(null);
+  const navigate = useNavigate();
+  const [vistaAct, setVistaAct] = useState("clientes");
 
-  const [clienteAsignado, setClienteAsignado] = useState("");
-  const [prendaSeleccionada, setPrendaSeleccionada] = useState("");
-  const [sastreAsignado, setSastreAsignado] = useState("");
-  const [fechaEntrega, setFechaEntrega] = useState("");
+  const [clienteEdit, setClienteEdit] = useState(null);
 
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
   const [correo, setCorreo] = useState("");
   const [direccion, setDireccion] = useState("");
 
-  const [medidas, setMedidas] = useState({
-    cuello: "",
-    pecho: "",
-    hombros: "",
-    largoManga: "",
-    largoTalle: "",
-    largoTotalSup: "",
-    cintura: "",
-    cadera: "",
-    altoCadera: "",
-    entrepierna: "",
-    largoTotalInf: "",
-    anchoBajo: "",
-  });
-
   const [clientes, setClientes] = useState([]);
   const [pedidos, setPedidos] = useState([]);
 
-  const [busquedaDirectorio, setDirectorio] = useState("");
-  const [busquedaPedido, setBusqueda] = useState("");
+  const [busquedaDirectorio, setBusquedaDirectorio] = useState("");
 
   useEffect(() => {
     cargarClientes();
@@ -53,7 +33,7 @@ export const DashboardRecepcion = () => {
       const data = await res.json();
       setClientes(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error cargando clientes:", error);
     }
   };
 
@@ -63,719 +43,549 @@ export const DashboardRecepcion = () => {
       const data = await res.json();
       setPedidos(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error cargando pedidos:", error);
     }
   };
 
-  const clientesEnDirectorio = clientes.filter(
-    (cliente) =>
-      cliente.nombre.toLowerCase().includes(busquedaDirectorio.toLowerCase()) ||
-      cliente.telefono.includes(busquedaDirectorio),
-  );
-
-  const clientesEnPedido = clientes.filter((cliente) =>
-    cliente.nombre.toLowerCase().includes(busquedaPedido.toLowerCase()),
-  );
-
-  const NuevoCliente = () => {
+  const limpiarFormulario = () => {
     setClienteEdit(null);
     setNombre("");
     setTelefono("");
-    setCorreo("test@test.com");
-    setDireccion("calle falsa 123");
-    setMedidaId(null);
-    setMostrarMedidas(false);
-
-    setMedidas({
-      cuello: "",
-      pecho: "",
-      hombros: "",
-      largoManga: "",
-      largoTalle: "",
-      largoTotalSup: "",
-      cintura: "",
-      cadera: "",
-      altoCadera: "",
-      entrepierna: "",
-      largoTotalInf: "",
-      anchoBajo: "",
-    });
-
-    setVistaAct("formulario");
+    setCorreo("");
+    setDireccion("");
   };
 
-  const CambioMedida = (e) => {
-    const { name, value } = e.target;
-    setMedidas((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  // =========================
+  // NUEVO CLIENTE
+  // =========================
+  const nuevoCliente = () => {
+    limpiarFormulario();
+    setVistaAct("clientes");
   };
 
-  const solicitarMedidas = async (e) => {
-    e.preventDefault();
-    const resultado = await Swal.fire({
-      title: "¿Añadir medidas?",
-      text: "¿Desea registrar medidas ahora?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#c5a880",
-      cancelButtonColor: "#181f21",
-      confirmButtonText: "Sí",
-      cancelButtonText: "Después",
-    });
-
-    if (resultado.isConfirmed) setMostrarMedidas(true);
-  };
-
+  // =========================
+  // GUARDAR CLIENTE
+  // =========================
   const guardarCliente = async () => {
     if (!nombre || !telefono) {
       Swal.fire("Error", "Nombre y teléfono son obligatorios", "error");
       return;
     }
 
+    const payload = {
+      nombre,
+      telefono,
+      correo,
+      direccion,
+      rol: 3,
+    };
+
+    if (clienteEdit) {
+      payload.id = clienteEdit;
+    }
+
     try {
-      const fechaActual = new Date();
-      const stringFechaCorta = fechaActual.toISOString().split("T")[0];
+      const url = clienteEdit
+        ? `${API}/Clientes/${clienteEdit}`
+        : `${API}/Clientes`;
 
-      const medidasPayload = mostrarMedidas
-        ? {
-            id: medidaId || 0,
-            pecho: Number(medidas.pecho || 0),
-            cintura: Number(medidas.cintura || 0),
-            cadera: Number(medidas.cadera || 0),
-            altoCadera: Number(medidas.altoCadera || 0),
-            entrepeirna: Number(medidas.entrepierna || 0),
-            largoTotal: Number(medidas.largoTotalInf || 0),
-            anchoBajo: Number(medidas.anchoBajo || 0),
-            largoBrazo: Number(medidas.largoManga || 0),
-            cuello: Number(medidas.cuello || 0),
-            hombros: Number(medidas.hombros || 0),
-            largoTalle: Number(medidas.largoTalle || 0),
-            largoTotalSuperior: Number(medidas.largoTotalSup || 0),
-            ultimaMedida: stringFechaCorta,
-            fechaRegistro: fechaActual.toISOString(),
-          }
-        : null;
+      const method = clienteEdit ? "PUT" : "POST";
 
-      const clientePayload = {
-        id: clienteEdit || 0,
-        nombre,
-        telefono,
-        correo: correo,
-        direccion: direccion,
-        medidas: medidasPayload,
-      };
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-      if (clienteEdit) {
-        const res = await fetch(`${API}/Clientes/${clienteEdit}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(clientePayload),
-        });
-
-        if (!res.ok) {
-          const errorDetalle = await res.text();
-          throw new Error(errorDetalle);
-        }
-      } else {
-        const res = await fetch(`${API}/Clientes`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(clientePayload),
-        });
-
-        if (!res.ok) {
-          const errorDetalle = await res.text();
-          throw new Error(errorDetalle);
-        }
-      }
+      if (!res.ok) throw new Error();
 
       await cargarClientes();
 
       Swal.fire({
         icon: "success",
-        title: "Cliente guardado",
+        title: clienteEdit ? "Cliente actualizado" : "Cliente registrado",
         toast: true,
         position: "top-end",
-        timer: 2500,
+        timer: 2200,
         showConfirmButton: false,
       });
 
-      NuevoCliente();
-      setVistaAct("tabla");
-    } catch (error) {
-      console.error("Error devuelto por el servidor:", error.message);
-      Swal.fire({
-        icon: "error",
-        title: "Error de validación",
-        text: "El servidor rechazó los datos. Recuerda pedirle al backend que haga las medidas opcionales.",
-        confirmButtonColor: "#181f21",
-      });
+      limpiarFormulario();
+      setVistaAct("directorio");
+    } catch {
+      Swal.fire("Error", "No se pudo guardar el cliente", "error");
     }
   };
 
-  const Eliminacion = async (id) => {
-    const resultado = await Swal.fire({
-      title: "¿Eliminar cliente?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí",
-    });
-
-    if (!resultado.isConfirmed) return;
-
-    await fetch(`${API}/Clientes/${id}`, {
-      method: "DELETE",
-    });
-
-    cargarClientes();
-  };
-
-  const Edicion = (cliente) => {
-    console.log("debug ", cliente);
-
+  const editarCliente = (cliente) => {
     setClienteEdit(cliente.id);
     setNombre(cliente.nombre);
     setTelefono(cliente.telefono);
     setCorreo(cliente.correo || "");
     setDireccion(cliente.direccion || "");
+    setVistaAct("clientes");
+  };
 
-    const datosMedida = cliente.medidas;
-
-    setMedidaId(datosMedida?.id || null);
-
-    setMedidas({
-      cuello: datosMedida?.cuello ?? "",
-      pecho: datosMedida?.pecho ?? "",
-      hombros: datosMedida?.hombros ?? "",
-      largoManga: datosMedida?.largoBrazo ?? "",
-      largoTalle: datosMedida?.largoTalle ?? "",
-      largoTotalSup: datosMedida?.largoTotalSuperior ?? "",
-      cintura: datosMedida?.cintura ?? "",
-      cadera: datosMedida?.cadera ?? "",
-      altoCadera: datosMedida?.altoCadera ?? "",
-      entrepierna: datosMedida?.entrepeirna ?? "",
-      largoTotalInf: datosMedida?.largoTotal ?? "",
-      anchoBajo: datosMedida?.anchoBajo ?? "",
+  const eliminarCliente = async (id) => {
+    const confirm = await Swal.fire({
+      title: "¿Eliminar cliente?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#c5a880",
+      cancelButtonColor: "#181f21",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar",
     });
 
-    setVistaAct("formulario");
+    if (!confirm.isConfirmed) return;
 
-    if (datosMedida) {
-      setMostrarMedidas(true);
-    } else {
-      setMostrarMedidas(false);
+    try {
+      await fetch(`${API}/Clientes/${id}`, {
+        method: "DELETE",
+      });
+
+      await cargarClientes();
+
+      Swal.fire({
+        icon: "success",
+        title: "Cliente eliminado",
+        toast: true,
+        position: "top-end",
+        timer: 2200,
+        showConfirmButton: false,
+      });
+    } catch {
+      Swal.fire("Error", "No se pudo eliminar", "error");
     }
   };
 
-  const generarOrden = async () => {
-    if (
-      !clienteAsignado ||
-      !prendaSeleccionada ||
-      !sastreAsignado ||
-      !fechaEntrega
-    ) {
-      Swal.fire("Error", "Completa todos los campos", "error");
+  const crearPedido = async () => {
+    if (!clientes.length) {
+      Swal.fire("Sin clientes", "Primero registra un cliente", "warning");
       return;
     }
 
+    const optionsClientes = clientes
+      .map((c) => `<option value="${c.id}">${c.nombre}</option>`)
+      .join("");
+
+    const { value: formValues } = await Swal.fire({
+      title: "Nuevo Pedido",
+      html: `
+        <select id="cliente" class="swal2-select" style="display:flex;margin:1em auto;width:73%">
+          <option value="">Selecciona cliente</option>
+          ${optionsClientes}
+        </select>
+
+        <select id="prenda" class="swal2-select" style="display:flex;margin:1em auto;width:73%">
+          <option value="">Selecciona prenda</option>
+          <option value="Traje">Traje</option>
+          <option value="Esmoquin">Esmóquin</option>
+          <option value="Camisa">Camisa</option>
+          <option value="Chaqueta">Chaqueta</option>
+          <option value="Pantalón">Pantalón</option>
+          <option value="Otro">Otro</option>
+        </select>
+
+        <input id="fecha" type="date" class="swal2-input">
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Crear",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#c5a880",
+      cancelButtonColor: "#181f21",
+      preConfirm: () => {
+        const clienteId = document.getElementById("cliente").value;
+        const tipoPrenda = document.getElementById("prenda").value;
+        const fechaEntrega = document.getElementById("fecha").value;
+
+        if (!clienteId || !tipoPrenda || !fechaEntrega) {
+          Swal.showValidationMessage("Completa todos los campos");
+          return false;
+        }
+
+        return {
+          clienteId,
+          tipoPrenda,
+          fechaEntrega,
+        };
+      },
+    });
+
+    if (!formValues) return;
+
     try {
-      await fetch(`${API}/Pedidos`, {
+      const payload = {
+        tipoPrenda: formValues.tipoPrenda,
+        costoTotal: 0,
+        saldoPendiente: 0,
+        estado: "Pendiente",
+        fechaEntrega: formValues.fechaEntrega,
+        clienteId: Number(formValues.clienteId),
+      };
+
+      const res = await fetch(`${API}/Pedidos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          tipoPrenda: prendaSeleccionada,
-          costoTotal: 0,
-          saldoPendiente: 0,
-          estado: "Pendiente",
-          fechaEntrega,
-          clienteId: Number(clienteAsignado),
-        }),
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) throw new Error();
 
       await cargarPedidos();
 
       Swal.fire({
         icon: "success",
-        title: "Orden generada",
+        title: "Pedido creado",
         toast: true,
         position: "top-end",
-        timer: 2500,
+        timer: 2200,
         showConfirmButton: false,
       });
-
-      setClienteAsignado("");
-      setPrendaSeleccionada("");
-      setSastreAsignado("");
-      setFechaEntrega("");
-      setBusqueda("");
-    } catch (error) {
+    } catch {
       Swal.fire("Error", "No se pudo crear pedido", "error");
     }
   };
 
+  const cambiarEstado = async (pedido) => {
+    const { value: nuevoEstado } = await Swal.fire({
+      title: `Pedido #${pedido.id}`,
+      input: "select",
+      inputOptions: {
+        Pendiente: "Pendiente",
+        "En proceso": "En proceso",
+        Terminado: "Terminado",
+        Entregado: "Entregado",
+      },
+      inputValue: pedido.estado,
+      showCancelButton: true,
+      confirmButtonText: "Actualizar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#c5a880",
+      cancelButtonColor: "#181f21",
+    });
+
+    if (!nuevoEstado || nuevoEstado === pedido.estado) return;
+
+    try {
+      const payload = {
+        id: pedido.id,
+        tipoPrenda: pedido.tipoPrenda,
+        costoTotal: pedido.costoTotal,
+        saldoPendiente: pedido.saldoPendiente,
+        estado: nuevoEstado,
+        fechaEntrega: pedido.fechaEntrega,
+        clienteId: pedido.clienteId,
+      };
+
+      const res = await fetch(`${API}/Pedidos/${pedido.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error();
+
+      await cargarPedidos();
+
+      Swal.fire({
+        icon: "success",
+        title: "Estado actualizado",
+        toast: true,
+        position: "top-end",
+        timer: 2200,
+        showConfirmButton: false,
+      });
+    } catch {
+      Swal.fire("Error", "No se pudo actualizar", "error");
+    }
+  };
+
+  const clientesFiltrados = clientes.filter(
+    (c) =>
+      c.nombre.toLowerCase().includes(busquedaDirectorio.toLowerCase()) ||
+      c.telefono.includes(busquedaDirectorio),
+  );
+
+  const pedidosPorEstado = (estado) =>
+    pedidos.filter((p) => p.estado === estado);
+
   return (
     <div className="animate__animated animate__fadeIn">
-      {/* Header */}
       <header className={styles.header}>
         <h1 className={styles.title}>
-          Recepción <br />{" "}
+          Recepción <br />
           <span className={styles.titleAccent}>del Atelier</span>
         </h1>
-        <p className="text-muted">
-          Gestione cada detalle de la experiencia de sus clientes.
-        </p>
+
+        <p className="text-muted">Gestione clientes y pedidos del taller.</p>
       </header>
 
-      {/* Métricas rápidas */}
+      {/* METRICAS */}
       <section className={styles.metricsGrid}>
         <div className={styles.card}>
           <small className={styles.label}>Clientes</small>
           <h2>{clientes.length}</h2>
         </div>
+
         <div className={`${styles.card} ${styles.cardDark}`}>
           <small className={styles.label} style={{ color: "#aaa" }}>
-            Pedidos Activos
+            Pedidos activos
           </small>
           <h2>{pedidos.length}</h2>
         </div>
+
         <div className={styles.card}>
-          <small className={styles.label}>En Sastrería</small>
+          <small className={styles.label}>Pendientes</small>
           <h2>{pedidos.filter((p) => p.estado === "Pendiente").length}</h2>
         </div>
       </section>
 
-      {/* Sección de Formularios */}
-      <div className={styles.formSection}>
-        {/* Registro, Medidas y Directorio */}
-        <div style={{ flex: 1, padding: "2rem" }}>
-          <div className={styles.tabContainer}>
-            <button
-              onClick={NuevoCliente}
-              className={
-                vistaAct === "formulario" ? styles.btnTabActive : styles.btnTab
-              }
-            >
-              + Nuevo Cliente
-            </button>
-            <button
-              onClick={() => setVistaAct("tabla")}
-              className={
-                vistaAct === "tabla" ? styles.btnTabActive : styles.btnTab
-              }
-            >
-              Ver Directorio
-            </button>
-          </div>
+      {/* TABS */}
+      <div className={styles.tabContainer}>
+        <button
+          onClick={() => setVistaAct("clientes")}
+          className={
+            vistaAct === "clientes" ? styles.btnTabActive : styles.btnTab
+          }
+        >
+          Clientes
+        </button>
 
-          {vistaAct === "tabla" ? (
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <h2>Directorio de Clientes</h2>
+        <button
+          onClick={() => setVistaAct("directorio")}
+          className={
+            vistaAct === "directorio" ? styles.btnTabActive : styles.btnTab
+          }
+        >
+          Directorio
+        </button>
 
-                {/* Buscador del Directorio */}
+        <button
+          onClick={() => setVistaAct("pedidos")}
+          className={
+            vistaAct === "pedidos" ? styles.btnTabActive : styles.btnTab
+          }
+        >
+          Pedidos
+        </button>
+      </div>
+
+      {/* CLIENTES */}
+      {vistaAct === "clientes" && (
+        <section className={styles.formSection}>
+          <div style={{ flex: 1, padding: "2rem" }}>
+            <h2>{clienteEdit ? "Editar Cliente" : "Registrar Cliente"}</h2>
+
+            <div className={styles.personalDataGrid}>
+              <div className={styles.fieldWrap}>
+                <label className={styles.fieldLabel}>Nombre</label>
                 <input
-                  type="text"
-                  placeholder="Buscar por nombre o teléfono..."
                   className={styles.inputLine}
-                  style={{ width: "300px", marginBottom: "1rem" }}
-                  value={busquedaDirectorio}
-                  onChange={(e) => setDirectorio(e.target.value)}
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
                 />
               </div>
 
-              <table
-                style={{ width: "100%", textAlign: "left", marginTop: "1rem" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Ultima Medida</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Usamos la lista filtrada  */}
-                  {clientesEnDirectorio.length > 0 ? (
-                    clientesEnDirectorio.map((cliente) => (
-                      <tr
-                        key={cliente.id}
-                        style={{ borderBottom: "1px solid #ccc" }}
-                      >
-                        <td style={{ padding: "1rem 0" }}>{cliente.nombre}</td>
-                        <td>{cliente.telefono}</td>
-                        <td>{new Date().toLocaleDateString()}</td>
-                        <td>
-                          <button
-                            onClick={() => Edicion(cliente)}
-                            style={{ marginRight: "10px" }}
-                          >
-                            Editar
-                          </button>
-                          <button onClick={() => Eliminacion(cliente.id)}>
-                            Eliminar
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan="4"
-                        style={{ textAlign: "center", padding: "2rem" }}
-                      >
-                        No se encontraron clientes.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div>
-              <h2>{clienteEdit ? "Editar Cliente" : "Datos Personales"}</h2>
-
-              <div className={styles.personalDataGrid}>
-                <div className={styles.fieldWrap}>
-                  <label className={styles.fieldLabel}>Nombre Completo</label>
-                  <input
-                    type="text"
-                    className={styles.inputLine}
-                    placeholder="Ej: Sebastián Maestre"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
-                  />
-                </div>
-
-                <div className={styles.fieldWrap}>
-                  <label className={styles.fieldLabel}>Teléfono</label>
-                  <input
-                    type="text"
-                    className={styles.inputLine}
-                    placeholder="+57 300 000 000"
-                    value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
-                  />
-                </div>
+              <div className={styles.fieldWrap}>
+                <label className={styles.fieldLabel}>Teléfono</label>
+                <input
+                  className={styles.inputLine}
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
+                />
               </div>
 
-              {!mostrarMedidas && (
-                <button
-                  className={styles.btnOutline}
-                  style={{ marginBottom: "2rem", width: "100%" }}
-                  onClick={solicitarMedidas}
-                >
-                  + Añadir medidas del cliente (Opcional)
-                </button>
-              )}
+              <div className={styles.fieldWrap}>
+                <label className={styles.fieldLabel}>Correo</label>
+                <input
+                  className={styles.inputLine}
+                  value={correo}
+                  onChange={(e) => setCorreo(e.target.value)}
+                />
+              </div>
 
-              {mostrarMedidas && (
-                <div className="animate__animated animate__fadeIn">
-                  <h3 style={{ marginTop: "2rem", marginBottom: "1rem" }}>
-                    Medidas Superiores (cm)
-                  </h3>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(3, 1fr)",
-                      gap: "1rem",
-                    }}
-                  >
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Cuello</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="cuello"
-                        value={medidas.cuello}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Pecho</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="pecho"
-                        value={medidas.pecho}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Hombros</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="hombros"
-                        value={medidas.hombros}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Largo Manga</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="largoManga"
-                        value={medidas.largoManga}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Largo Talle</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="largoTalle"
-                        value={medidas.largoTalle}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Largo Total</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="largoTotalSup"
-                        value={medidas.largoTotalSup}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-                  </div>
-                  <h3 style={{ marginTop: "2rem", marginBottom: "1rem" }}>
-                    Medidas Inferiores (cm)
-                  </h3>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(3, 1fr)",
-                      gap: "1rem",
-                    }}
-                  >
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Cintura</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="cintura"
-                        value={medidas.cintura}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Cadera</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="cadera"
-                        value={medidas.cadera}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Alto Cadera</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="altoCadera"
-                        value={medidas.altoCadera}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Entrepierna</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="entrepierna"
-                        value={medidas.entrepierna}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Ancho bajo</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="anchoBajo"
-                        value={medidas.anchoBajo}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label}>Largo Total</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className={styles.inputLine}
-                        placeholder="0.0"
-                        name="largoTotalInf"
-                        value={medidas.largoTotalInf}
-                        onChange={CambioMedida}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <button
-                className={styles.btnDark}
-                onClick={guardarCliente}
-                style={{ width: "100%", marginTop: "2rem" }}
-              >
-                {clienteEdit
-                  ? "ACTUALIZAR PERFIL"
-                  : "GUARDAR PERFIL DE CLIENTE"}
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Nuevo Pedido */}
-        <aside>
-          <div className={styles.orderPanel}>
-            <h3 className="font-headline mb-3 text-white">Nuevo Pedido</h3>
-
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>Cliente Asignado</label>
-
-              {/* Buscador menu de seleccion */}
-              <input
-                type="text"
-                placeholder="Filtrar cliente..."
-                className={styles.inputLine}
-                style={{
-                  backgroundColor: "transparent",
-                  color: "white",
-                  marginBottom: "0.5rem",
-                  borderColor: "rgba(255,255,255,0.2)",
-                }}
-                value={busquedaPedido}
-                onChange={(e) => setBusqueda(e.target.value)}
-              />
-
-              <select
-                className={styles.inputLine}
-                style={{ backgroundColor: "transparent", color: "gray" }}
-                value={clienteAsignado}
-                onChange={(e) => setClienteAsignado(e.target.value)}
-              >
-                <option value="" disabled>
-                  Seleccione un cliente de la lista
-                </option>
-                {/* lista filtrada para el pedido */}
-                {clientesEnPedido.map((cliente) => (
-                  <option
-                    key={cliente.id}
-                    value={cliente.id}
-                    style={{ color: "black" }}
-                  >
-                    {cliente.nombre}
-                  </option>
-                ))}
-              </select>
+              <div className={styles.fieldWrap}>
+                <label className={styles.fieldLabel}>Dirección</label>
+                <input
+                  className={styles.inputLine}
+                  value={direccion}
+                  onChange={(e) => setDireccion(e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>Seleccionar Prenda</label>
-              <select
-                className={styles.inputLine}
-                style={{ backgroundColor: "transparent", color: "gray" }}
-                value={prendaSeleccionada}
-                onChange={(e) => setPrendaSeleccionada(e.target.value)}
-              >
-                <option value="">Seleccione una opción</option>
-                <option value="Traje">Traje</option>
-                <option value="Esmoquin">Esmóquin</option>
-                <option value="Camisa">Camisa</option>
-                <option value="Pantalón">Chaqueta</option>
-                <option value="Pantalón">Bolso</option>
-                <option value="Pantalón">Otro</option>
-              </select>
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>Sastre Asignado</label>
-              <select
-                className={styles.inputLine}
-                style={{ backgroundColor: "transparent", color: "gray" }}
-                value={sastreAsignado}
-                onChange={(e) => setSastreAsignado(e.target.value)}
-              >
-                <option value="" disabled>
-                  Seleccione sastre
-                </option>
-                <option value="sastre1" style={{ color: "black" }}>
-                  Maestro Alessandro
-                </option>
-                <option value="sastre2" style={{ color: "black" }}>
-                  Sastre Valentina
-                </option>
-                <option value="sastre3" style={{ color: "black" }}>
-                  Oficial Roberto
-                </option>
-              </select>
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>Fecha de Entrega</label>
-              <input
-                type="date"
-                className={styles.inputLine}
-                style={{ color: "gray" }}
-                value={fechaEntrega}
-                onChange={(e) => setFechaEntrega(e.target.value)}
-              />
-            </div>
-
-            <button className={styles.btnGold} onClick={generarOrden}>
-              Generar Orden
+            <button
+              className={styles.btnDark}
+              style={{
+                width: "100%",
+                marginTop: "2rem",
+              }}
+              onClick={guardarCliente}
+            >
+              {clienteEdit ? "ACTUALIZAR CLIENTE" : "GUARDAR CLIENTE"}
             </button>
           </div>
-        </aside>
-      </div>
+        </section>
+      )}
+
+      {/* DIRECTORIO */}
+      {vistaAct === "directorio" && (
+        <section className={styles.formSection}>
+          <div style={{ flex: 1, padding: "2rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "1rem",
+              }}
+            >
+              <h2>Directorio</h2>
+
+              <input
+                className={styles.inputLine}
+                style={{ width: "300px" }}
+                placeholder="Buscar..."
+                value={busquedaDirectorio}
+                onChange={(e) => setBusquedaDirectorio(e.target.value)}
+              />
+            </div>
+
+            <table
+              style={{
+                width: "100%",
+                textAlign: "left",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Correo</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {clientesFiltrados.map((cliente) => (
+                  <tr key={cliente.id}>
+                    <td>{cliente.nombre}</td>
+                    <td>{cliente.telefono}</td>
+                    <td>{cliente.correo}</td>
+
+                    <td>
+                      <button
+                        onClick={() => editarCliente(cliente)}
+                        style={{
+                          marginRight: "10px",
+                        }}
+                      >
+                        Editar
+                      </button>
+
+                      <button onClick={() => eliminarCliente(cliente.id)}>
+                        Eliminar
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          localStorage.setItem(
+                            "clienteMedidas",
+                            JSON.stringify(cliente),
+                          );
+
+                          navigate("/medidas");
+                        }}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        Medidas
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* PEDIDOS */}
+      {vistaAct === "pedidos" && (
+        <section style={{ marginTop: "2rem" }}>
+          <button
+            className={styles.btnGold}
+            onClick={crearPedido}
+            style={{ marginBottom: "2rem" }}
+          >
+            + Crear Pedido
+          </button>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "1.5rem",
+            }}
+          >
+            {["Pendiente", "En proceso", "Terminado", "Entregado"].map(
+              (estado) => (
+                <div
+                  key={estado}
+                  className={styles.card}
+                  style={{
+                    minHeight: "450px",
+                    padding: "1rem",
+                  }}
+                >
+                  <h4>{estado}</h4>
+
+                  {pedidosPorEstado(estado).map((pedido) => (
+                    <div
+                      key={pedido.id}
+                      style={{
+                        background: "white",
+                        padding: "1rem",
+                        borderRadius: "12px",
+                        marginBottom: "1rem",
+                        boxShadow: "0 5px 20px rgba(0,0,0,.08)",
+                      }}
+                    >
+                      <strong>Pedido #{pedido.id}</strong>
+
+                      <p className="mb-1 mt-2">
+                        Cliente: {pedido.cliente?.nombre}
+                      </p>
+
+                      <p className="mb-1">Prenda: {pedido.tipoPrenda}</p>
+
+                      <p className="mb-3">
+                        Entrega:{" "}
+                        {new Date(pedido.fechaEntrega).toLocaleDateString()}
+                      </p>
+
+                      {pedido.estado !== "Entregado" && (
+                        <button
+                          className={styles.btnOutline}
+                          onClick={() => cambiarEstado(pedido)}
+                        >
+                          Cambiar estado
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ),
+            )}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

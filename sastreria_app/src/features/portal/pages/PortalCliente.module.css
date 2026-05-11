@@ -1,0 +1,116 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #181f21 0%, #232b2e 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 40px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  color: white;
+}
+
+.label {
+  color: #c5a880;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.title {
+  font-size: 56px;
+  margin: 20px 0 10px;
+  font-weight: 300;
+}
+
+.title span {
+  color: #c5a880;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #cfcfcf;
+  margin-bottom: 60px;
+  font-size: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 24px;
+  padding: 50px 40px;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #c5a880;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.icon {
+  font-size: 52px;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.card p {
+  color: #d6d6d6;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.card button {
+  border: none;
+  background: #c5a880;
+  color: white;
+  padding: 14px 34px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.card button:hover {
+  background: #d4b98f;
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 40px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

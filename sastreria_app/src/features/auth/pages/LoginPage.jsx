@@ -1,59 +1,89 @@
 // src/features/auth/pages/LoginPage.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import styles from "./LoginPage.module.css";
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Recepcionista");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  // Estados del formulario
+  const [isRegister, setIsRegister] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const API_LOGIN = "https://localhost:7196/api/Auth/login";
+  const API_REGISTRO = "https://localhost:7196/api/Usuarios";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!role) {
-      setError("Por favor, selecciona un rol.");
-      return;
-    }
-
     setLoading(true);
-    setError("");
 
     try {
-      const credenciales = {
-        correo: email,
-        password: password,
-        rol: role,
-      };
-      // api resquest to login endpoint
-      const respuesta = await fetch("https://localhost:7196/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credenciales),
-      });
+      if (isRegister) {
+        // register
+        const response = await fetch(API_REGISTRO, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre: nombre,
+            correo: email,
+            password: password,
+            rol: 3, // Asignar rol de cliente por defecto
+          }),
+        });
 
-      if (respuesta.ok) {
-        const datosDelUsuario = await respuesta.json();
-        localStorage.setItem("rol", datosDelUsuario.rol);
-        localStorage.setItem("login", "true");
-        if (role === "Administrador") navigate("/finanzas");
-        else if (role === "Sastre") navigate("/sastreria");
-        else if (role === "Recepcionista") navigate("/recepcion");
-        else navigate("/Cliente");
+        if (!response.ok) {
+          throw new Error("No se pudo crear la cuenta. Verifica los datos.");
+        }
+
+        Swal.fire({
+          icon: "success",
+          title: "¡Cuenta creada!",
+          text: "Ahora puedes iniciar sesión con tu nuevo correo.",
+          confirmButtonColor: "#c9a84c",
+        });
+
+        setNombre("");
+        setPassword("");
+        setIsRegister(false);
       } else {
-        alert(
-          "Credenciales incorrectas. Por favor, verifica tu correo y contraseña.",
-        );
+        // login
+        const response = await fetch(API_LOGIN, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!response.ok) throw new Error("Credenciales incorrectas");
+
+        const usuario = await response.json();
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+
+        const nombreRol =
+          usuario.rol?.nombre?.toLowerCase() || usuario.rol?.toLowerCase();
+
+        // Redirección inteligente
+        if (nombreRol === "administrador" || nombreRol === "admin") {
+          navigate("/finanzas");
+        } else if (nombreRol === "sastre") {
+          navigate("/sastreria");
+        } else if (nombreRol === "recepcionista" || nombreRol === "recepcion") {
+          navigate("/recepcion");
+        } else {
+          navigate("/cliente");
+        }
       }
     } catch (error) {
-      console.error("Error al conectar con la API:", error);
-      alert("Error de conexión");
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: isRegister ? "Error al registrar" : "Error de acceso",
+        text: error.message || "Verifica tus datos de conexión.",
+        confirmButtonColor: "#181f21",
+      });
     } finally {
       setLoading(false);
     }
@@ -74,26 +104,38 @@ export const LoginPage = () => {
           Elegancia
           <br />y Estilo
         </h1>
-
         <div className={styles.goldLine} />
-
         <p className={styles.brandTagline}>Sastrería · Valledupar</p>
       </div>
 
       {/* ── Panel Derecho ── */}
       <div className={styles.formPanel}>
         <div className={styles.formInner}>
-          <span className={styles.portalLabel}>Portal de Acceso</span>
+          <span className={styles.portalLabel}>
+            {isRegister ? "Crear Nueva Cuenta" : "Portal de Acceso"}
+          </span>
 
-          {error && <div className={styles.errorBox}>{error}</div>}
+          <form onSubmit={handleSubmit}>
+            {isRegister && (
+              <div className={styles.fieldWrap}>
+                <label className={styles.fieldLabel}>Nombre Completo</label>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Ej: Juan Pérez"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  required={isRegister}
+                />
+              </div>
+            )}
 
-          <form onSubmit={handleLogin}>
             <div className={styles.fieldWrap}>
               <label className={styles.fieldLabel}>Correo Electrónico</label>
               <input
                 type="email"
                 className={styles.input}
-                placeholder="usuario@unicesar.com"
+                placeholder="usuario@atelier.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -112,28 +154,43 @@ export const LoginPage = () => {
               />
             </div>
 
-            <div className={styles.fieldWrapLast}>
-              <label className={styles.fieldLabel}>Seleccionar Rol</label>
-              <select
-                className={styles.select}
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <option value="Recepcionista">Recepcionista</option>
-                <option value="Sastre">Sastre / Modista</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Cliente">Cliente</option>
-              </select>
-            </div>
-
             <button
               type="submit"
               className={styles.submitBtn}
               disabled={loading}
             >
-              {loading ? "Verificando..." : "Iniciar Sesión"}
+              {loading
+                ? isRegister
+                  ? "Registrando..."
+                  : "Verificando..."
+                : isRegister
+                  ? "Crear Cuenta"
+                  : "Iniciar Sesión"}
             </button>
           </form>
+
+          <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+            <button
+              type="button"
+              onClick={() => {
+                setIsRegister(!isRegister);
+                setNombre("");
+                setPassword("");
+              }}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#c9a84c",
+                cursor: "pointer",
+                fontWeight: "bold",
+                fontSize: "0.9rem",
+              }}
+            >
+              {isRegister
+                ? "¿Ya tienes una cuenta? Inicia sesión aquí"
+                : "¿Eres nuevo? Regístrate aquí"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
