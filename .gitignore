@@ -1,8 +1,0 @@
-﻿################################################################################
-# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
-################################################################################
-
-/SastreriaAPI/.vs
-/SastreriaAPI/SastreriaAPI/Migrations
-/SastreriaAPI/SastreriaAPI/obj
-/SastreriaAPI/SastreriaAPI/bin/Debug/net10.0
