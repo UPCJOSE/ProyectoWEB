@@ -6,8 +6,18 @@ import styles from "./MainLayout.module.css";
 export const MainLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userRole = localStorage.getItem("rol");
+
+  const usuarioGuardado = localStorage.getItem("usuario");
+  const usuarioObj = usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
+
+  const userRole = usuarioObj?.rol?.nombre?.toLowerCase() || "";
+
+  const iniciales = usuarioObj?.nombre
+    ? usuarioObj.nombre.substring(0, 2).toUpperCase()
+    : "US";
+
   const [cartCount, setCartCount] = useState(0);
+
   const actualizarContador = () => {
     const carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]");
     const totalItems = carrito.reduce((suma, item) => suma + item.cantidad, 0);
@@ -23,9 +33,9 @@ export const MainLayout = () => {
   }, []);
 
   const getHomeRoute = () => {
-    if (userRole === "Administrador") return "/finanzas";
-    if (userRole === "Sastre") return "/sastreria";
-    if (userRole === "Recepcionista") return "/recepcion";
+    if (userRole === "administrador") return "/finanzas";
+    if (userRole === "sastre") return "/sastreria";
+    if (userRole === "recepcion") return "/recepcion";
     return "/cliente";
   };
 
@@ -47,7 +57,7 @@ export const MainLayout = () => {
         </div>
 
         <div className={styles.navGroup}>
-          {/* CLIENTE */}
+          {/* ── CLIENTE ── */}
           {userRole === "cliente" && (
             <>
               <span
@@ -57,7 +67,6 @@ export const MainLayout = () => {
                 Mi Perfil
               </span>
 
-              {/* Separador visual */}
               <div className={styles.actionsGroup}>
                 <div
                   className={styles.cartContainer}
@@ -88,8 +97,8 @@ export const MainLayout = () => {
             </>
           )}
 
-          {/* RECEPCIONISTA */}
-          {(userRole === "Administrador" || userRole === "Recepcionista") && (
+          {/* ── RECEPCIONISTA ── */}
+          {(userRole === "administrador" || userRole === "recepcionista") && (
             <span
               className={`${styles.navLink} ${isActive("/recepcion")}`}
               onClick={() => navigate("/recepcion")}
@@ -98,8 +107,8 @@ export const MainLayout = () => {
             </span>
           )}
 
-          {/* SASTRE */}
-          {(userRole === "Administrador" || userRole === "Sastre") && (
+          {/* ── SASTRE ── */}
+          {(userRole === "administrador" || userRole === "sastre") && (
             <span
               className={`${styles.navLink} ${isActive("/sastreria")}`}
               onClick={() => navigate("/sastreria")}
@@ -108,8 +117,8 @@ export const MainLayout = () => {
             </span>
           )}
 
-          {/* Administrador */}
-          {(userRole === "Administrador" || userRole === "Recepcionista") && (
+          {/* ── FINANZAS ── */}
+          {(userRole === "administrador" || userRole === "recepcionista") && (
             <span
               className={`${styles.navLink} ${isActive("/finanzas")}`}
               onClick={() => navigate("/finanzas")}
@@ -121,14 +130,13 @@ export const MainLayout = () => {
           <button
             className={styles.avatarBtn}
             onClick={handleLogout}
-            title={`Cerrar Sesión (${userRole})`}
+            title={`Cerrar Sesión (${usuarioObj?.nombre || "Usuario"})`}
           >
-            CV
+            {iniciales}
           </button>
         </div>
       </nav>
 
-      {/* CONTENIDO DINÁMICO */}
       <main className={styles.mainContent}>
         <Outlet />
       </main>
