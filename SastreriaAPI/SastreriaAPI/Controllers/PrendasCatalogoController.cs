@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
+using SastreriaAPI.DTOs;
 using SastreriaAPI.Models;
 
 namespace SastreriaAPI.Controllers
@@ -39,9 +40,56 @@ namespace SastreriaAPI.Controllers
 
         // POST: api/PrendasCatalogo
         [HttpPost]
-        public async Task<ActionResult<PrendaCatalogo>> PostPrenda(PrendaCatalogo prenda)
+        public async Task<ActionResult<PrendaCatalogo>> PostPrenda([FromForm] PrendaCatalogoCreateDto dto)
         {
+            string? imagenUrl = null;
+
+            // Verificar si llegó una imagen
+            if (dto.Imagen != null && dto.Imagen.Length > 0)
+            {
+                // Ruta física donde se guardarán las imágenes
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "uploads",
+                    "prendas"
+                );
+
+                // Crear carpeta si no existe
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Crear nombre único para evitar conflictos
+                var fileName = Guid.NewGuid().ToString() +
+                               Path.GetExtension(dto.Imagen.FileName);
+
+                // Ruta completa del archivo
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                // Guardar imagen físicamente
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await dto.Imagen.CopyToAsync(stream);
+                }
+
+                // Ruta que se guardará en la base de datos
+                imagenUrl = $"/uploads/prendas/{fileName}";
+            }
+
+            // Crear objeto real para guardar en SQL
+            var prenda = new PrendaCatalogo
+            {
+                Nombre = dto.Nombre,
+                TipoPrenda = dto.TipoPrenda,
+                PrecioBase = dto.PrecioBase,
+                Activa = dto.Activa,
+                ImagenUrl = imagenUrl
+            };
+
             _context.PrendasCatalogo.Add(prenda);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetPrenda), new { id = prenda.Id }, prenda);
