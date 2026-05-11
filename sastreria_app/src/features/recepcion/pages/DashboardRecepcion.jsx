@@ -73,16 +73,12 @@ export const DashboardRecepcion = () => {
     }
 
     const payload = {
+      id: clienteEdit || 0,
       nombre,
       telefono,
       correo,
       direccion,
-      rol: 3,
     };
-
-    if (clienteEdit) {
-      payload.id = clienteEdit;
-    }
 
     try {
       const url = clienteEdit

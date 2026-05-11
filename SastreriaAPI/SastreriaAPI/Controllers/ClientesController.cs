@@ -27,7 +27,10 @@ namespace SastreriaAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Clientes
+                .Include(c => c.Pedidos)
+                .Include(c => c.Medidas)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (cliente == null)
             {
@@ -57,7 +60,20 @@ namespace SastreriaAPI.Controllers
             }
 
             _context.Entry(cliente).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Clientes.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+
+                throw;
+            }
 
             return NoContent();
         }

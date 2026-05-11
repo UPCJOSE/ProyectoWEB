@@ -14,5 +14,8 @@ namespace SastreriaAPI.Models
         public string Correo { get; set; } = string.Empty;
 
         public string Direccion { get; set; } = string.Empty;
+
+        public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        public ICollection<Medida> Medidas { get; set; } = new List<Medida>();
     }
 }

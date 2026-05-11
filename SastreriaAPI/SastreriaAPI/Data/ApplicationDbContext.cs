@@ -17,5 +17,6 @@ namespace SastreriaAPI.Data
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<Egreso> Egresos { get; set; }
         public DbSet<Material> Materiales { get; set; }
+        public DbSet<PrendaCatalogo> PrendasCatalogo { get; set; }
     }
 }

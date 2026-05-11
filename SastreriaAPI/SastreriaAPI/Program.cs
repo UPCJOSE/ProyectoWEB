@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Servicios
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -77,6 +82,8 @@ using (var scope = app.Services.CreateScope())
 app.UseCors("ReactPolicy");
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
