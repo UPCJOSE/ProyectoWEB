@@ -7,5 +7,6 @@
         public string TipoPrenda { get; set; } = string.Empty; // Pantalón, Camisa, Vestido
         public decimal PrecioBase { get; set; }
         public bool Activa { get; set; } = true;
+        public string? ImagenUrl { get; set; }
     }
 }
