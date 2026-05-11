@@ -6,8 +6,8 @@ import styles from "./PanelSastre.module.css";
 export const PanelSastre = () => {
   const [pedidos, setPedidos] = useState([]);
 
-  const API_PEDIDOS = "https://localhost:7065/api/Pedidos";
-  const API_CLIENTES = "https://localhost:7065/api/Clientes";
+  const API_PEDIDOS = "https://localhost:7196/api/Pedidos";
+  const API_CLIENTES = "https://localhost:7196/api/Clientes";
 
   const cargarPedidos = async () => {
     try {

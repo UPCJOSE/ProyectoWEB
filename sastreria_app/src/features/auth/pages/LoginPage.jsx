@@ -14,8 +14,8 @@ export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_LOGIN = "https://localhost:7065/api/Auth/login";
-  const API_REGISTRO = "https://localhost:7065/api/Usuarios";
+  const API_LOGIN = "https://localhost:7196/api/Auth/login";
+  const API_REGISTRO = "https://localhost:7196/api/Usuarios";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

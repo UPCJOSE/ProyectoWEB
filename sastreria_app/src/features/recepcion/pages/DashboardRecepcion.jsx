@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import styles from "./DashboardRecepcion.module.css";
 import { useNavigate } from "react-router-dom";
 
-const API = "https://localhost:7065/api";
+const API = "https://localhost:7196/api";
 
 export const DashboardRecepcion = () => {
   const navigate = useNavigate();
@@ -73,13 +73,16 @@ export const DashboardRecepcion = () => {
     }
 
     const payload = {
-      id: clienteEdit || 0,
       nombre,
       telefono,
       correo,
       direccion,
       rol: 3,
     };
+
+    if (clienteEdit) {
+      payload.id = clienteEdit;
+    }
 
     try {
       const url = clienteEdit

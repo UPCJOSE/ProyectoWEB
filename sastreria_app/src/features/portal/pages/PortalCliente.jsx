@@ -30,7 +30,7 @@ export const PortalCliente = () => {
               comienza tu proceso de confección.
             </p>
 
-            <button onClick={() => navigate("/recepcion")}>Entrar</button>
+            <button onClick={() => navigate("/login")}>Entrar</button>
           </div>
 
           <div className={styles.card}>
@@ -43,7 +43,7 @@ export const PortalCliente = () => {
               inmediato.
             </p>
 
-            <button onClick={() => navigate("/cliente")}>Entrar</button>
+            <button onClick={() => navigate("/home")}>Entrar</button>
           </div>
         </div>
       </div>

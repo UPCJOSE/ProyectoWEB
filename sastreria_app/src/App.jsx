@@ -26,6 +26,7 @@ function App() {
       <Routes>
         {/* RUTA PÚBLICA */}
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/portal" element={<PortalCliente />} />
 
         {/* RUTAS PROTEGIDAS */}
         <Route element={<PrivateRoute />}>
@@ -34,7 +35,6 @@ function App() {
             <Route path="/recepcion" element={<DashboardRecepcion />} />
             <Route path="/sastreria" element={<PanelSastre />} />
             <Route path="/finanzas" element={<DashboardAdmin />} />
-            <Route path="/portal" element={<PortalCliente />} />
             <Route path="/medidas" element={<DashboardMedidas />} />
           </Route>
         </Route>
