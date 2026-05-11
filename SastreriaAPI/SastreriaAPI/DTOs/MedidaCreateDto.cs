@@ -1,14 +1,9 @@
-﻿namespace SastreriaAPI.Models
+﻿namespace SastreriaAPI.DTOs
 {
-    public class Medida
+    public class MedidaCreateDto
     {
-        public int Id { get; set; }
-
-        // Relación con cliente
         public int ClienteId { get; set; }
-        public Cliente? Cliente { get; set; }
-        
-        // Medidas
+
         public decimal? Pecho { get; set; }
 
         public decimal? Cintura { get; set; }
@@ -33,10 +28,6 @@
 
         public decimal? LargoTotalSuperior { get; set; }
 
-        // Fechas
         public DateOnly? UltimaMedida { get; set; }
-
-        public DateTime FechaRegistro { get; set; } = DateTime.Now;
-
     }
 }

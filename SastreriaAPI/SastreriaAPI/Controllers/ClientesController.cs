@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
+using SastreriaAPI.DTOs;
 using SastreriaAPI.Models;
 
 namespace SastreriaAPI.Controllers
@@ -52,28 +53,21 @@ namespace SastreriaAPI.Controllers
 
         // PUT: api/Clientes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(int id, ClienteUpdateDto dto)
         {
-            if (id != cliente.Id)
+            var cliente = await _context.Clientes.FindAsync(id);
+
+            if (cliente == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            cliente.Nombre = dto.Nombre;
+            cliente.Telefono = dto.Telefono;
+            cliente.Correo = dto.Correo;
+            cliente.Direccion = dto.Direccion;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Clientes.Any(e => e.Id == id))
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

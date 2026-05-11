@@ -10,8 +10,9 @@
         public int PrendaCatalogoId { get; set; }
         public PrendaCatalogo? PrendaCatalogo { get; set; }
 
-        public int? MedidaId { get; set; }
-        public Medida? Medida { get; set; }
+        // Ajustes específicos de esa prenda
+        public int? MedidaPrendaId { get; set; }
+        public MedidaPrenda? MedidaPrenda { get; set; }
 
         public decimal PrecioUnitario { get; set; }   // se copia del catálogo al crear el pedido
         public decimal CostoTotal { get; set; }

@@ -12,8 +12,8 @@ using SastreriaAPI.Data;
 namespace SastreriaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260511012808_Inicial")]
-    partial class Inicial
+    [Migration("20260511222616_ajusteMedida")]
+    partial class ajusteMedida
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,10 +155,6 @@ namespace SastreriaAPI.Migrations
                     b.Property<decimal?>("Pecho")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("TipoPrenda")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateOnly?>("UltimaMedida")
                         .HasColumnType("date");
 
@@ -167,6 +163,47 @@ namespace SastreriaAPI.Migrations
                     b.HasIndex("ClienteId");
 
                     b.ToTable("Medidas");
+                });
+
+            modelBuilder.Entity("SastreriaAPI.Models.MedidaPrenda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal?>("AjusteCadera")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("AjusteCintura")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("AjustePecho")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("AnchoBota")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaRegistro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("LargoEspecial")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("PrendaCatalogoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("PrendaCatalogoId");
+
+                    b.ToTable("MedidasPrenda");
                 });
 
             modelBuilder.Entity("SastreriaAPI.Models.Pago", b =>
@@ -221,7 +258,7 @@ namespace SastreriaAPI.Migrations
                     b.Property<DateTime>("FechaPedido")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MedidaId")
+                    b.Property<int?>("MedidaPrendaId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PrecioUnitario")
@@ -237,7 +274,7 @@ namespace SastreriaAPI.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("MedidaId");
+                    b.HasIndex("MedidaPrendaId");
 
                     b.HasIndex("PrendaCatalogoId");
 
@@ -254,6 +291,9 @@ namespace SastreriaAPI.Migrations
 
                     b.Property<bool>("Activa")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImagenUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -310,6 +350,25 @@ namespace SastreriaAPI.Migrations
                     b.Navigation("Cliente");
                 });
 
+            modelBuilder.Entity("SastreriaAPI.Models.MedidaPrenda", b =>
+                {
+                    b.HasOne("SastreriaAPI.Models.Cliente", "Cliente")
+                        .WithMany("MedidasPrenda")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SastreriaAPI.Models.PrendaCatalogo", "PrendaCatalogo")
+                        .WithMany()
+                        .HasForeignKey("PrendaCatalogoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("PrendaCatalogo");
+                });
+
             modelBuilder.Entity("SastreriaAPI.Models.Pago", b =>
                 {
                     b.HasOne("SastreriaAPI.Models.Pedido", "Pedido")
@@ -329,9 +388,9 @@ namespace SastreriaAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SastreriaAPI.Models.Medida", "Medida")
+                    b.HasOne("SastreriaAPI.Models.MedidaPrenda", "MedidaPrenda")
                         .WithMany()
-                        .HasForeignKey("MedidaId");
+                        .HasForeignKey("MedidaPrendaId");
 
                     b.HasOne("SastreriaAPI.Models.PrendaCatalogo", "PrendaCatalogo")
                         .WithMany()
@@ -341,7 +400,7 @@ namespace SastreriaAPI.Migrations
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("Medida");
+                    b.Navigation("MedidaPrenda");
 
                     b.Navigation("PrendaCatalogo");
                 });
@@ -349,6 +408,8 @@ namespace SastreriaAPI.Migrations
             modelBuilder.Entity("SastreriaAPI.Models.Cliente", b =>
                 {
                     b.Navigation("Medidas");
+
+                    b.Navigation("MedidasPrenda");
 
                     b.Navigation("Pedidos");
                 });

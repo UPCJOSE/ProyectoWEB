@@ -17,5 +17,6 @@ namespace SastreriaAPI.Models
 
         public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
         public ICollection<Medida> Medidas { get; set; } = new List<Medida>();
+        public ICollection<MedidaPrenda> MedidasPrenda { get; set; } = new List<MedidaPrenda>();
     }
 }

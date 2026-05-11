@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SastreriaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,7 +67,8 @@ namespace SastreriaAPI.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TipoPrenda = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PrecioBase = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Activa = table.Column<bool>(type: "bit", nullable: false)
+                    Activa = table.Column<bool>(type: "bit", nullable: false),
+                    ImagenUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,7 +98,6 @@ namespace SastreriaAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    TipoPrenda = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Pecho = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Cintura = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Cadera = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -125,6 +125,38 @@ namespace SastreriaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MedidaPrenda",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    PrendaCatalogoId = table.Column<int>(type: "int", nullable: false),
+                    AjustePecho = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    AjusteCintura = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    AjusteCadera = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    LargoEspecial = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    AnchoBota = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedidaPrenda", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MedidaPrenda_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MedidaPrenda_PrendasCatalogo_PrendaCatalogoId",
+                        column: x => x.PrendaCatalogoId,
+                        principalTable: "PrendasCatalogo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pedidos",
                 columns: table => new
                 {
@@ -132,7 +164,7 @@ namespace SastreriaAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     PrendaCatalogoId = table.Column<int>(type: "int", nullable: false),
-                    MedidaId = table.Column<int>(type: "int", nullable: true),
+                    MedidaPrendaId = table.Column<int>(type: "int", nullable: true),
                     PrecioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CostoTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SaldoPendiente = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -150,9 +182,9 @@ namespace SastreriaAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pedidos_Medidas_MedidaId",
-                        column: x => x.MedidaId,
-                        principalTable: "Medidas",
+                        name: "FK_Pedidos_MedidaPrenda_MedidaPrendaId",
+                        column: x => x.MedidaPrendaId,
+                        principalTable: "MedidaPrenda",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Pedidos_PrendasCatalogo_PrendaCatalogoId",
@@ -185,6 +217,16 @@ namespace SastreriaAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_MedidaPrenda_ClienteId",
+                table: "MedidaPrenda",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedidaPrenda_PrendaCatalogoId",
+                table: "MedidaPrenda",
+                column: "PrendaCatalogoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Medidas_ClienteId",
                 table: "Medidas",
                 column: "ClienteId");
@@ -200,9 +242,9 @@ namespace SastreriaAPI.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_MedidaId",
+                name: "IX_Pedidos_MedidaPrendaId",
                 table: "Pedidos",
-                column: "MedidaId");
+                column: "MedidaPrendaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_PrendaCatalogoId",
@@ -220,6 +262,9 @@ namespace SastreriaAPI.Migrations
                 name: "Materiales");
 
             migrationBuilder.DropTable(
+                name: "Medidas");
+
+            migrationBuilder.DropTable(
                 name: "Pagos");
 
             migrationBuilder.DropTable(
@@ -229,13 +274,13 @@ namespace SastreriaAPI.Migrations
                 name: "Pedidos");
 
             migrationBuilder.DropTable(
-                name: "Medidas");
-
-            migrationBuilder.DropTable(
-                name: "PrendasCatalogo");
+                name: "MedidaPrenda");
 
             migrationBuilder.DropTable(
                 name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "PrendasCatalogo");
         }
     }
 }
