@@ -9,7 +9,6 @@ const API = "https://localhost:7196/api";
 export const DashboardRecepcion = () => {
   const navigate = useNavigate();
   const [vistaAct, setVistaAct] = useState("clientes");
-
   const [clienteEdit, setClienteEdit] = useState(null);
 
   const [nombre, setNombre] = useState("");
@@ -19,7 +18,6 @@ export const DashboardRecepcion = () => {
 
   const [clientes, setClientes] = useState([]);
   const [pedidos, setPedidos] = useState([]);
-
   const [busquedaDirectorio, setBusquedaDirectorio] = useState("");
 
   useEffect(() => {
@@ -55,47 +53,34 @@ export const DashboardRecepcion = () => {
     setDireccion("");
   };
 
-  // =========================
-  // NUEVO CLIENTE
-  // =========================
   const nuevoCliente = () => {
     limpiarFormulario();
     setVistaAct("clientes");
   };
 
-  // =========================
-  // GUARDAR CLIENTE
-  // =========================
   const guardarCliente = async () => {
-    if (!nombre || !telefono) {
-      Swal.fire("Error", "Nombre y teléfono son obligatorios", "error");
+    if (!nombre || !telefono || !correo || !direccion) {
+      Swal.fire("Error", "Por favor complete todos los datos", "error");
       return;
     }
 
     const payload = {
+      id: clienteEdit || 0,
       nombre,
       telefono,
       correo,
       direccion,
-      rol: 3,
     };
-
-    if (clienteEdit) {
-      payload.id = clienteEdit;
-    }
 
     try {
       const url = clienteEdit
         ? `${API}/Clientes/${clienteEdit}`
         : `${API}/Clientes`;
-
       const method = clienteEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -143,12 +128,8 @@ export const DashboardRecepcion = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      await fetch(`${API}/Clientes/${id}`, {
-        method: "DELETE",
-      });
-
+      await fetch(`${API}/Clientes/${id}`, { method: "DELETE" });
       await cargarClientes();
-
       Swal.fire({
         icon: "success",
         title: "Cliente eliminado",
@@ -179,7 +160,6 @@ export const DashboardRecepcion = () => {
           <option value="">Selecciona cliente</option>
           ${optionsClientes}
         </select>
-
         <select id="prenda" class="swal2-select" style="display:flex;margin:1em auto;width:73%">
           <option value="">Selecciona prenda</option>
           <option value="Traje">Traje</option>
@@ -189,8 +169,7 @@ export const DashboardRecepcion = () => {
           <option value="Pantalón">Pantalón</option>
           <option value="Otro">Otro</option>
         </select>
-
-        <input id="fecha" type="date" class="swal2-input">
+        <input id="fecha" type="date" class="swal2-input" style="width: 73%;">
       `,
       showCancelButton: true,
       confirmButtonText: "Crear",
@@ -201,17 +180,11 @@ export const DashboardRecepcion = () => {
         const clienteId = document.getElementById("cliente").value;
         const tipoPrenda = document.getElementById("prenda").value;
         const fechaEntrega = document.getElementById("fecha").value;
-
         if (!clienteId || !tipoPrenda || !fechaEntrega) {
           Swal.showValidationMessage("Completa todos los campos");
           return false;
         }
-
-        return {
-          clienteId,
-          tipoPrenda,
-          fechaEntrega,
-        };
+        return { clienteId, tipoPrenda, fechaEntrega };
       },
     });
 
@@ -229,16 +202,12 @@ export const DashboardRecepcion = () => {
 
       const res = await fetch(`${API}/Pedidos`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error();
-
       await cargarPedidos();
-
       Swal.fire({
         icon: "success",
         title: "Pedido creado",
@@ -285,16 +254,12 @@ export const DashboardRecepcion = () => {
 
       const res = await fetch(`${API}/Pedidos/${pedido.id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error();
-
       await cargarPedidos();
-
       Swal.fire({
         icon: "success",
         title: "Estado actualizado",
@@ -324,8 +289,6 @@ export const DashboardRecepcion = () => {
           Recepción <br />
           <span className={styles.titleAccent}>del Atelier</span>
         </h1>
-
-        <p className="text-muted">Gestione clientes y pedidos del taller.</p>
       </header>
 
       {/* METRICAS */}
@@ -334,14 +297,12 @@ export const DashboardRecepcion = () => {
           <small className={styles.label}>Clientes</small>
           <h2>{clientes.length}</h2>
         </div>
-
         <div className={`${styles.card} ${styles.cardDark}`}>
           <small className={styles.label} style={{ color: "#aaa" }}>
             Pedidos activos
           </small>
           <h2>{pedidos.length}</h2>
         </div>
-
         <div className={styles.card}>
           <small className={styles.label}>Pendientes</small>
           <h2>{pedidos.filter((p) => p.estado === "Pendiente").length}</h2>
@@ -358,7 +319,6 @@ export const DashboardRecepcion = () => {
         >
           Clientes
         </button>
-
         <button
           onClick={() => setVistaAct("directorio")}
           className={
@@ -367,7 +327,6 @@ export const DashboardRecepcion = () => {
         >
           Directorio
         </button>
-
         <button
           onClick={() => setVistaAct("pedidos")}
           className={
@@ -378,60 +337,76 @@ export const DashboardRecepcion = () => {
         </button>
       </div>
 
-      {/* CLIENTES */}
+      {/* CLIENTES - BLOQUE CENTRADO */}
       {vistaAct === "clientes" && (
         <section className={styles.formSection}>
-          <div style={{ flex: 1, padding: "2rem" }}>
-            <h2>{clienteEdit ? "Editar Cliente" : "Registrar Cliente"}</h2>
+          <div className={styles.formContainer}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <h2>{clienteEdit ? "Editar Cliente" : "Registrar Cliente"}</h2>
+              {clienteEdit && (
+                <button className={styles.btnActionGold} onClick={nuevoCliente}>
+                  + Nuevo Cliente
+                </button>
+              )}
+            </div>
 
             <div className={styles.personalDataGrid}>
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Nombre</label>
                 <input
-                  className={styles.inputLine}
+                  className={styles.inputElegant}
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
                 />
               </div>
-
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Teléfono</label>
                 <input
-                  className={styles.inputLine}
+                  className={styles.inputElegant}
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                 />
               </div>
-
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Correo</label>
                 <input
-                  className={styles.inputLine}
+                  className={styles.inputElegant}
                   value={correo}
                   onChange={(e) => setCorreo(e.target.value)}
                 />
               </div>
-
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Dirección</label>
                 <input
-                  className={styles.inputLine}
+                  className={styles.inputElegant}
                   value={direccion}
                   onChange={(e) => setDireccion(e.target.value)}
                 />
               </div>
             </div>
 
-            <button
-              className={styles.btnDark}
+            <div
               style={{
-                width: "100%",
+                display: "flex",
+                justifyContent: "center",
                 marginTop: "2rem",
               }}
-              onClick={guardarCliente}
             >
-              {clienteEdit ? "ACTUALIZAR CLIENTE" : "GUARDAR CLIENTE"}
-            </button>
+              <button
+                className={styles.btnDark}
+                style={{ padding: "12px 48px", borderRadius: "6px" }}
+                onClick={guardarCliente}
+              >
+                {clienteEdit ? "ACTUALIZAR CLIENTE" : "GUARDAR CLIENTE"}
+              </button>
+            </div>
           </div>
         </section>
       )}
@@ -445,73 +420,65 @@ export const DashboardRecepcion = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 marginBottom: "1rem",
+                alignItems: "center",
               }}
             >
               <h2>Directorio</h2>
-
               <input
-                className={styles.inputLine}
+                className={styles.inputElegant}
                 style={{ width: "300px" }}
-                placeholder="Buscar..."
+                placeholder="Buscar por nombre o teléfono..."
                 value={busquedaDirectorio}
                 onChange={(e) => setBusquedaDirectorio(e.target.value)}
               />
             </div>
-
-            <table
-              style={{
-                width: "100%",
-                textAlign: "left",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Teléfono</th>
-                  <th>Correo</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {clientesFiltrados.map((cliente) => (
-                  <tr key={cliente.id}>
-                    <td>{cliente.nombre}</td>
-                    <td>{cliente.telefono}</td>
-                    <td>{cliente.correo}</td>
-
-                    <td>
-                      <button
-                        onClick={() => editarCliente(cliente)}
-                        style={{
-                          marginRight: "10px",
-                        }}
-                      >
-                        Editar
-                      </button>
-
-                      <button onClick={() => eliminarCliente(cliente.id)}>
-                        Eliminar
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          localStorage.setItem(
-                            "clienteMedidas",
-                            JSON.stringify(cliente),
-                          );
-
-                          navigate("/medidas");
-                        }}
-                        style={{ marginLeft: "10px" }}
-                      >
-                        Medidas
-                      </button>
-                    </td>
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th style={{ textAlign: "right" }}>Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {clientesFiltrados.map((cliente) => (
+                    <tr key={cliente.id}>
+                      <td>{cliente.nombre}</td>
+                      <td>{cliente.telefono}</td>
+                      <td>{cliente.correo}</td>
+                      <td style={{ textAlign: "right" }}>
+                        <button
+                          className={styles.btnAction}
+                          onClick={() => editarCliente(cliente)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className={styles.btnAction}
+                          onClick={() => eliminarCliente(cliente.id)}
+                        >
+                          Eliminar
+                        </button>
+                        <button
+                          className={styles.btnActionGold}
+                          onClick={() => {
+                            localStorage.setItem(
+                              "clienteMedidas",
+                              JSON.stringify(cliente),
+                            );
+                            navigate("/medidas");
+                          }}
+                        >
+                          Medidas
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
       )}
@@ -526,7 +493,6 @@ export const DashboardRecepcion = () => {
           >
             + Crear Pedido
           </button>
-
           <div
             style={{
               display: "grid",
@@ -539,13 +505,9 @@ export const DashboardRecepcion = () => {
                 <div
                   key={estado}
                   className={styles.card}
-                  style={{
-                    minHeight: "450px",
-                    padding: "1rem",
-                  }}
+                  style={{ minHeight: "450px", padding: "1rem" }}
                 >
                   <h4>{estado}</h4>
-
                   {pedidosPorEstado(estado).map((pedido) => (
                     <div
                       key={pedido.id}
@@ -558,18 +520,14 @@ export const DashboardRecepcion = () => {
                       }}
                     >
                       <strong>Pedido #{pedido.id}</strong>
-
                       <p className="mb-1 mt-2">
                         Cliente: {pedido.cliente?.nombre}
                       </p>
-
                       <p className="mb-1">Prenda: {pedido.tipoPrenda}</p>
-
                       <p className="mb-3">
                         Entrega:{" "}
                         {new Date(pedido.fechaEntrega).toLocaleDateString()}
                       </p>
-
                       {pedido.estado !== "Entregado" && (
                         <button
                           className={styles.btnOutline}

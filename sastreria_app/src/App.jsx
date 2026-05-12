@@ -17,7 +17,7 @@ import { DashboardMedidas } from "./features/medidas/pages/DashboardMedidas";
 const PrivateRoute = () => {
   const isLogged = localStorage.getItem("usuario") !== null;
 
-  return isLogged ? <Outlet /> : <Navigate to="/login" />;
+  return isLogged ? <Outlet /> : <Navigate to="/portal" />;
 };
 
 function App() {
@@ -25,8 +25,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* RUTA PÚBLICA */}
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/portal" element={<PortalCliente />} />
+        <Route path="/login" element={<LoginPage />} />
 
         {/* RUTAS PROTEGIDAS */}
         <Route element={<PrivateRoute />}>
@@ -40,11 +40,11 @@ function App() {
         </Route>
 
         {/* RUTAS DE FALLBACK */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/portal" />} />
         <Route
           path="*"
           element={
-            <h1 className="text-center mt-5">404 - Atelier No Encontrado</h1>
+            <h1 className="text-center mt-5">404 - Pagina no encontrada</h1>
           }
         />
       </Routes>
