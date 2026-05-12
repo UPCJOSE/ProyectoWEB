@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./PortalCliente.module.css";
+import { PortalCliente } from "./features/portal/pages/PortalCliente";
 
 export const PortalCliente = () => {
   const navigate = useNavigate();
@@ -43,7 +44,9 @@ export const PortalCliente = () => {
               inmediato.
             </p>
 
-            <button onClick={() => navigate("/catalogo")}>Entrar</button>
+            <button onClick={() => navigate("/catalogo-publico")}>
+              Entrar
+            </button>
           </div>
         </div>
       </div>

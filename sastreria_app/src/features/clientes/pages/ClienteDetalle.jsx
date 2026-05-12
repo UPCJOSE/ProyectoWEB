@@ -13,7 +13,7 @@ export const ClienteDetalle = () => {
 
   useEffect(() => {
     cargarCliente();
-  }, []);
+  }, [id]);
 
   const cargarCliente = async () => {
     try {
@@ -116,7 +116,7 @@ export const ClienteDetalle = () => {
           {cliente.pedidos?.map((pedido) => (
             <div key={pedido.id} className={styles.orderCard}>
               <div className={styles.orderTop}>
-                <h3>{pedido.prendaCatalogo?.nombre}</h3>
+                <h3>{pedido.prenda}</h3>
 
                 <span className={styles.status}>{pedido.estado}</span>
               </div>

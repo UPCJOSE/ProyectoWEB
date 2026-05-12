@@ -43,7 +43,9 @@ export const PortalCliente = () => {
               inmediato.
             </p>
 
-            <button onClick={() => navigate("/home")}>Entrar</button>
+            <button onClick={() => navigate("/catalogo-publico")}>
+              Entrar
+            </button>
           </div>
         </div>
       </div>
