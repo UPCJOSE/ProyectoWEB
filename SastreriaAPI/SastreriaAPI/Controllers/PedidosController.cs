@@ -21,11 +21,20 @@ namespace SastreriaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
         {
-            return await _context.Pedidos
+            try
+            {
+                return await _context.Pedidos
                 .Include(p => p.Cliente)
                 .Include(p => p.PrendaCatalogo)
                 .Include(p => p.MedidaPrenda)
                 .ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         // GET by id
