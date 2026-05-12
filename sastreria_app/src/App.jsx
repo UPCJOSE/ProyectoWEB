@@ -6,13 +6,14 @@ import {
   Outlet,
 } from "react-router-dom";
 import { LoginPage } from "./features/auth/pages/LoginPage";
-import { DashboardCliente } from "./features/catalogo/pages/DashboardCliente";
+import { DashboardCatalogo } from "./features/catalogo/pages/DashboardCrearCatalogo";
 import { DashboardRecepcion } from "./features/recepcion/pages/DashboardRecepcion";
 import { PanelSastre } from "./features/sastreria/pages/PanelSastre";
 import { DashboardAdmin } from "./features/finanzas/pages/DashboardAdmin";
 import { MainLayout } from "./core/layouts/MainLayout";
 import { PortalCliente } from "./features/portal/pages/PortalCliente";
 import { DashboardMedidas } from "./features/medidas/pages/DashboardMedidas";
+import { DashboardCatalogoPublico } from "./features/catalogo/pages/DashboardCatalogo";
 
 const PrivateRoute = () => {
   const isLogged = localStorage.getItem("usuario") !== null;
@@ -31,11 +32,12 @@ function App() {
         {/* RUTAS PROTEGIDAS */}
         <Route element={<PrivateRoute />}>
           <Route element={<MainLayout />}></Route>
-          <Route path="/cliente" element={<DashboardCliente />} />
+          <Route path="/catalogo" element={<DashboardCatalogo />} />
           <Route path="/recepcion" element={<DashboardRecepcion />} />
           <Route path="/sastreria" element={<PanelSastre />} />
           <Route path="/finanzas" element={<DashboardAdmin />} />
           <Route path="/medidas" element={<DashboardMedidas />} />
+          <Route path="/catalogo-publico" element={<DashboardCatalogo />} />
         </Route>
 
         {/* RUTAS DE FALLBACK */}

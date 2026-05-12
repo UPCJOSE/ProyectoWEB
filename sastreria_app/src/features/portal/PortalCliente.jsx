@@ -43,7 +43,7 @@ export const PortalCliente = () => {
               inmediato.
             </p>
 
-            <button onClick={() => navigate("/cliente")}>Entrar</button>
+            <button onClick={() => navigate("/catalogo")}>Entrar</button>
           </div>
         </div>
       </div>
