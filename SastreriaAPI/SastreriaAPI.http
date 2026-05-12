@@ -1,6 +1,0 @@
-@SastreriaAPI_HostAddress = http://localhost:5097
-
-GET {{SastreriaAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
