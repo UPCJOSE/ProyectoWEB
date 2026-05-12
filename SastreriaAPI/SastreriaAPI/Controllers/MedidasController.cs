@@ -42,6 +42,21 @@ namespace SastreriaAPI.Controllers
             return medida;
         }
 
+        [HttpGet("cliente/{clienteId}")]
+        public async Task<ActionResult<Medida>> GetMedidaByCliente(int clienteId)
+        {
+            // Busca la medida basándose en el ClienteId, no en el Id de la medida
+            var medida = await _context.Medidas
+                .FirstOrDefaultAsync(m => m.ClienteId == clienteId);
+
+            if (medida == null)
+            {
+                return NotFound();
+            }
+
+            return medida;
+        }
+
         // POST: api/Medidas
         [HttpPost]
         public async Task<ActionResult<Medida>> PostMedida(MedidaCreateDto dto)
