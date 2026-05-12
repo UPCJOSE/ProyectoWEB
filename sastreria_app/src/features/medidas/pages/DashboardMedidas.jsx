@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import styles from "./DashboardMedidas.module.css";
 
 const API = "https://localhost:7196/api";
 
 export const DashboardMedidas = () => {
+  const navigate = useNavigate();
   const [cliente, setCliente] = useState(null);
+  const [medidaId, setMedidaId] = useState(null);
 
   const [form, setForm] = useState({
     pecho: "",
@@ -27,9 +30,7 @@ export const DashboardMedidas = () => {
 
     if (clienteStorage) {
       const clienteParse = JSON.parse(clienteStorage);
-
       setCliente(clienteParse);
-
       cargarMedidas(clienteParse.id);
     }
   }, []);
@@ -41,6 +42,8 @@ export const DashboardMedidas = () => {
       if (!res.ok) return;
 
       const data = await res.json();
+
+      setMedidaId(data.id);
 
       setForm({
         pecho: data.pecho || "",
@@ -61,37 +64,67 @@ export const DashboardMedidas = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const guardarMedidas = async () => {
     try {
       const payload = {
-        ...form,
+        id: medidaId || 0,
         clienteId: cliente.id,
-        fechaRegistro: new Date(),
+        pecho: Number(form.pecho) || 0,
+        cintura: Number(form.cintura) || 0,
+        cadera: Number(form.cadera) || 0,
+        altoCadera: Number(form.altoCadera) || 0,
+        entrepierna: Number(form.entrepierna) || 0,
+        largoTotal: Number(form.largoTotal) || 0,
+        anchoBajo: Number(form.anchoBajo) || 0,
+        largoBrazo: Number(form.largoBrazo) || 0,
+        cuello: Number(form.cuello) || 0,
+        hombros: Number(form.hombros) || 0,
+        largoTalle: Number(form.largoTalle) || 0,
+        largoTotalSuperior: Number(form.largoTotalSuperior) || 0,
+        ultimaMedida: new Date().toISOString().split("T")[0],
       };
 
-      const res = await fetch(`${API}/Medidas`, {
-        method: "POST",
+      const url = medidaId ? `${API}/Medidas/${medidaId}` : `${API}/Medidas`;
+      const method = medidaId ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const errorMsg = await res.text();
+        console.error("Error del backend:", errorMsg);
+        throw new Error("Rechazado por el servidor");
+      }
 
-      Swal.fire("Guardado", "Medidas registradas", "success");
+      await Swal.fire({
+        icon: "success",
+        title: medidaId ? "Actualizado" : "Guardado",
+        text: "Las medidas fueron registradas correctamente.",
+        confirmButtonColor: "#c9a84c",
+      });
+
+      navigate(-1);
     } catch (error) {
       console.error(error);
-
-      Swal.fire("Error", "No se pudieron guardar", "error");
+      Swal.fire({
+        icon: "error",
+        title: "Error al guardar",
+        text: "Hubo un problema al procesar las medidas.",
+        confirmButtonColor: "#181f21",
+      });
     }
+  };
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -120,8 +153,34 @@ export const DashboardMedidas = () => {
         ))}
       </div>
 
-      <div className={styles.actions}>
-        <button onClick={guardarMedidas} className={styles.btnGold}>
+      <div
+        className={styles.actions}
+        style={{
+          display: "flex",
+          gap: "1rem",
+          justifyContent: "center",
+          marginTop: "2rem",
+        }}
+      >
+        <button
+          onClick={() => navigate(-1)}
+          style={{
+            padding: "10px 24px",
+            background: "transparent",
+            border: "1px solid #181f21",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Volver
+        </button>
+
+        <button
+          onClick={guardarMedidas}
+          className={styles.btnGold}
+          style={{ padding: "10px 24px", borderRadius: "6px" }}
+        >
           Guardar medidas
         </button>
       </div>

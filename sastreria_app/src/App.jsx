@@ -30,12 +30,13 @@ function App() {
 
         {/* RUTAS PROTEGIDAS */}
         <Route element={<PrivateRoute />}>
-          <Route element={<MainLayout />}></Route>
-          <Route path="/cliente" element={<DashboardCliente />} />
-          <Route path="/recepcion" element={<DashboardRecepcion />} />
-          <Route path="/sastreria" element={<PanelSastre />} />
-          <Route path="/finanzas" element={<DashboardAdmin />} />
-          <Route path="/medidas" element={<DashboardMedidas />} />
+          <Route element={<MainLayout />}>
+            <Route path="/cliente" element={<DashboardCliente />} />
+            <Route path="/recepcion" element={<DashboardRecepcion />} />
+            <Route path="/sastreria" element={<PanelSastre />} />
+            <Route path="/finanzas" element={<DashboardAdmin />} />
+            <Route path="/medidas" element={<DashboardMedidas />} />
+          </Route>
         </Route>
 
         {/* RUTAS DE FALLBACK */}
