@@ -4,7 +4,7 @@ import styles from "./DashboardCatalogo.module.css";
 
 const API = "https://localhost:7196/api/PrendasCatalogo";
 
-export const DashboardCatalogo = () => {
+export const DashboardCrearCatalogo = () => {
   const [prendas, setPrendas] = useState([]);
 
   const [form, setForm] = useState({

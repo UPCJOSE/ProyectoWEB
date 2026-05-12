@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./DashboardCatalogoPublico.module.css";
+import styles from "./DashboardCatalogo.module.css";
 
 const API = "https://localhost:7196/api/PrendasCatalogo";
 
