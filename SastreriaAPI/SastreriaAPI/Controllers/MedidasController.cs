@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
+using SastreriaAPI.DTOs;
 using SastreriaAPI.Models;
 
 namespace SastreriaAPI.Controllers
@@ -41,63 +42,70 @@ namespace SastreriaAPI.Controllers
             return medida;
         }
 
-        // GET: api/Medidas/Cliente/1
-        [HttpGet("Cliente/{clienteId}")]
-        public async Task<ActionResult<IEnumerable<Medida>>> GetMedidasPorCliente(int clienteId)
-        {
-            var medidas = await _context.Medidas
-                .Where(m => m.ClienteId == clienteId)
-                .OrderByDescending(m => m.FechaRegistro)
-                .ToListAsync();
-
-            return medidas;
-        }
-
         // POST: api/Medidas
         [HttpPost]
-        public async Task<ActionResult<Medida>> PostMedida(Medida medida)
+        public async Task<ActionResult<Medida>> PostMedida(MedidaCreateDto dto)
         {
-            var clienteExiste = await _context.Clientes
-                .AnyAsync(c => c.Id == medida.ClienteId);
-
-            if (!clienteExiste)
+            var medida = new Medida
             {
-                return BadRequest("El cliente no existe.");
-            }
+                ClienteId = dto.ClienteId,
 
-            medida.FechaRegistro = DateTime.Now;
+                Pecho = dto.Pecho,
+                Cintura = dto.Cintura,
+                Cadera = dto.Cadera,
+                AltoCadera = dto.AltoCadera,
+                Entrepierna = dto.Entrepierna,
+                LargoTotal = dto.LargoTotal,
+                AnchoBajo = dto.AnchoBajo,
+                LargoBrazo = dto.LargoBrazo,
+                Cuello = dto.Cuello,
+                Hombros = dto.Hombros,
+                LargoTalle = dto.LargoTalle,
+                LargoTotalSuperior = dto.LargoTotalSuperior,
+
+                UltimaMedida = dto.UltimaMedida
+            };
 
             _context.Medidas.Add(medida);
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetMedida), new { id = medida.Id }, medida);
+            return CreatedAtAction(
+                nameof(GetMedida),
+                new { id = medida.Id },
+                medida
+            );
         }
 
         // PUT: api/Medidas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMedida(int id, Medida medida)
+        public async Task<IActionResult> PutMedida(int id, MedidaCreateDto dto)
         {
-            if (id != medida.Id)
+            var medida = await _context.Medidas.FindAsync(id);
+
+            if (medida == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(medida).State = EntityState.Modified;
+            medida.ClienteId = dto.ClienteId;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Medidas.Any(e => e.Id == id))
-                {
-                    return NotFound();
-                }
+            medida.Pecho = dto.Pecho;
+            medida.Cintura = dto.Cintura;
+            medida.Cadera = dto.Cadera;
+            medida.AltoCadera = dto.AltoCadera;
+            medida.Entrepierna = dto.Entrepierna;
+            medida.LargoTotal = dto.LargoTotal;
+            medida.AnchoBajo = dto.AnchoBajo;
+            medida.LargoBrazo = dto.LargoBrazo;
+            medida.Cuello = dto.Cuello;
+            medida.Hombros = dto.Hombros;
+            medida.LargoTalle = dto.LargoTalle;
+            medida.LargoTotalSuperior = dto.LargoTotalSuperior;
 
-                throw;
-            }
+            medida.UltimaMedida = dto.UltimaMedida;
+
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

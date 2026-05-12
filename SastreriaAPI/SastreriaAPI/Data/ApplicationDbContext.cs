@@ -13,6 +13,7 @@ namespace SastreriaAPI.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Medida> Medidas { get; set; }
+        public DbSet<MedidaPrenda> MedidasPrenda { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<Egreso> Egresos { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
+using SastreriaAPI.DTOs;
 using SastreriaAPI.Models;
 
 namespace SastreriaAPI.Controllers
@@ -16,25 +17,25 @@ namespace SastreriaAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Pedidos
+        // GET
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
         {
             return await _context.Pedidos
                 .Include(p => p.Cliente)
                 .Include(p => p.PrendaCatalogo)
-                .Include(p => p.Medida)
+                .Include(p => p.MedidaPrenda)
                 .ToListAsync();
         }
 
-        // GET: api/Pedidos/5
+        // GET by id
         [HttpGet("{id}")]
         public async Task<ActionResult<Pedido>> GetPedido(int id)
         {
             var pedido = await _context.Pedidos
                 .Include(p => p.Cliente)
                 .Include(p => p.PrendaCatalogo)
-                .Include(p => p.Medida)
+                .Include(p => p.MedidaPrenda)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pedido == null)
@@ -45,85 +46,69 @@ namespace SastreriaAPI.Controllers
             return pedido;
         }
 
-        // POST: api/Pedidos
+        // POST
         [HttpPost]
-        public async Task<ActionResult<Pedido>> PostPedido(Pedido pedido)
+        public async Task<ActionResult<Pedido>> PostPedido(PedidoCreateDto dto)
         {
-            // Validar cliente
-            var clienteExiste = await _context.Clientes
-                .AnyAsync(c => c.Id == pedido.ClienteId);
-
-            if (!clienteExiste)
-            {
-                return BadRequest("El cliente no existe.");
-            }
-
-            // Buscar prenda
             var prenda = await _context.PrendasCatalogo
-                .FirstOrDefaultAsync(p => p.Id == pedido.PrendaCatalogoId);
+                .FindAsync(dto.PrendaCatalogoId);
 
             if (prenda == null)
             {
-                return BadRequest("La prenda no existe.");
+                return BadRequest("Prenda no encontrada");
             }
 
-            // Validar medida si viene
-            if (pedido.MedidaId.HasValue)
+            var pedido = new Pedido
             {
-                var medidaExiste = await _context.Medidas
-                    .AnyAsync(m => m.Id == pedido.MedidaId.Value);
+                ClienteId = dto.ClienteId,
+                PrendaCatalogoId = dto.PrendaCatalogoId,
+                MedidaPrendaId = dto.MedidaPrendaId,
 
-                if (!medidaExiste)
-                {
-                    return BadRequest("La medida no existe.");
-                }
-            }
+                PrecioUnitario = prenda.PrecioBase,
 
-            // Copiar precio del catálogo
-            pedido.PrecioUnitario = prenda.PrecioBase;
+                CostoTotal = dto.CostoTotal,
 
-            // Calcular saldo
-            pedido.SaldoPendiente = pedido.CostoTotal;
+                SaldoPendiente = dto.SaldoPendiente,
 
-            // Fecha automática
-            pedido.FechaPedido = DateTime.Now;
+                Estado = dto.Estado,
+
+                FechaEntrega = dto.FechaEntrega
+            };
 
             _context.Pedidos.Add(pedido);
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetPedido), new { id = pedido.Id }, pedido);
+            return CreatedAtAction(nameof(GetPedido),
+                new { id = pedido.Id },
+                pedido);
         }
 
-        // PUT: api/Pedidos/5
+        // PUT
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPedido(int id, Pedido pedido)
+        public async Task<IActionResult> PutPedido(int id, PedidoCreateDto dto)
         {
-            if (id != pedido.Id)
+            var pedido = await _context.Pedidos.FindAsync(id);
+
+            if (pedido == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(pedido).State = EntityState.Modified;
+            pedido.ClienteId = dto.ClienteId;
+            pedido.PrendaCatalogoId = dto.PrendaCatalogoId;
+            pedido.MedidaPrendaId = dto.MedidaPrendaId;
+            pedido.CostoTotal = dto.CostoTotal;
+            pedido.SaldoPendiente = dto.SaldoPendiente;
+            pedido.Estado = dto.Estado;
+            pedido.FechaEntrega = dto.FechaEntrega;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Pedidos.Any(e => e.Id == id))
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // DELETE: api/Pedidos/5
+        // DELETE
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePedido(int id)
         {
