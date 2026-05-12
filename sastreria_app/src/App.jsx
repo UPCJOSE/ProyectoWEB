@@ -39,6 +39,10 @@ function App() {
             />
 
             <Route path="/catalogo-publico" element={<DashboardCatalogo />} />
+            <Route
+              path="/crear-catalogo"
+              element={<DashboardCrearCatalogo />}
+            />
 
             <Route path="/recepcion" element={<DashboardRecepcion />} />
 

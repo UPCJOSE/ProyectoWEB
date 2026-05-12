@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import styles from "./DashboardCatalogo.module.css";
+import styles from "./DashboardCrearCatalogo.module.css";
 
 const API = "https://localhost:7196/api/PrendasCatalogo";
 
