@@ -9,6 +9,7 @@ const API = "https://localhost:7196/api";
 export const DashboardRecepcion = () => {
   const navigate = useNavigate();
   const [vistaAct, setVistaAct] = useState("clientes");
+
   const [clienteEdit, setClienteEdit] = useState(null);
 
   const [nombre, setNombre] = useState("");
@@ -20,9 +21,12 @@ export const DashboardRecepcion = () => {
   const [pedidos, setPedidos] = useState([]);
   const [busquedaDirectorio, setBusquedaDirectorio] = useState("");
 
+  const [prendasCatalogo, setPrendasCatalogo] = useState([]);
+
   useEffect(() => {
     cargarClientes();
     cargarPedidos();
+    cargarPrendas();
   }, []);
 
   const cargarClientes = async () => {
@@ -45,6 +49,18 @@ export const DashboardRecepcion = () => {
     }
   };
 
+  const cargarPrendas = async () => {
+    try {
+      const res = await fetch(`${API}/PrendasCatalogo`);
+      if (res.ok) {
+        const data = await res.json();
+        setPrendasCatalogo(data);
+      }
+    } catch (error) {
+      console.error("Error cargando prendas:", error);
+    }
+  };
+
   const limpiarFormulario = () => {
     setClienteEdit(null);
     setNombre("");
@@ -59,8 +75,8 @@ export const DashboardRecepcion = () => {
   };
 
   const guardarCliente = async () => {
-    if (!nombre || !telefono || !correo || !direccion) {
-      Swal.fire("Error", "Por favor complete todos los datos", "error");
+    if (!nombre || !telefono) {
+      Swal.fire("Error", "Nombre y teléfono son obligatorios", "error");
       return;
     }
 
@@ -76,11 +92,14 @@ export const DashboardRecepcion = () => {
       const url = clienteEdit
         ? `${API}/Clientes/${clienteEdit}`
         : `${API}/Clientes`;
+
       const method = clienteEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
@@ -119,7 +138,7 @@ export const DashboardRecepcion = () => {
       text: "Esta acción no se puede deshacer",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#c5a880",
+      confirmButtonColor: "#c9a84c",
       cancelButtonColor: "#181f21",
       confirmButtonText: "Eliminar",
       cancelButtonText: "Cancelar",
@@ -128,8 +147,12 @@ export const DashboardRecepcion = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      await fetch(`${API}/Clientes/${id}`, { method: "DELETE" });
+      await fetch(`${API}/Clientes/${id}`, {
+        method: "DELETE",
+      });
+
       await cargarClientes();
+
       Swal.fire({
         icon: "success",
         title: "Cliente eliminado",
@@ -149,8 +172,24 @@ export const DashboardRecepcion = () => {
       return;
     }
 
+    if (!prendasCatalogo || prendasCatalogo.length === 0) {
+      Swal.fire(
+        "Catálogo vacío",
+        "No hay prendas en la base de datos para ofrecer.",
+        "warning",
+      );
+      return;
+    }
+
     const optionsClientes = clientes
       .map((c) => `<option value="${c.id}">${c.nombre}</option>`)
+      .join("");
+
+    const optionsPrendas = prendasCatalogo
+      .map(
+        (p) =>
+          `<option value="${p.id}">${p.nombre} ($${p.precioBase})</option>`,
+      )
       .join("");
 
     const { value: formValues } = await Swal.fire({
@@ -160,31 +199,34 @@ export const DashboardRecepcion = () => {
           <option value="">Selecciona cliente</option>
           ${optionsClientes}
         </select>
+
         <select id="prenda" class="swal2-select" style="display:flex;margin:1em auto;width:73%">
-          <option value="">Selecciona prenda</option>
-          <option value="Traje">Traje</option>
-          <option value="Esmoquin">Esmóquin</option>
-          <option value="Camisa">Camisa</option>
-          <option value="Chaqueta">Chaqueta</option>
-          <option value="Pantalón">Pantalón</option>
-          <option value="Otro">Otro</option>
+          <option value="">Selecciona prenda del catálogo</option>
+          ${optionsPrendas}
         </select>
+
         <input id="fecha" type="date" class="swal2-input" style="width: 73%;">
       `,
       showCancelButton: true,
       confirmButtonText: "Crear",
       cancelButtonText: "Cancelar",
-      confirmButtonColor: "#c5a880",
+      confirmButtonColor: "#c9a84c",
       cancelButtonColor: "#181f21",
       preConfirm: () => {
         const clienteId = document.getElementById("cliente").value;
-        const tipoPrenda = document.getElementById("prenda").value;
+        const prendaCatalogoId = document.getElementById("prenda").value;
         const fechaEntrega = document.getElementById("fecha").value;
-        if (!clienteId || !tipoPrenda || !fechaEntrega) {
+
+        if (!clienteId || !prendaCatalogoId || !fechaEntrega) {
           Swal.showValidationMessage("Completa todos los campos");
           return false;
         }
-        return { clienteId, tipoPrenda, fechaEntrega };
+
+        return {
+          clienteId,
+          prendaCatalogoId,
+          fechaEntrega,
+        };
       },
     });
 
@@ -192,22 +234,27 @@ export const DashboardRecepcion = () => {
 
     try {
       const payload = {
-        tipoPrenda: formValues.tipoPrenda,
+        clienteId: Number(formValues.clienteId),
+        prendaCatalogoId: Number(formValues.prendaCatalogoId),
+        medidaPrendaId: null,
         costoTotal: 0,
         saldoPendiente: 0,
         estado: "Pendiente",
         fechaEntrega: formValues.fechaEntrega,
-        clienteId: Number(formValues.clienteId),
       };
 
       const res = await fetch(`${API}/Pedidos`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error();
+
       await cargarPedidos();
+
       Swal.fire({
         icon: "success",
         title: "Pedido creado",
@@ -235,7 +282,7 @@ export const DashboardRecepcion = () => {
       showCancelButton: true,
       confirmButtonText: "Actualizar",
       cancelButtonText: "Cancelar",
-      confirmButtonColor: "#c5a880",
+      confirmButtonColor: "#c9a84c",
       cancelButtonColor: "#181f21",
     });
 
@@ -244,22 +291,27 @@ export const DashboardRecepcion = () => {
     try {
       const payload = {
         id: pedido.id,
-        tipoPrenda: pedido.tipoPrenda,
+        clienteId: pedido.clienteId,
+        prendaCatalogoId: pedido.prendaCatalogoId,
+        medidaPrendaId: pedido.medidaPrendaId,
         costoTotal: pedido.costoTotal,
         saldoPendiente: pedido.saldoPendiente,
         estado: nuevoEstado,
         fechaEntrega: pedido.fechaEntrega,
-        clienteId: pedido.clienteId,
       };
 
       const res = await fetch(`${API}/Pedidos/${pedido.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error();
+
       await cargarPedidos();
+
       Swal.fire({
         icon: "success",
         title: "Estado actualizado",
@@ -289,6 +341,8 @@ export const DashboardRecepcion = () => {
           Recepción <br />
           <span className={styles.titleAccent}>del Atelier</span>
         </h1>
+
+        <p className="text-muted">Gestione clientes y pedidos del taller.</p>
       </header>
 
       {/* METRICAS */}
@@ -297,12 +351,14 @@ export const DashboardRecepcion = () => {
           <small className={styles.label}>Clientes</small>
           <h2>{clientes.length}</h2>
         </div>
+
         <div className={`${styles.card} ${styles.cardDark}`}>
           <small className={styles.label} style={{ color: "#aaa" }}>
             Pedidos activos
           </small>
           <h2>{pedidos.length}</h2>
         </div>
+
         <div className={styles.card}>
           <small className={styles.label}>Pendientes</small>
           <h2>{pedidos.filter((p) => p.estado === "Pendiente").length}</h2>
@@ -319,6 +375,7 @@ export const DashboardRecepcion = () => {
         >
           Clientes
         </button>
+
         <button
           onClick={() => setVistaAct("directorio")}
           className={
@@ -327,6 +384,7 @@ export const DashboardRecepcion = () => {
         >
           Directorio
         </button>
+
         <button
           onClick={() => setVistaAct("pedidos")}
           className={
@@ -366,6 +424,7 @@ export const DashboardRecepcion = () => {
                   onChange={(e) => setNombre(e.target.value)}
                 />
               </div>
+
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Teléfono</label>
                 <input
@@ -374,6 +433,7 @@ export const DashboardRecepcion = () => {
                   onChange={(e) => setTelefono(e.target.value)}
                 />
               </div>
+
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Correo</label>
                 <input
@@ -382,6 +442,7 @@ export const DashboardRecepcion = () => {
                   onChange={(e) => setCorreo(e.target.value)}
                 />
               </div>
+
               <div className={styles.fieldWrap}>
                 <label className={styles.fieldLabel}>Dirección</label>
                 <input
@@ -424,6 +485,7 @@ export const DashboardRecepcion = () => {
               }}
             >
               <h2>Directorio</h2>
+
               <input
                 className={styles.inputElegant}
                 style={{ width: "300px" }}
@@ -432,6 +494,7 @@ export const DashboardRecepcion = () => {
                 onChange={(e) => setBusquedaDirectorio(e.target.value)}
               />
             </div>
+
             <div className={styles.tableWrapper}>
               <table className={styles.table}>
                 <thead>
@@ -442,12 +505,14 @@ export const DashboardRecepcion = () => {
                     <th style={{ textAlign: "right" }}>Acciones</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {clientesFiltrados.map((cliente) => (
                     <tr key={cliente.id}>
                       <td>{cliente.nombre}</td>
                       <td>{cliente.telefono}</td>
                       <td>{cliente.correo}</td>
+
                       <td style={{ textAlign: "right" }}>
                         <button
                           className={styles.btnAction}
@@ -455,12 +520,14 @@ export const DashboardRecepcion = () => {
                         >
                           Editar
                         </button>
+
                         <button
                           className={styles.btnAction}
                           onClick={() => eliminarCliente(cliente.id)}
                         >
                           Eliminar
                         </button>
+
                         <button
                           className={styles.btnActionGold}
                           onClick={() => {
@@ -468,6 +535,7 @@ export const DashboardRecepcion = () => {
                               "clienteMedidas",
                               JSON.stringify(cliente),
                             );
+
                             navigate("/medidas");
                           }}
                         >
@@ -493,6 +561,7 @@ export const DashboardRecepcion = () => {
           >
             + Crear Pedido
           </button>
+
           <div
             style={{
               display: "grid",
@@ -505,9 +574,13 @@ export const DashboardRecepcion = () => {
                 <div
                   key={estado}
                   className={styles.card}
-                  style={{ minHeight: "450px", padding: "1rem" }}
+                  style={{
+                    minHeight: "450px",
+                    padding: "1rem",
+                  }}
                 >
                   <h4>{estado}</h4>
+
                   {pedidosPorEstado(estado).map((pedido) => (
                     <div
                       key={pedido.id}
@@ -520,14 +593,20 @@ export const DashboardRecepcion = () => {
                       }}
                     >
                       <strong>Pedido #{pedido.id}</strong>
+
                       <p className="mb-1 mt-2">
                         Cliente: {pedido.cliente?.nombre}
                       </p>
-                      <p className="mb-1">Prenda: {pedido.tipoPrenda}</p>
+
+                      <p className="mb-1">
+                        Prenda: {pedido.prendaCatalogo?.nombre || "N/A"}
+                      </p>
+
                       <p className="mb-3">
                         Entrega:{" "}
                         {new Date(pedido.fechaEntrega).toLocaleDateString()}
                       </p>
+
                       {pedido.estado !== "Entregado" && (
                         <button
                           className={styles.btnOutline}

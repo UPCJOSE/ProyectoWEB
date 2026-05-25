@@ -1,4 +1,3 @@
-// src/features/sastreria/pages/PanelSastre.jsx
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./PanelSastre.module.css";
@@ -29,8 +28,15 @@ export const PanelSastre = () => {
       if (!pedido) return;
 
       const actualizado = {
-        ...pedido,
+        id: pedido.id,
+        tipoPrenda: pedido.tipoPrenda,
+        costoTotal: pedido.costoTotal,
+        saldoPendiente: pedido.saldoPendiente,
+        fechaEntrega: pedido.fechaEntrega,
         estado: nuevoEstado,
+        clienteId: pedido.clienteId || pedido.cliente?.id,
+        prendaCatalogoId:
+          pedido.prendaCatalogoId || pedido.prendaCatalogo?.id || null,
       };
 
       await fetch(`${API_PEDIDOS}/${id}`, {
@@ -124,7 +130,7 @@ export const PanelSastre = () => {
   };
 
   const pendientes = pedidos.filter((p) => p.estado === "Pendiente");
-  const enProceso = pedidos.filter((p) => p.estado === "EnProceso");
+  const enProceso = pedidos.filter((p) => p.estado === "En proceso");
   const terminados = pedidos.filter((p) => p.estado === "Terminado");
 
   const confirmarEntrega = async (id) => {
@@ -165,13 +171,13 @@ export const PanelSastre = () => {
         {pedido.estado === "Pendiente" && (
           <button
             className={`${styles.btnAction} ${styles.btnGold}`}
-            onClick={() => moverPedido(pedido.id, "EnProceso")}
+            onClick={() => moverPedido(pedido.id, "En proceso")}
           >
             Iniciar
           </button>
         )}
 
-        {pedido.estado === "EnProceso" && (
+        {pedido.estado === "En proceso" && (
           <button
             className={`${styles.btnAction} ${styles.btnGold}`}
             onClick={() => moverPedido(pedido.id, "Terminado")}
