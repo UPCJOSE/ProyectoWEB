@@ -14,8 +14,8 @@ export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_LOGIN = "https://localhost:7196/api/Auth/login";
-  const API_REGISTRO = "https://localhost:7196/api/Usuarios";
+  const API_LOGIN = "http://localhost:5000/api/Auth/login";
+  const API_REGISTRO = "http://localhost:5000/api/Usuarios";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,27 +93,44 @@ export const LoginPage = () => {
     <div className={styles.page}>
       {/* ── Panel Izquierdo ── */}
       <div className={styles.brandPanel}>
+        <div className={styles.brandOverlay} />
+        <div className={styles.brandGlow} />
         <div className={styles.cornerTL} />
         <div className={styles.cornerTR} />
         <div className={styles.cornerBL} />
         <div className={styles.cornerBR} />
 
-        <div className={styles.scissorIcon}>✂</div>
+        <div className={styles.brandContent}>
+          <div className={styles.scissorIcon}>✂</div>
 
-        <h1 className={styles.brandTitle}>
-          Elegancia
-          <br />y Estilo
-        </h1>
-        <div className={styles.goldLine} />
-        <p className={styles.brandTagline}>Sastrería · Valledupar</p>
+          <h1 className={styles.brandTitle}>
+            Elegancia
+            <br />
+            <span className={styles.brandTitleAccent}>y Estilo</span>
+          </h1>
+          <div className={styles.goldLine} />
+          <p className={styles.brandTagline}>Sastrería · Valledupar</p>
+        </div>
+
+        <p className={styles.brandFooter}>Atelier premium · 2026</p>
       </div>
 
       {/* ── Panel Derecho ── */}
       <div className={styles.formPanel}>
-        <div className={styles.formInner}>
-          <span className={styles.portalLabel}>
-            {isRegister ? "Crear Nueva Cuenta" : "Portal de Acceso"}
-          </span>
+        <div className={styles.formCard}>
+          <header className={styles.formHeader}>
+            <span className={styles.portalLabel}>
+              {isRegister ? "Registro" : "Acceso"}
+            </span>
+            <h2 className={styles.formTitle}>
+              {isRegister ? "Crear cuenta" : "Bienvenido"}
+            </h2>
+            <p className={styles.formSubtitle}>
+              {isRegister
+                ? "Completa tus datos para unirte al atelier."
+                : "Ingresa tus credenciales para continuar."}
+            </p>
+          </header>
 
           <form onSubmit={handleSubmit}>
             {isRegister && (
@@ -156,7 +173,7 @@ export const LoginPage = () => {
 
             <button
               type="submit"
-              className={styles.submitBtn}
+              className={`${styles.submitBtn} ${loading ? styles.submitBtnLoading : ""}`}
               disabled={loading}
             >
               {loading
@@ -169,26 +186,25 @@ export const LoginPage = () => {
             </button>
           </form>
 
-          <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+          <div className={styles.toggleSection}>
             <button
               type="button"
+              className={styles.toggleBtn}
               onClick={() => {
                 setIsRegister(!isRegister);
                 setNombre("");
                 setPassword("");
               }}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#c9a84c",
-                cursor: "pointer",
-                fontWeight: "bold",
-                fontSize: "0.9rem",
-              }}
             >
-              {isRegister
-                ? "¿Ya tienes una cuenta? Inicia sesión aquí"
-                : "¿Eres nuevo? Regístrate aquí"}
+              {isRegister ? (
+                <>
+                  ¿Ya tienes cuenta? <span>Inicia sesión</span>
+                </>
+              ) : (
+                <>
+                  ¿Eres nuevo? <span>Regístrate aquí</span>
+                </>
+              )}
             </button>
           </div>
         </div>

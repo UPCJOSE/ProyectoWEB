@@ -1,182 +1,417 @@
 /* src/features/auth/pages/LoginPage.module.css */
 
 .page {
+  --gold: #c9a84c;
+  --gold-light: #d4b98f;
+  --gold-muted: rgba(201, 168, 76, 0.35);
+  --ink: #181f21;
+  --ink-soft: #232b2e;
+  --cream: #fbfaee;
+  --cream-dark: #f0efe3;
+  --text-muted: #8a8f91;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --shadow-soft: 0 24px 64px rgba(24, 31, 33, 0.08);
+  --shadow-card: 0 32px 80px rgba(24, 31, 33, 0.12);
+
   display: flex;
-  height: 100vh;
-  font-family: 'Manrope', sans-serif;
+  min-height: 100vh;
+  height: 100dvh;
+  font-family: "Manrope", system-ui, sans-serif;
   overflow: hidden;
+  background: var(--cream);
 }
 
-/* ── Panel izquierdo  ── */
+/* ── Panel izquierdo ── */
 .brandPanel {
-  width: 42%;
-  background: #181f21;
+  width: 44%;
+  min-width: 320px;
+  background: linear-gradient(145deg, var(--ink) 0%, var(--ink-soft) 55%, #1a2225 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3rem;
+  padding: clamp(2rem, 5vw, 4rem);
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
 }
 
+.brandOverlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.brandGlow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-muted) 0%, transparent 70%);
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.brandContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeUp 0.7s ease-out both;
+}
+
+.cornerTL,
+.cornerTR,
+.cornerBL,
+.cornerBR {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-color: var(--gold);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.brandPanel:hover .cornerTL,
+.brandPanel:hover .cornerTR,
+.brandPanel:hover .cornerBL,
+.brandPanel:hover .cornerBR {
+  opacity: 0.85;
+}
+
 .cornerTL {
-  position: absolute; top: 2rem; left: 2rem;
-  width: 24px; height: 24px;
-  border-top: 1px solid #c9a84c; border-left: 1px solid #c9a84c;
-  opacity: 0.7;
+  top: 2rem;
+  left: 2rem;
+  border-top: 1px solid;
+  border-left: 1px solid;
 }
 
 .cornerTR {
-  position: absolute; top: 2rem; right: 2rem;
-  width: 24px; height: 24px;
-  border-top: 1px solid #c9a84c; border-right: 1px solid #c9a84c;
-  opacity: 0.7;
+  top: 2rem;
+  right: 2rem;
+  border-top: 1px solid;
+  border-right: 1px solid;
 }
 
 .cornerBL {
-  position: absolute; bottom: 2rem; left: 2rem;
-  width: 24px; height: 24px;
-  border-bottom: 1px solid #c9a84c; border-left: 1px solid #c9a84c;
-  opacity: 0.7;
+  bottom: 2rem;
+  left: 2rem;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
 }
 
 .cornerBR {
-  position: absolute; bottom: 2rem; right: 2rem;
-  width: 24px; height: 24px;
-  border-bottom: 1px solid #c9a84c; border-right: 1px solid #c9a84c;
-  opacity: 0.7;
+  bottom: 2rem;
+  right: 2rem;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
 }
 
 .scissorIcon {
-  font-size: 2.2rem;
-  color: #c9a84c;
-  opacity: 0.55;
-  margin-bottom: 2rem;
-  letter-spacing: -2px;
-}
-
-.brandTitle {
-  font-family: 'Noto Serif', serif;
-  color: #fbfaee;
-  font-size: 2.6rem;
-  font-weight: 700;
-  text-align: center;
-  margin: 0 0 1.5rem;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
-}
-
-.goldLine {
-  width: 40px;
-  height: 1.5px;
-  background: #c9a84c;
-  margin: 0 auto 1.5rem;
-}
-
-.brandTagline {
-  color: #fbfaee;
-  opacity: 0.4;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 9px;
-  text-align: center;
-  font-weight: 700;
-}
-
-/* ── Panel derecho  ── */
-.formPanel {
-  flex: 1;
-  background: #fbfaee;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1.75rem;
+  font-size: 1.6rem;
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 16px;
 }
 
-.formInner {
+.brandTitle {
+  font-family: "Noto Serif", Georgia, serif;
+  color: var(--cream);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 1.25rem;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.brandTitleAccent {
+  color: var(--gold-light);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.goldLine {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 1.25rem;
+  border-radius: 2px;
+}
+
+.brandTagline {
+  color: var(--cream);
+  opacity: 0.55;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.65rem;
+  text-align: center;
+  font-weight: 700;
+  margin: 0;
+}
+
+.brandFooter {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.7rem;
+  color: rgba(251, 250, 238, 0.25);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+/* ── Panel derecho ── */
+.formPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(201, 168, 76, 0.06), transparent),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(24, 31, 33, 0.04), transparent),
+    var(--cream);
+}
+
+.formCard {
   width: 100%;
-  max-width: 360px;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid rgba(24, 31, 33, 0.06);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  box-shadow: var(--shadow-card);
+  animation: fadeUp 0.6s ease-out 0.1s both;
+}
+
+.formHeader {
+  margin-bottom: 2rem;
 }
 
 .portalLabel {
+  display: inline-block;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 9px;
+  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.formTitle {
+  font-family: "Noto Serif", Georgia, serif;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #aaa;
-  margin-bottom: 2.5rem;
-  display: block;
+  color: var(--ink);
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.formSubtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.fieldWrap {
+  margin-bottom: 1.25rem;
 }
 
 .fieldLabel {
   display: block;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-size: 9px;
-  font-weight: 700;
-  color: #999;
-  margin-bottom: 6px;
+  letter-spacing: 0.12em;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
 }
 
-.input, .select {
+.input {
   display: block;
   width: 100%;
-  border: none;
-  border-bottom: 1.5px solid #d4d0c4;
-  background: transparent;
-  padding: 8px 0;
-  font-size: 14px;
-  color: #181f21;
+  border: 1.5px solid var(--cream-dark);
+  background: var(--cream);
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  color: var(--ink);
   outline: none;
-  font-family: 'Manrope', sans-serif;
+  font-family: inherit;
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  border-radius: var(--radius-md);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-.input:focus, .select:focus {
-  border-bottom-color: #181f21;
+.input::placeholder {
+  color: #b5b8ba;
 }
 
-.select {
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
+.input:hover {
+  border-color: rgba(201, 168, 76, 0.35);
 }
 
-.fieldWrap { margin-bottom: 1.5rem; }
-.fieldWrapLast { margin-bottom: 3rem; }
+.input:focus {
+  border-color: var(--gold);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.12);
+}
 
 .submitBtn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   width: 100%;
-  background: #181f21;
-  color: #fbfaee;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, var(--ink) 0%, #2a3336 100%);
+  color: var(--cream);
   border: none;
-  padding: 14px;
+  padding: 0.95rem 1.25rem;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 11px;
-  font-weight: 700;
-  font-family: 'Manrope', sans-serif;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: inherit;
   cursor: pointer;
-  border-radius: 4px;
-  transition: opacity 0.2s;
+  border-radius: var(--radius-md);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+  box-shadow: 0 8px 24px rgba(24, 31, 33, 0.2);
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(24, 31, 33, 0.28);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .submitBtn:disabled {
-  opacity: 0.6;
+  opacity: 0.65;
   cursor: not-allowed;
+  transform: none;
 }
 
-.errorBox {
-  background: #fff5f5;
-  border: 1px solid #f5c6c6;
-  color: #b03030;
-  padding: 10px 14px;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-bottom: 1.5rem;
-  font-family: 'Manrope', sans-serif;
+.submitBtnLoading::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(251, 250, 238, 0.3);
+  border-top-color: var(--cream);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.toggleSection {
+  text-align: center;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cream-dark);
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: inherit;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: color 0.2s ease;
+}
+
+.toggleBtn span {
+  color: var(--gold);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(201, 168, 76, 0.4);
+}
+
+.toggleBtn:hover span {
+  text-decoration-color: var(--gold);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    flex-direction: column;
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .brandPanel {
+    width: 100%;
+    min-height: 220px;
+    min-width: unset;
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .brandFooter {
+    display: none;
+  }
+
+  .cornerTL,
+  .cornerTR,
+  .cornerBL,
+  .cornerBR {
+    width: 20px;
+    height: 20px;
+  }
+
+  .formPanel {
+    padding: 1.5rem 1.25rem 2.5rem;
+  }
+
+  .formCard {
+    box-shadow: var(--shadow-soft);
+  }
 }

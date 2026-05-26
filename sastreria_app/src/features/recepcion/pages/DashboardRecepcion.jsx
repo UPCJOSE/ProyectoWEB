@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import styles from "./DashboardRecepcion.module.css";
 import { useNavigate } from "react-router-dom";
 
-const API = "https://localhost:7196/api";
+const API = "http://localhost:5000/api";
 
 export const DashboardRecepcion = () => {
   const navigate = useNavigate();
@@ -335,14 +335,14 @@ export const DashboardRecepcion = () => {
     pedidos.filter((p) => p.estado === estado);
 
   return (
-    <div className="animate__animated animate__fadeIn">
+    <div className={`animate__animated animate__fadeIn ${styles.page}`}>
       <header className={styles.header}>
         <h1 className={styles.title}>
           Recepción <br />
           <span className={styles.titleAccent}>del Atelier</span>
         </h1>
 
-        <p className="text-muted">Gestione clientes y pedidos del taller.</p>
+        <p className={styles.subtitle}>Gestione clientes y pedidos del taller.</p>
       </header>
 
       {/* METRICAS */}
@@ -353,7 +353,7 @@ export const DashboardRecepcion = () => {
         </div>
 
         <div className={`${styles.card} ${styles.cardDark}`}>
-          <small className={styles.label} style={{ color: "#aaa" }}>
+          <small className={`${styles.label} ${styles.labelMutedOnDark}`}>
             Pedidos activos
           </small>
           <h2>{pedidos.length}</h2>
@@ -399,14 +399,7 @@ export const DashboardRecepcion = () => {
       {vistaAct === "clientes" && (
         <section className={styles.formSection}>
           <div className={styles.formContainer}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "2rem",
-              }}
-            >
+            <div className={styles.sectionHeader}>
               <h2>{clienteEdit ? "Editar Cliente" : "Registrar Cliente"}</h2>
               {clienteEdit && (
                 <button className={styles.btnActionGold} onClick={nuevoCliente}>
@@ -453,16 +446,10 @@ export const DashboardRecepcion = () => {
               </div>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "2rem",
-              }}
-            >
+            <div className={styles.formActions}>
               <button
                 className={styles.btnDark}
-                style={{ padding: "12px 48px", borderRadius: "6px" }}
+                style={{ padding: "12px 48px" }}
                 onClick={guardarCliente}
               >
                 {clienteEdit ? "ACTUALIZAR CLIENTE" : "GUARDAR CLIENTE"}
@@ -475,15 +462,8 @@ export const DashboardRecepcion = () => {
       {/* DIRECTORIO */}
       {vistaAct === "directorio" && (
         <section className={styles.formSection}>
-          <div style={{ flex: 1, padding: "2rem" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "1rem",
-                alignItems: "center",
-              }}
-            >
+          <div className={styles.directoryContainer}>
+            <div className={styles.sectionHeader}>
               <h2>Directorio</h2>
 
               <input
@@ -553,7 +533,7 @@ export const DashboardRecepcion = () => {
 
       {/* PEDIDOS */}
       {vistaAct === "pedidos" && (
-        <section style={{ marginTop: "2rem" }}>
+        <section className={styles.ordersSection}>
           <button
             className={styles.btnGold}
             onClick={crearPedido}
@@ -562,13 +542,7 @@ export const DashboardRecepcion = () => {
             + Crear Pedido
           </button>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "1.5rem",
-            }}
-          >
+          <div className={styles.kanbanGrid}>
             {["Pendiente", "En proceso", "Terminado", "Entregado"].map(
               (estado) => (
                 <div
@@ -584,25 +558,19 @@ export const DashboardRecepcion = () => {
                   {pedidosPorEstado(estado).map((pedido) => (
                     <div
                       key={pedido.id}
-                      style={{
-                        background: "white",
-                        padding: "1rem",
-                        borderRadius: "12px",
-                        marginBottom: "1rem",
-                        boxShadow: "0 5px 20px rgba(0,0,0,.08)",
-                      }}
+                      className={styles.pedidoCard}
                     >
                       <strong>Pedido #{pedido.id}</strong>
 
-                      <p className="mb-1 mt-2">
+                      <p className={styles.pedidoMeta}>
                         Cliente: {pedido.cliente?.nombre}
                       </p>
 
-                      <p className="mb-1">
+                      <p className={styles.pedidoMeta}>
                         Prenda: {pedido.prendaCatalogo?.nombre || "N/A"}
                       </p>
 
-                      <p className="mb-3">
+                      <p className={styles.pedidoMetaLast}>
                         Entrega:{" "}
                         {new Date(pedido.fechaEntrega).toLocaleDateString()}
                       </p>

@@ -47,7 +47,7 @@ export const DashboardCliente = () => {
 };
 
   return (
-    <div className="animate__animated animate__fadeIn">
+    <div className={`${styles.page} animate__animated animate__fadeIn`}>
       
       {/* Hero Section */}
       <section className={styles.hero}>
@@ -56,22 +56,22 @@ export const DashboardCliente = () => {
             <h1 className={styles.title}>
               Tu Estilo, <br /><span className={styles.titleGold}>a Medida</span>
             </h1>
-            <p className="lead text-muted mt-3">
+            <p className={styles.heroLead}>
               Bienvenido a su atelier personal. Supervise sus pedidos y explore nuestra nueva colección.
             </p>
           </div>
           <div className="col-md-5 text-end d-none d-md-block">
-             <div className="p-4 bg-white shadow-sm border-start border-4" style={{borderColor: '#c9a84c'}}>
-                <small className="text-uppercase fw-bold text-muted">Próxima Prueba de Ajuste</small>
-                <h3 className="mb-0">14 Oct, 17:30</h3>
-             </div>
+            <div className={styles.appointmentCard}>
+              <small className={styles.kicker}>Próxima Prueba de Ajuste</small>
+              <h3 className={styles.appointmentValue}>14 Oct, 17:30</h3>
+            </div>
           </div>
         </div>
       </section>
 
       {/* RASTREADOR (Stepper) */}
       <section className={styles.stepperContainer}>
-        <h6 className="text-uppercase fw-bold text-muted mb-4" style={{letterSpacing: '2px'}}>Estado de tu último traje</h6>
+        <h6 className={styles.sectionKicker}>Estado de tu último traje</h6>
         <div className={styles.stepper}>
           <div className={styles.stepperLine}></div>
           
@@ -87,19 +87,19 @@ export const DashboardCliente = () => {
 
           <div className={styles.step}>
             <div className={`${styles.stepIcon} ${styles.activeIcon}`}><i className="bi bi-scissors"></i></div>
-            <small className="fw-bold" style={{color: '#c9a84c'}}>Confección</small>
+            <small className={`${styles.stepLabel} ${styles.stepLabelActive}`}>Confección</small>
           </div>
 
           <div className={styles.step}>
             <div className={styles.stepIcon}><i className="bi bi-box-seam"></i></div>
-            <small className="fw-bold text-muted">Entrega</small>
+            <small className={styles.stepLabel}>Entrega</small>
           </div>
         </div>
       </section>
 
       {/* CATÁLOGO DINÁMICO */}
-      <section className="mb-5">
-        <h2 className="font-headline mb-4">Colección Prêt-à-Porter</h2>
+      <section className={styles.catalogSection}>
+        <h2 className={styles.sectionTitle}>Colección Prêt-à-Porter</h2>
         
         {loading ? (
           <div className="text-center py-5">
