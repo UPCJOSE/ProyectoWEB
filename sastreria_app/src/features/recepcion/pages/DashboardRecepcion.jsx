@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import styles from "./DashboardRecepcion.module.css";
 import { useNavigate } from "react-router-dom";
 
-const API = "http://localhost:5000/api";
+const API = "https://localhost:7196/api";
 
 export const DashboardRecepcion = () => {
   const navigate = useNavigate();
@@ -342,7 +342,9 @@ export const DashboardRecepcion = () => {
           <span className={styles.titleAccent}>del Atelier</span>
         </h1>
 
-        <p className={styles.subtitle}>Gestione clientes y pedidos del taller.</p>
+        <p className={styles.subtitle}>
+          Gestione clientes y pedidos del taller.
+        </p>
       </header>
 
       {/* METRICAS */}
@@ -556,10 +558,7 @@ export const DashboardRecepcion = () => {
                   <h4>{estado}</h4>
 
                   {pedidosPorEstado(estado).map((pedido) => (
-                    <div
-                      key={pedido.id}
-                      className={styles.pedidoCard}
-                    >
+                    <div key={pedido.id} className={styles.pedidoCard}>
                       <strong>Pedido #{pedido.id}</strong>
 
                       <p className={styles.pedidoMeta}>

@@ -5,7 +5,7 @@ import styles from "./PanelSastre.module.css";
 
 const API_BASE =
   (import.meta?.env?.VITE_API_URL && String(import.meta.env.VITE_API_URL)) ||
-  "http://localhost:5000/api";
+  "https://localhost:7196/api";
 
 const ESTADO = {
   PENDIENTE: "Pendiente",
@@ -87,7 +87,7 @@ export const PanelSastre = () => {
       console.error("Error cargando pedidos:", err);
       setPedidos([]);
       setError(
-        "No se pudieron cargar los pedidos. Verifica que la API esté ejecutándose en http://localhost:5000."
+        "No se pudieron cargar los pedidos. Verifica que la API esté ejecutándose en http://localhost:5000.",
       );
     } finally {
       setLoading(false);
@@ -138,11 +138,15 @@ export const PanelSastre = () => {
       }
 
       setPedidos((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, estado: nuevoEstado } : p))
+        prev.map((p) => (p.id === id ? { ...p, estado: nuevoEstado } : p)),
       );
     } catch (err) {
       console.error("Error actualizando pedido:", err);
-      Swal.fire("Error", "No se pudo actualizar el estado del pedido.", "error");
+      Swal.fire(
+        "Error",
+        "No se pudo actualizar el estado del pedido.",
+        "error",
+      );
     }
   };
 
@@ -183,7 +187,11 @@ export const PanelSastre = () => {
       }
     } catch (err) {
       console.error("Error obteniendo medidas:", err);
-      Swal.fire("Error", "No se pudieron cargar las medidas del cliente.", "error");
+      Swal.fire(
+        "Error",
+        "No se pudieron cargar las medidas del cliente.",
+        "error",
+      );
     }
   };
 
@@ -283,7 +291,8 @@ export const PanelSastre = () => {
             Atelier de <span className={styles.titleAccent}>Confección</span>
           </h1>
           <p className={styles.subtitle}>
-            Tablero de producción · arrastra el flujo con los botones de cada pedido
+            Tablero de producción · arrastra el flujo con los botones de cada
+            pedido
           </p>
         </div>
         <button
@@ -302,7 +311,8 @@ export const PanelSastre = () => {
         <div className={styles.emptyBoard}>
           <p>No hay pedidos activos en el taller.</p>
           <small>
-            Crea pedidos desde Recepción con estado &quot;Pendiente&quot; para verlos aquí.
+            Crea pedidos desde Recepción con estado &quot;Pendiente&quot; para
+            verlos aquí.
           </small>
         </div>
       ) : null}

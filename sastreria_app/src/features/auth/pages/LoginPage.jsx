@@ -14,8 +14,8 @@ export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_LOGIN = "http://localhost:5000/api/Auth/login";
-  const API_REGISTRO = "http://localhost:5000/api/Usuarios";
+  const API_LOGIN = "https://localhost:7196/api/Auth/login";
+  const API_REGISTRO = "https://localhost:7196/api/Usuarios";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export const LoginPage = () => {
             nombre: nombre,
             correo: email,
             password: password,
-            rol: 3, // Asignar rol de cliente por defecto
+            rol: 3,
           }),
         });
 

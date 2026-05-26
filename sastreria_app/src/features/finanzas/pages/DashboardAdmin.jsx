@@ -7,7 +7,7 @@ export const DashboardAdmin = () => {
   const [egresos, setEgresos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  const API = "http://localhost:5000/api";
+  const API = "https://localhost:7196/api";
 
   const cargarDatos = async () => {
     try {
@@ -282,9 +282,7 @@ export const DashboardAdmin = () => {
           </div>
           <div>
             <p className={styles.metricLabel}>Saldo Neto en Caja</p>
-            <h3
-              className={`${styles.metricValue} ${styles.metricValueSaldo}`}
-            >
+            <h3 className={`${styles.metricValue} ${styles.metricValueSaldo}`}>
               {formatoMoneda(saldoFinal)}
             </h3>
           </div>

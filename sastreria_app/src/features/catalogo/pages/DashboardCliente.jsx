@@ -1,18 +1,21 @@
 // src/features/catalogo/pages/DashboardCliente.jsx
-import { useState, useEffect } from 'react';
-import styles from './DashboardCliente.module.css';
+import { useState, useEffect } from "react";
+import styles from "./DashboardCliente.module.css";
 
 export const DashboardCliente = () => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // MIGRACIÓN DE FAKE-API.JS A REACT
   useEffect(() => {
     const fetchProductos = async () => {
       try {
         const [hombres, mujeres] = await Promise.all([
-          fetch("https://fakestoreapi.com/products/category/men's clothing").then(r => r.json()),
-          fetch("https://fakestoreapi.com/products/category/women's clothing").then(r => r.json())
+          fetch(
+            "https://fakestoreapi.com/products/category/men's clothing",
+          ).then((r) => r.json()),
+          fetch(
+            "https://fakestoreapi.com/products/category/women's clothing",
+          ).then((r) => r.json()),
         ]);
         setProductos([...hombres, ...mujeres]);
         setLoading(false);
@@ -25,39 +28,43 @@ export const DashboardCliente = () => {
   }, []);
 
   const agregarAlCarrito = (nombre, precio) => {
-  const cant = prompt(`¿Cuántas unidades de "${nombre}" desea encargar?`, "1");
-  const cantidadAgregada = parseInt(cant);
+    const cant = prompt(
+      `¿Cuántas unidades de "${nombre}" desea encargar?`,
+      "1",
+    );
+    const cantidadAgregada = parseInt(cant);
 
-  if (cantidadAgregada && cantidadAgregada > 0) {
-    const carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]");
-    
-    const index = carrito.findIndex((p) => p.nombre === nombre);
-    if (index !== -1) {
-      carrito[index].cantidad += cantidadAgregada; 
-    } else {
-      carrito.push({ nombre, precio, cantidad: cantidadAgregada }); 
+    if (cantidadAgregada && cantidadAgregada > 0) {
+      const carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]");
+
+      const index = carrito.findIndex((p) => p.nombre === nombre);
+      if (index !== -1) {
+        carrito[index].cantidad += cantidadAgregada;
+      } else {
+        carrito.push({ nombre, precio, cantidad: cantidadAgregada });
+      }
+
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+
+      window.dispatchEvent(new Event("carritoActualizado"));
+
+      alert(`Añadido al carrito: ${cantidadAgregada} x ${nombre}`);
     }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-
-    window.dispatchEvent(new Event("carritoActualizado"));
-
-    alert(`Añadido al carrito: ${cantidadAgregada} x ${nombre}`);
-  }
-};
+  };
 
   return (
     <div className={`${styles.page} animate__animated animate__fadeIn`}>
-      
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className="row align-items-center">
           <div className="col-md-7">
             <h1 className={styles.title}>
-              Tu Estilo, <br /><span className={styles.titleGold}>a Medida</span>
+              Tu Estilo, <br />
+              <span className={styles.titleGold}>a Medida</span>
             </h1>
             <p className={styles.heroLead}>
-              Bienvenido a su atelier personal. Supervise sus pedidos y explore nuestra nueva colección.
+              Bienvenido a su atelier personal. Supervise sus pedidos y explore
+              nuestra nueva colección.
             </p>
           </div>
           <div className="col-md-5 text-end d-none d-md-block">
@@ -74,24 +81,34 @@ export const DashboardCliente = () => {
         <h6 className={styles.sectionKicker}>Estado de tu último traje</h6>
         <div className={styles.stepper}>
           <div className={styles.stepperLine}></div>
-          
+
           <div className={styles.step}>
-            <div className={`${styles.stepIcon} ${styles.activeIcon}`}><i className="bi bi-pencil"></i></div>
+            <div className={`${styles.stepIcon} ${styles.activeIcon}`}>
+              <i className="bi bi-pencil"></i>
+            </div>
             <small className="fw-bold">Diseño</small>
           </div>
-          
+
           <div className={styles.step}>
-            <div className={`${styles.stepIcon} ${styles.activeIcon}`}><i className="bi bi-rulers"></i></div>
+            <div className={`${styles.stepIcon} ${styles.activeIcon}`}>
+              <i className="bi bi-rulers"></i>
+            </div>
             <small className="fw-bold">Medidas</small>
           </div>
 
           <div className={styles.step}>
-            <div className={`${styles.stepIcon} ${styles.activeIcon}`}><i className="bi bi-scissors"></i></div>
-            <small className={`${styles.stepLabel} ${styles.stepLabelActive}`}>Confección</small>
+            <div className={`${styles.stepIcon} ${styles.activeIcon}`}>
+              <i className="bi bi-scissors"></i>
+            </div>
+            <small className={`${styles.stepLabel} ${styles.stepLabelActive}`}>
+              Confección
+            </small>
           </div>
 
           <div className={styles.step}>
-            <div className={styles.stepIcon}><i className="bi bi-box-seam"></i></div>
+            <div className={styles.stepIcon}>
+              <i className="bi bi-box-seam"></i>
+            </div>
             <small className={styles.stepLabel}>Entrega</small>
           </div>
         </div>
@@ -100,7 +117,7 @@ export const DashboardCliente = () => {
       {/* CATÁLOGO DINÁMICO */}
       <section className={styles.catalogSection}>
         <h2 className={styles.sectionTitle}>Colección Prêt-à-Porter</h2>
-        
+
         {loading ? (
           <div className="text-center py-5">
             <div className="spinner-border text-warning" role="status"></div>
@@ -108,12 +125,16 @@ export const DashboardCliente = () => {
           </div>
         ) : (
           <div className={styles.grid}>
-            {productos.map(prod => (
+            {productos.map((prod) => (
               <div key={prod.id} className={styles.productCard}>
-                <img src={prod.image} alt={prod.title} className={styles.productImg} />
+                <img
+                  src={prod.image}
+                  alt={prod.title}
+                  className={styles.productImg}
+                />
                 <h4 className={styles.productTitle}>{prod.title}</h4>
                 <p className={styles.price}>${prod.price}</p>
-                <button 
+                <button
                   className={styles.btnBuy}
                   onClick={() => agregarAlCarrito(prod.title, prod.price)}
                 >
@@ -124,7 +145,6 @@ export const DashboardCliente = () => {
           </div>
         )}
       </section>
-
     </div>
   );
 };

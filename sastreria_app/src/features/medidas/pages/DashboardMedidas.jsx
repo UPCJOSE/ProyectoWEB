@@ -5,7 +5,7 @@ import styles from "./DashboardMedidas.module.css";
 
 const API_BASE =
   (import.meta?.env?.VITE_API_URL && String(import.meta.env.VITE_API_URL)) ||
-  "http://localhost:5000/api";
+  "https://localhost:7196/api";
 
 const FIELD_META = {
   pecho: { label: "Pecho", hint: "cm" },
@@ -72,7 +72,7 @@ export const DashboardMedidas = () => {
       // Intentamos primero por compatibilidad y si falla, hacemos fallback a /Medidas y filtramos.
       let data = null;
       const resByCliente = await fetch(
-        `${API_BASE}/Medidas/cliente/${clienteId}`
+        `${API_BASE}/Medidas/cliente/${clienteId}`,
       );
 
       if (resByCliente.ok) {
@@ -131,7 +131,7 @@ export const DashboardMedidas = () => {
     } catch (error) {
       console.error(error);
       setLoadError(
-        "No se pudieron cargar las medidas. Revisa que la API esté levantada y el CORS habilitado."
+        "No se pudieron cargar las medidas. Revisa que la API esté levantada y el CORS habilitado.",
       );
     } finally {
       setLoading(false);
@@ -293,7 +293,11 @@ export const DashboardMedidas = () => {
           disabled={loading || saving || !cliente?.id}
           style={{ padding: "10px 24px", borderRadius: "6px" }}
         >
-          {saving ? "Guardando..." : medidaId ? "Actualizar medidas" : "Guardar medidas"}
+          {saving
+            ? "Guardando..."
+            : medidaId
+              ? "Actualizar medidas"
+              : "Guardar medidas"}
         </button>
       </div>
     </div>
