@@ -1,6 +1,7 @@
 // src/core/layouts/MainLayout.jsx
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import styles from "./MainLayout.module.css";
 
 export const MainLayout = () => {
@@ -17,6 +18,8 @@ export const MainLayout = () => {
     : "US";
 
   const [cartCount, setCartCount] = useState(0);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const actualizarContador = () => {
     const carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]");
@@ -35,15 +38,28 @@ export const MainLayout = () => {
   const getHomeRoute = () => {
     if (userRole === "administrador") return "/finanzas";
     if (userRole === "sastre") return "/sastreria";
-    if (userRole === "recepcion") return "/recepcion";
+    if (userRole === "recepcionista") return "/recepcion";
     return "/cliente";
   };
 
   const handleLogout = () => {
-    if (window.confirm("¿Desea cerrar su sesión en el Atelier?")) {
-      localStorage.clear();
-      navigate("/login");
-    }
+    setIsMenuOpen(false);
+
+    Swal.fire({
+      title: "Cerrar sesión",
+      text: "¿Deseas salir del sistema?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#c9a84c",
+      cancelButtonColor: "#181f21",
+      confirmButtonText: "Sí, salir",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        navigate("/login");
+      }
+    });
   };
 
   const isActive = (path) =>
@@ -53,7 +69,7 @@ export const MainLayout = () => {
     <div className={styles.wrapper}>
       <nav className={styles.navbar}>
         <div className={styles.brand} onClick={() => navigate(getHomeRoute())}>
-          Elegancia y Estilo
+          Elegancia <span>y Estilo</span>
         </div>
 
         <div className={styles.navGroup}>
@@ -78,7 +94,8 @@ export const MainLayout = () => {
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#181f21"
+                    stroke="currentColor"
+                    className={styles.cartIcon}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -127,13 +144,53 @@ export const MainLayout = () => {
             </span>
           )}
 
-          <button
-            className={styles.avatarBtn}
-            onClick={handleLogout}
-            title={`Cerrar Sesión (${usuarioObj?.nombre || "Usuario"})`}
-          >
-            {iniciales}
-          </button>
+          {(userRole === "administrador" || userRole === "recepcionista") && (
+            <span
+              className={`${styles.navLink} ${isActive("/clientes")}`}
+              onClick={() => navigate("/clientes")}
+            >
+              Clientes
+            </span>
+          )}
+
+          <div className={styles.userMenuContainer}>
+            <button
+              className={styles.avatarBtn}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              title="Opciones de cuenta"
+            >
+              {iniciales}
+            </button>
+
+            {/* Desplegable que aparece si isMenuOpen es true */}
+            {isMenuOpen && (
+              <div className={styles.dropdownMenu}>
+                <div className={styles.dropdownHeader}>
+                  <strong>{usuarioObj?.nombre || "Usuario"}</strong>
+                  <span>{userRole || "Usuario"}</span>
+                </div>
+
+                <hr className={styles.dropdownDivider} />
+
+                <button
+                  className={styles.dropdownItem}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    alert("Abre aquí tu configuración o panel");
+                  }}
+                >
+                  <i className="bi bi-gear"></i> Configuración
+                </button>
+
+                <button
+                  className={`${styles.dropdownItem} ${styles.textDanger}`}
+                  onClick={handleLogout}
+                >
+                  <i className="bi bi-box-arrow-right"></i> Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 

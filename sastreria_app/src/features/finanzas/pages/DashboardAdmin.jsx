@@ -214,21 +214,44 @@ export const DashboardAdmin = () => {
     }
   };
 
-  if (cargando) return <h2>Cargando dashboard...</h2>;
+  if (cargando) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.loadingWrap}>
+          <div className="spinner-border text-warning" role="status" />
+          <p className={styles.loadingText}>Cargando panel financiero...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="animate__animated animate__fadeIn">
+    <div className={`${styles.page} animate__animated animate__fadeIn`}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Dashboard Financiero</h1>
-        <p className="text-muted">
-          Control general de caja, ingresos por pedidos e inventario.
-        </p>
+        <div className={styles.headerMain}>
+          <p className={styles.kicker}>Panel administrativo</p>
+          <h1 className={styles.title}>
+            Dashboard <span className={styles.titleGold}>Financiero</span>
+          </h1>
+        </div>
+
+        <div className={styles.headerBadge}>
+          <div className={styles.headerBadgeIcon}>
+            <i className="bi bi-wallet2" />
+          </div>
+          <div>
+            <span className={styles.headerBadgeLabel}>Saldo en caja</span>
+            <span className={styles.headerBadgeValue}>
+              {formatoMoneda(saldoFinal)}
+            </span>
+          </div>
+        </div>
       </header>
 
       <section className={styles.metricsGrid}>
         <div className={`${styles.metricCard} ${styles.ingreso}`}>
-          <div className={styles.iconBox}>
-            <i className="bi bi-arrow-up-right"></i>
+          <div className={`${styles.iconBox} ${styles.iconIngreso}`}>
+            <i className="bi bi-arrow-up-right" />
           </div>
           <div>
             <p className={styles.metricLabel}>Ingresos Brutos</p>
@@ -239,8 +262,8 @@ export const DashboardAdmin = () => {
         </div>
 
         <div className={`${styles.metricCard} ${styles.egreso}`}>
-          <div className={styles.iconBox} style={{ color: "#e74c3c" }}>
-            <i className="bi bi-arrow-down-right"></i>
+          <div className={`${styles.iconBox} ${styles.iconEgreso}`}>
+            <i className="bi bi-arrow-down-right" />
           </div>
           <div>
             <p className={styles.metricLabel}>Egresos / Gastos</p>
@@ -251,15 +274,12 @@ export const DashboardAdmin = () => {
         </div>
 
         <div className={`${styles.metricCard} ${styles.saldo}`}>
-          <div
-            className={styles.iconBox}
-            style={{ background: "#c9a84c", color: "white" }}
-          >
-            <i className="bi bi-wallet2"></i>
+          <div className={`${styles.iconBox} ${styles.iconSaldo}`}>
+            <i className="bi bi-piggy-bank" />
           </div>
           <div>
             <p className={styles.metricLabel}>Saldo Neto en Caja</p>
-            <h3 className={styles.metricValue} style={{ color: "#c9a84c" }}>
+            <h3 className={`${styles.metricValue} ${styles.metricValueSaldo}`}>
               {formatoMoneda(saldoFinal)}
             </h3>
           </div>
@@ -269,9 +289,13 @@ export const DashboardAdmin = () => {
       <section className={styles.tablesGrid}>
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
-            <h4 className="font-headline m-0">Pagos Recibidos</h4>
+            <h4 className={styles.tableTitle}>
+              Pagos Recibidos
+              <span className={styles.tableCount}>{pagos.length}</span>
+            </h4>
 
             <button
+              type="button"
               className={`${styles.btnAction} ${styles.btnIngreso}`}
               onClick={registrarPago}
             >
@@ -279,49 +303,50 @@ export const DashboardAdmin = () => {
             </button>
           </div>
 
-          <table className={styles.atelierTable}>
-            <thead>
-              <tr>
-                <th>Pedido</th>
-                <th>Método</th>
-                <th>Monto</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {pagos.length > 0 ? (
-                pagos.map((pago) => (
-                  <tr key={pago.id}>
-                    <td style={{ color: "#c9a84c", fontWeight: "bold" }}>
-                      ORD-{pago.pedidoId}
-                    </td>
-
-                    <td>{pago.metodoPago}</td>
-
-                    <td style={{ color: "#27ae60" }}>
-                      {formatoMoneda(pago.monto)}
-                    </td>
-                  </tr>
-                ))
-              ) : (
+          <div className={styles.tableScroll}>
+            <table className={styles.atelierTable}>
+              <thead>
                 <tr>
-                  <td
-                    colSpan="3"
-                    style={{ textAlign: "center", padding: "2rem" }}
-                  >
-                    No hay pagos registrados.
-                  </td>
+                  <th>Pedido</th>
+                  <th>Método</th>
+                  <th>Monto</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {pagos.length > 0 ? (
+                  pagos.map((pago) => (
+                    <tr key={pago.id}>
+                      <td className={styles.orderId}>ORD-{pago.pedidoId}</td>
+                      <td>
+                        <span className={styles.methodBadge}>
+                          {pago.metodoPago}
+                        </span>
+                      </td>
+                      <td className={styles.amountPositive}>
+                        {formatoMoneda(pago.monto)}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className={styles.emptyRow}>
+                    <td colSpan="3">No hay pagos registrados.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
-            <h4 className="font-headline m-0">Egresos de Inventario</h4>
+            <h4 className={styles.tableTitle}>
+              Egresos de Inventario
+              <span className={styles.tableCount}>{egresos.length}</span>
+            </h4>
 
             <button
+              type="button"
               className={`${styles.btnAction} ${styles.btnEgreso}`}
               onClick={registrarEgreso}
             >
@@ -329,81 +354,78 @@ export const DashboardAdmin = () => {
             </button>
           </div>
 
-          <table className={styles.atelierTable}>
-            <thead>
-              <tr>
-                <th>Concepto</th>
-                <th>Proveedor</th>
-                <th>Costo</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {egresos.length > 0 ? (
-                egresos.map((egreso) => (
-                  <tr key={egreso.id}>
-                    <td>{egreso.concepto}</td>
-                    <td style={{ color: "#747879" }}>{egreso.proveedor}</td>
-                    <td style={{ color: "#e74c3c" }}>
-                      - {formatoMoneda(egreso.costo)}
-                    </td>
-                  </tr>
-                ))
-              ) : (
+          <div className={styles.tableScroll}>
+            <table className={styles.atelierTable}>
+              <thead>
                 <tr>
-                  <td
-                    colSpan="3"
-                    style={{ textAlign: "center", padding: "2rem" }}
-                  >
-                    No hay egresos registrados.
-                  </td>
+                  <th>Concepto</th>
+                  <th>Proveedor</th>
+                  <th>Costo</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {egresos.length > 0 ? (
+                  egresos.map((egreso) => (
+                    <tr key={egreso.id}>
+                      <td>{egreso.concepto}</td>
+                      <td className={styles.provider}>{egreso.proveedor}</td>
+                      <td className={styles.amountNegative}>
+                        - {formatoMoneda(egreso.costo)}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className={styles.emptyRow}>
+                    <td colSpan="3">No hay egresos registrados.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
       <section className={styles.reportsBox}>
-        <h4 className="font-headline m-0 me-4">Exportar Reportes</h4>
+        <h4 className={styles.reportsTitle}>Exportar Reportes</h4>
 
-        <input
-          type="date"
-          className="form-control w-auto"
-          style={{ border: "1px solid #d4d0c4" }}
-        />
+        <input type="date" className={styles.dateInput} />
 
-        <span className="text-muted">hasta</span>
+        <span className={styles.reportsDivider}>hasta</span>
 
-        <input
-          type="date"
-          className="form-control w-auto"
-          style={{ border: "1px solid #d4d0c4" }}
-        />
+        <input type="date" className={styles.dateInput} />
 
-        <button
-          className="btn btn-dark ms-auto d-flex align-items-center gap-2"
-          onClick={() =>
-            Swal.fire(
-              "Próximamente",
-              "Exportación a Excel en desarrollo",
-              "info",
-            )
-          }
-        >
-          <i className="bi bi-file-earmark-excel"></i>
-          Exportar a Excel
-        </button>
+        <div className={styles.reportsActions}>
+          <button
+            type="button"
+            className={styles.btnExportPrimary}
+            onClick={() =>
+              Swal.fire(
+                "Próximamente",
+                "Exportación a Excel en desarrollo",
+                "info",
+              )
+            }
+          >
+            <i className="bi bi-file-earmark-excel" />
+            Exportar a Excel
+          </button>
 
-        <button
-          className="btn btn-outline-dark d-flex align-items-center gap-2"
-          onClick={() =>
-            Swal.fire("Próximamente", "Exportación a PDF en desarrollo", "info")
-          }
-        >
-          <i className="bi bi-filetype-pdf"></i>
-          Exportar a PDF
-        </button>
+          <button
+            type="button"
+            className={styles.btnExportSecondary}
+            onClick={() =>
+              Swal.fire(
+                "Próximamente",
+                "Exportación a PDF en desarrollo",
+                "info",
+              )
+            }
+          >
+            <i className="bi bi-filetype-pdf" />
+            Exportar a PDF
+          </button>
+        </div>
       </section>
     </div>
   );

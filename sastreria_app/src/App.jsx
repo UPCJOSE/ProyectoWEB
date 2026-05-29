@@ -8,7 +8,7 @@ import {
 
 import { LoginPage } from "./features/auth/pages/LoginPage";
 import { DashboardCrearCatalogo } from "./features/catalogo/pages/DashboardCrearCatalogo";
-import { DashboardCatalogo } from "./features/catalogo/pages/DashboardCatalogo";
+import { DashboardCliente } from "./features/catalogo/pages/DashboardCliente";
 import { DashboardRecepcion } from "./features/recepcion/pages/DashboardRecepcion";
 import { PanelSastre } from "./features/sastreria/pages/PanelSastre";
 import { DashboardAdmin } from "./features/finanzas/pages/DashboardAdmin";
@@ -17,6 +17,8 @@ import { PortalCliente } from "./features/portal/pages/PortalCliente";
 import { DashboardMedidas } from "./features/medidas/pages/DashboardMedidas";
 import { DashboardClientes } from "./features/clientes/pages/DashboardClientes";
 import { ClienteDetalle } from "./features/clientes/pages/ClienteDetalle";
+import { LandingPage } from "./features/portal/pages/LandingPage";
+import { NotFoundPage } from "./features/portal/pages/NotFoundPage";
 
 const PrivateRoute = () => {
   const isLogged = localStorage.getItem("usuario") !== null;
@@ -28,17 +30,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/portal" element={<PortalCliente />} />
 
         <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
           <Route element={<MainLayout />}>
-            <Route path="/catalogo-publico" element={<DashboardCatalogo />} />
             <Route
               path="/crear-catalogo"
               element={<DashboardCrearCatalogo />}
             />
-
+            <Route path="/principal" element={<DashboardCliente />} />
             <Route path="/recepcion" element={<DashboardRecepcion />} />
 
             <Route path="/sastreria" element={<PanelSastre />} />
@@ -57,12 +59,7 @@ function App() {
 
         <Route path="/" element={<Navigate to="/portal" />} />
 
-        <Route
-          path="*"
-          element={
-            <h1 className="text-center mt-5">404 - Página no encontrada</h1>
-          }
-        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
