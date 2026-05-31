@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.DTOs;
@@ -6,6 +7,7 @@ using SastreriaAPI.Models;
 
 namespace SastreriaAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MedidasPrendaController : ControllerBase
