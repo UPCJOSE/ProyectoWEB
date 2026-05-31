@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.DTOs;
-using SastreriaAPI.Models;
+using SastreriaAPI.JWT;
 
 namespace SastreriaAPI.Controllers
 {
@@ -11,10 +11,12 @@ namespace SastreriaAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly JwtTokenGenerador _jwtGenerador;
 
-        public AuthController(ApplicationDbContext context)
+        public AuthController(ApplicationDbContext context, JwtTokenGenerador jwtGenerador)
         {
             _context = context;
+            _jwtGenerador = jwtGenerador;
         }
 
         [HttpPost("login")]
@@ -25,8 +27,11 @@ namespace SastreriaAPI.Controllers
 
             if (usuario == null) return Unauthorized("Credenciales inválidas");
 
+            var token = _jwtGenerador.GenerateToken(usuario.Correo);
+
             return Ok(new
             {
+                token,
                 usuario.Id,
                 usuario.Nombre,
                 usuario.Correo,
