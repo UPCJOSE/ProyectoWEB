@@ -1,0 +1,456 @@
+.landingContainer {
+  font-family: "Manrope", sans-serif;
+  background-color: #fbfaee;
+  color: #181f21;
+}
+
+/* HERO SECTION */
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #181f21 0%, #232b2e 100%);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.goldLabel {
+  color: #c9a84c;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: "Noto Serif", serif;
+  font-size: 4.5rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.title span {
+  color: #c9a84c;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #d6d6d6;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.btnPrimary {
+  background: linear-gradient(90deg, #735c00, #cca72f);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-3px);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: rgb(2, 2, 2);
+  border: 2px solid #c9a84c;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnSecondary:hover {
+  background: #c9a84c;
+  color: #181f21;
+}
+
+/* SERVICES SECTION */
+.servicesSection {
+  padding: 6rem 2rem;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-family: "Noto Serif", serif;
+  font-size: 2.5rem;
+  margin-bottom: 4rem;
+  color: #181f21;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.serviceCard {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.serviceCard:hover {
+  transform: translateY(-10px);
+}
+
+.icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.serviceCard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #181f21;
+}
+
+.serviceCard p {
+  color: #747879;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.footer {
+  background: #181f21;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.footerContent h2 {
+  font-family: "Noto Serif", serif;
+  color: #c9a84c;
+  margin-bottom: 0.5rem;
+}
+
+.footerContent p {
+  color: #747879;
+  margin-bottom: 2rem;
+}
+
+.loginLink {
+  background: none;
+  border: none;
+  color: #747879;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.loginLink:hover {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+  .buttonGroup {
+    flex-direction: column;
+  }
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6%;
+  background: rgba(24, 31, 33, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  z-index: 1000;
+}
+
+.navLogo {
+  font-family: "Noto Serif", serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: white;
+  cursor: pointer;
+}
+
+.navLogo span {
+  color: #c9a84c;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+  margin: 0;
+}
+
+.navLinks li {
+  color: #cfcfcf;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navLinks li:hover {
+  color: #c9a84c;
+}
+
+.btnLogin {
+  background: transparent;
+  border: 1px solid #c9a84c;
+  color: #c9a84c;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnLogin:hover {
+  background: #c9a84c;
+  color: #181f21;
+}
+
+.hero {
+  padding-top: 80px;
+}
+/* --- PROCESO (CÓMO FUNCIONA) --- */
+.processSection {
+  background-color: #181f21;
+  color: white;
+  padding: 6rem 6%;
+  text-align: center;
+}
+
+.processSection .sectionTitle {
+  color: white;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.processStep {
+  text-align: center;
+}
+
+.stepNumber {
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid #c9a84c;
+  color: #c9a84c;
+  font-size: 1.8rem;
+  font-family: "Noto Serif", serif;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.processStep h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #c9a84c;
+}
+
+.processStep p {
+  color: #cfcfcf;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* --- COLECCIÓN DESTACADA --- */
+.featuredSection {
+  padding: 6rem 6%;
+  background-color: #fbfaee;
+}
+
+.featuredHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.featuredGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.featuredCard {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.featuredCard:hover {
+  transform: translateY(-8px);
+}
+
+.featuredCard img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+.featuredInfo {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.featuredInfo h4 {
+  font-family: "Noto Serif", serif;
+  font-size: 1.2rem;
+  color: #181f21;
+  margin-bottom: 0.5rem;
+}
+
+.featuredInfo p {
+  color: #9c8a5b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* --- TESTIMONIOS --- */
+.testimonialsSection {
+  padding: 6rem 6%;
+  background-color: #f5f4e8;
+  text-align: center;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.testimonialCard {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+}
+
+.stars {
+  color: #c9a84c;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.testimonialCard p {
+  color: #5d6466;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.testimonialCard strong {
+  color: #181f21;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- BANNER CTA FINAL --- */
+.ctaBanner {
+  background: linear-gradient(135deg, #c9a84c 0%, #a68b3f 100%);
+  padding: 5rem 6%;
+  text-align: center;
+  color: white;
+}
+
+.ctaBanner h2 {
+  font-family: "Noto Serif", serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.ctaBanner p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.ctaBanner .btnPrimary {
+  background: #181f21;
+  color: white;
+  font-size: 1.1rem;
+  padding: 16px 40px;
+}
+
+.ctaBanner .btnPrimary:hover {
+  background: #232b2e;
+}
+
+/* MEDIA QUERIES EXTRA */
+@media (max-width: 768px) {
+  .featuredHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .ctaBanner h2 {
+    font-size: 2.2rem;
+  }
+}

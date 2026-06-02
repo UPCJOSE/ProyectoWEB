@@ -1,0 +1,380 @@
+/* src/features/catalogo/pages/DashboardCliente.module.css */
+
+.page {
+  --gold: #c9a84c;
+  --gold-light: #d4b98f;
+  --ink: #181f21;
+  --cream: #f8f7f2;
+  --text-muted: #747879;
+
+  /* Aplicamos el fondo crema suave a toda la página */
+  background-color: var(--cream);
+  min-height: 100vh;
+  margin: -2rem; /* Compensa el padding del MainLayout para tomar todo el ancho */
+  padding: 3rem 4rem;
+}
+
+/* ── HERO SECTION ── */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  margin-bottom: 3.5rem;
+  background: radial-gradient(
+    circle at 100% 0%,
+    rgba(201, 168, 76, 0.08) 0%,
+    transparent 40%
+  );
+}
+
+.heroContent {
+  max-width: 600px;
+}
+
+.title {
+  font-family: "Noto Serif", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0;
+}
+
+.titleGold {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.heroLead {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.heroWidget {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.appointmentCard {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(24, 31, 33, 0.06);
+  box-shadow: 0 15px 35px rgba(24, 31, 33, 0.04);
+  position: relative;
+  overflow: hidden;
+  text-align: right;
+}
+
+.appointmentCard::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--gold), var(--gold-light));
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  display: block;
+}
+
+.appointmentValue {
+  margin: 0.5rem 0 0;
+  font-family: "Noto Serif", serif;
+  font-size: 1.8rem;
+  color: var(--ink);
+}
+
+/* ── STEPPER ── */
+.stepperContainer {
+  margin-bottom: 5rem;
+  max-width: 900px;
+}
+
+.sectionKicker {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stepperLine {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(201, 168, 76, 0.3);
+  z-index: 1;
+}
+
+.step {
+  z-index: 2;
+  text-align: center;
+  width: 100px;
+}
+
+.stepIcon {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border: 2px solid rgba(24, 31, 33, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 1.5rem;
+  color: #ccc;
+}
+
+.activeIcon {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  color: white;
+  border-color: var(--gold);
+  box-shadow: 0 10px 20px rgba(201, 168, 76, 0.3);
+}
+
+.stepLabel {
+  font-weight: 800;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+.stepLabelActive {
+  font-weight: 800;
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+/* ── CABECERA DEL CATÁLOGO Y FILTROS ── */
+.catalogHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-family: "Noto Serif", serif;
+  font-size: 2.2rem;
+  color: var(--ink);
+  margin: 0 0 0.5rem 0;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 99px;
+  border: 1px solid rgba(24, 31, 33, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+  width: 300px;
+}
+
+.searchBox i {
+  color: var(--text-muted);
+  margin-right: 10px;
+}
+
+.searchBox input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.filterTabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  background: transparent;
+  border: 1px solid rgba(24, 31, 33, 0.2);
+  padding: 0.6rem 1.5rem;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tabActive {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+}
+
+.tabActive:hover {
+  color: white;
+  background: #232b2e;
+}
+
+/* ── GRID Y TARJETAS ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(24, 31, 33, 0.04);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(24, 31, 33, 0.08);
+  border-color: rgba(201, 168, 76, 0.4);
+}
+
+.imageWrap {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: #f8f7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.type {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+  font-family: "Noto Serif", serif;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 1rem;
+}
+
+.price {
+  font-size: 1.25rem;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.btnGold {
+  border: none;
+  background: var(--ink);
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.btnGold:hover {
+  background: linear-gradient(90deg, #735c00, #cca72f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(201, 168, 76, 0.3);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 2rem;
+    margin: -2rem;
+  }
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  .heroWidget {
+    justify-content: center;
+  }
+  .appointmentCard {
+    text-align: center;
+  }
+  .catalogHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .searchBox {
+    width: 100%;
+  }
+}
