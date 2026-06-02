@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./PanelSastre.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API_BASE =
   (import.meta?.env?.VITE_API_URL && String(import.meta.env.VITE_API_URL)) ||
@@ -65,7 +66,7 @@ export const PanelSastre = () => {
     setError("");
 
     try {
-      const res = await fetch(`${API_BASE}/Pedidos`);
+      const res = await fetchAuth(`${API_BASE}/Pedidos`);
 
       if (!res.ok) {
         const detalle = await res.text();
@@ -113,7 +114,7 @@ export const PanelSastre = () => {
         fechaEntrega: pedido.fechaEntrega,
       };
 
-      const res = await fetch(`${API_BASE}/Pedidos/${id}`, {
+      const res = await fetchAuth(`${API_BASE}/Pedidos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -154,7 +155,7 @@ export const PanelSastre = () => {
     if (!cliente?.id) return;
 
     try {
-      const res = await fetch(`${API_BASE}/Clientes/${cliente.id}`);
+      const res = await fetchAuth(`${API_BASE}/Clientes/${cliente.id}`);
       if (!res.ok) throw new Error();
 
       const data = await res.json();

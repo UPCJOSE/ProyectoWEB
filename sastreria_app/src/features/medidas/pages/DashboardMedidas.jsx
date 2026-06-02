@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import styles from "./DashboardMedidas.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API_BASE =
   (import.meta?.env?.VITE_API_URL && String(import.meta.env.VITE_API_URL)) ||
@@ -68,17 +69,15 @@ export const DashboardMedidas = () => {
     setLoading(true);
     setLoadError("");
     try {
-      // En tu API (según MedidasController) NO existe /Medidas/cliente/{id}.
-      // Intentamos primero por compatibilidad y si falla, hacemos fallback a /Medidas y filtramos.
       let data = null;
-      const resByCliente = await fetch(
+      const resByCliente = await fetchAuth(
         `${API_BASE}/Medidas/cliente/${clienteId}`,
       );
 
       if (resByCliente.ok) {
         data = await resByCliente.json();
       } else {
-        const resAll = await fetch(`${API_BASE}/Medidas`);
+        const resAll = await fetchAuth(`${API_BASE}/Medidas`);
         if (!resAll.ok) {
           const t = await resAll.text();
           throw new Error(t || "No se pudo obtener medidas");
@@ -164,7 +163,7 @@ export const DashboardMedidas = () => {
         : `${API_BASE}/Medidas`;
       const method = medidaId ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      const res = await fetchAuth(url, {
         method: method,
         headers: {
           "Content-Type": "application/json",

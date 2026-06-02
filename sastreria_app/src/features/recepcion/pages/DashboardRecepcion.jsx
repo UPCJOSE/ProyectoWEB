@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardRecepcion.module.css";
 import { useNavigate } from "react-router-dom";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API = "https://localhost:7196/api";
 
@@ -31,7 +32,7 @@ export const DashboardRecepcion = () => {
 
   const cargarClientes = async () => {
     try {
-      const res = await fetch(`${API}/Clientes`);
+      const res = await fetchAuth(`${API}/Clientes`);
       const data = await res.json();
       setClientes(data);
     } catch (error) {
@@ -41,7 +42,7 @@ export const DashboardRecepcion = () => {
 
   const cargarPedidos = async () => {
     try {
-      const res = await fetch(`${API}/Pedidos`);
+      const res = await fetchAuth(`${API}/Pedidos`);
       const data = await res.json();
       setPedidos(data);
     } catch (error) {
@@ -51,7 +52,8 @@ export const DashboardRecepcion = () => {
 
   const cargarPrendas = async () => {
     try {
-      const res = await fetch(`${API}/PrendasCatalogo`);
+      const token = localStorage.getItem("token");
+      const res = await fetchAuth(`${API}/PrendasCatalogo`);
       if (res.ok) {
         const data = await res.json();
         setPrendasCatalogo(data);
@@ -95,11 +97,8 @@ export const DashboardRecepcion = () => {
 
       const method = clienteEdit ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      const res = await fetchAuth(url, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(payload),
       });
 
@@ -119,7 +118,12 @@ export const DashboardRecepcion = () => {
       limpiarFormulario();
       setVistaAct("directorio");
     } catch {
-      Swal.fire("Error", "No se pudo guardar el cliente", "error");
+      if (
+        error.message !== "Token expirado o inexistente" &&
+        error.message !== "Petición rechazada por el servidor"
+      ) {
+        Swal.fire("Error", "No se pudo guardar el cliente", "error");
+      }
     }
   };
 
@@ -147,7 +151,7 @@ export const DashboardRecepcion = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      await fetch(`${API}/Clientes/${id}`, {
+      await fetchAuth(`${API}/Clientes/${id}`, {
         method: "DELETE",
       });
 
@@ -243,7 +247,7 @@ export const DashboardRecepcion = () => {
         fechaEntrega: formValues.fechaEntrega,
       };
 
-      const res = await fetch(`${API}/Pedidos`, {
+      const res = await fetchAuth(`${API}/Pedidos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -300,7 +304,7 @@ export const DashboardRecepcion = () => {
         fechaEntrega: pedido.fechaEntrega,
       };
 
-      const res = await fetch(`${API}/Pedidos/${pedido.id}`, {
+      const res = await fetchAuth(`${API}/Pedidos/${pedido.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

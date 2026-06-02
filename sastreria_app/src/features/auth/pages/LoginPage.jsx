@@ -59,11 +59,12 @@ export const LoginPage = () => {
 
         if (!response.ok) throw new Error("Credenciales incorrectas");
 
-        const usuario = await response.json();
-        localStorage.setItem("usuario", JSON.stringify(usuario));
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("usuario", JSON.stringify(data));
 
         const nombreRol =
-          usuario.rol?.nombre?.toLowerCase() || usuario.rol?.toLowerCase();
+          data.rol?.nombre?.toLowerCase() || data.rol?.toLowerCase();
 
         // Redirección inteligente
         if (nombreRol === "administrador" || nombreRol === "admin") {

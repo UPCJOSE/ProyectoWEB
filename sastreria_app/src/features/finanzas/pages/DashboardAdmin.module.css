@@ -15,12 +15,20 @@
   --radius-lg: 20px;
   --radius-md: 14px;
   --shadow-soft: 0 24px 64px rgba(24, 31, 33, 0.08);
-  --shadow-card: 0 22px 60px rgba(24, 31, 33, 0.10);
+  --shadow-card: 0 22px 60px rgba(24, 31, 33, 0.1);
 
   padding: 2.25rem 0 4rem;
   background:
-    radial-gradient(ellipse 70% 45% at 100% 0%, rgba(201, 168, 76, 0.07), transparent),
-    radial-gradient(ellipse 55% 40% at 0% 100%, rgba(24, 31, 33, 0.04), transparent),
+    radial-gradient(
+      ellipse 70% 45% at 100% 0%,
+      rgba(201, 168, 76, 0.07),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 0% 100%,
+      rgba(24, 31, 33, 0.04),
+      transparent
+    ),
     var(--cream);
 }
 
@@ -50,7 +58,7 @@
   gap: 1.5rem;
   padding-bottom: 2.5rem;
   margin-bottom: 2.75rem;
-  border-bottom: 1px solid rgba(115, 92, 0, 0.10);
+  border-bottom: 1px solid rgba(115, 92, 0, 0.1);
 }
 
 .headerMain {
@@ -473,7 +481,9 @@
   background: white;
   font-size: 0.9rem;
   color: var(--ink);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .dateInput:focus {

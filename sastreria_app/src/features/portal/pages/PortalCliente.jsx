@@ -56,66 +56,31 @@ export const PortalCliente = () => {
             </p>
           </header>
 
-          <div className={styles.grid}>
-            <article
-              className={styles.card}
-              role="button"
-              tabIndex={0}
-              onClick={irA("/login")}
-              onKeyDown={onCardKeyDown("/login")}
-            >
-              <div className={styles.cardIconWrap}>
-                <span className={styles.cardIcon} aria-hidden>
-                  ✂
-                </span>
-              </div>
-              <span className={styles.cardTag}>A medida</span>
-              <h3 className={styles.cardTitle}>Registrar Confección</h3>
-              <p className={styles.cardText}>
-                Solicita una prenda hecha a medida, agenda toma de medidas y
-                comienza tu proceso de confección.
-              </p>
-              <button
-                type="button"
-                className={styles.cardBtn}
-                onClick={irA("/login")}
-              >
-                Entrar
-                <span className={styles.cardBtnArrow} aria-hidden>
-                  →
-                </span>
-              </button>
-            </article>
+        <div className={styles.grid}>
+          <div className={styles.card}>
+            <div className={styles.icon}>✂</div>
 
-            <article
-              className={styles.card}
-              role="button"
-              tabIndex={0}
-              onClick={irA("/home")}
-              onKeyDown={onCardKeyDown("/home")}
-            >
-              <div className={`${styles.cardIconWrap} ${styles.cardIconWrapAlt}`}>
-                <span className={`${styles.cardIcon} ${styles.cardIconEmoji}`} aria-hidden>
-                  🤵
-                </span>
-              </div>
-              <span className={styles.cardTag}>Colección</span>
-              <h3 className={styles.cardTitle}>Alquilar</h3>
-              <p className={styles.cardText}>
-                Explora nuestra colección premium disponible para alquiler
-                inmediato.
-              </p>
-              <button
-                type="button"
-                className={styles.cardBtn}
-                onClick={irA("/home")}
-              >
-                Entrar
-                <span className={styles.cardBtnArrow} aria-hidden>
-                  →
-                </span>
-              </button>
-            </article>
+            <h2>Registrar Confección</h2>
+
+            <p>
+              Solicita una prenda hecha a medida, agenda toma de medidas y
+              comienza tu proceso de confección.
+            </p>
+
+            <button onClick={() => navigate("/login")}>Entrar</button>
+          </div>
+
+          <div className={styles.card}>
+            <div className={styles.icon}>🤵</div>
+
+            <h2>Alquilar</h2>
+
+            <p>
+              Explora nuestra colección premium disponible para alquiler
+              inmediato.
+            </p>
+
+            <button onClick={() => navigate("/catalogo-publico")}>Entrar</button>
           </div>
         </div>
       </main>

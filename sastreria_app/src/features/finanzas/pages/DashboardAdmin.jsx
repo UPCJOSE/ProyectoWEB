@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardAdmin.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 export const DashboardAdmin = () => {
   const [pagos, setPagos] = useState([]);
@@ -12,8 +13,8 @@ export const DashboardAdmin = () => {
   const cargarDatos = async () => {
     try {
       const [respPagos, respEgresos] = await Promise.all([
-        fetch(`${API}/Pagos`),
-        fetch(`${API}/Egresos`),
+        fetchAuth(`${API}/Pagos`),
+        fetchAuth(`${API}/Egresos`),
       ]);
 
       const pagosData = await respPagos.json();
@@ -113,7 +114,7 @@ export const DashboardAdmin = () => {
         fechaPago: new Date().toISOString(),
       };
 
-      const respuesta = await fetch(`${API}/Pagos`, {
+      const respuesta = await fetchAuth(`${API}/Pagos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +186,7 @@ export const DashboardAdmin = () => {
         fecha: new Date().toISOString(),
       };
 
-      const respuesta = await fetch(`${API}/Egresos`, {
+      const respuesta = await fetchAuth(`${API}/Egresos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -233,9 +234,6 @@ export const DashboardAdmin = () => {
           <h1 className={styles.title}>
             Dashboard <span className={styles.titleGold}>Financiero</span>
           </h1>
-          <p className={styles.subtitle}>
-            Control general de caja, ingresos por pedidos e inventario.
-          </p>
         </div>
 
         <div className={styles.headerBadge}>
