@@ -31,7 +31,7 @@ export const LoginPage = () => {
             nombre: nombre,
             correo: email,
             password: password,
-            rol: 3,
+            rol: 1,
           }),
         });
 
