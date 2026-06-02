@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import styles from "./ClienteDetalle.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API = "https://localhost:7196/api/Clientes";
 
@@ -29,7 +30,7 @@ export const ClienteDetalle = () => {
 
   const cargarCliente = async (clienteId) => {
     try {
-      const res = await fetch(`${API}/${clienteId}`);
+      const res = await fetchAuth(`${API}/${clienteId}`);
       const data = await res.json();
       setCliente(data);
     } catch (error) {

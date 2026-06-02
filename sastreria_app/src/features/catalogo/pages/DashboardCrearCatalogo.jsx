@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardCrearCatalogo.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API = "https://localhost:7196/api/PrendasCatalogo";
 
@@ -22,7 +23,7 @@ export const DashboardCrearCatalogo = () => {
 
   const cargarPrendas = async () => {
     try {
-      const res = await fetch(API);
+      const res = await fetchAuth(API);
       const data = await res.json();
 
       setPrendas(data);
@@ -59,7 +60,7 @@ export const DashboardCrearCatalogo = () => {
         formData.append("imagen", imagen);
       }
 
-      const res = await fetch(API, {
+      const res = await fetchAuth(API, {
         method: "POST",
         body: formData,
       });
@@ -101,7 +102,7 @@ export const DashboardCrearCatalogo = () => {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await fetch(`${API}/${id}`, {
+      const res = await fetchAuth(`${API}/${id}`, {
         method: "DELETE",
       });
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./DashboardClientes.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API = "https://localhost:7196/api/Clientes";
 
@@ -15,7 +16,7 @@ export const DashboardClientes = () => {
 
   const cargarClientes = async () => {
     try {
-      const res = await fetch(API);
+      const res = await fetchAuth(API);
 
       const data = await res.json();
 

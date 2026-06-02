@@ -1,6 +1,7 @@
 // src/features/catalogo/pages/DashboardCliente.jsx
 import { useState, useEffect } from "react";
 import styles from "./DashboardCliente.module.css";
+import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API = "https://localhost:7196/api/PrendasCatalogo";
 
@@ -8,7 +9,6 @@ export const DashboardCliente = () => {
   const [prendas, setPrendas] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // NUEVOS ESTADOS PARA FILTROS Y BÚSQUEDA
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
 
@@ -24,7 +24,7 @@ export const DashboardCliente = () => {
   useEffect(() => {
     const cargarPrendas = async () => {
       try {
-        const res = await fetch(API);
+        const res = await fetchAuth(API);
         if (!res.ok) throw new Error("Error en la respuesta del servidor");
         const data = await res.json();
         const activas = data.filter((p) => p.activa);
@@ -59,7 +59,6 @@ export const DashboardCliente = () => {
     }
   };
 
-  // LÓGICA DE FILTRADO
   const prendasFiltradas = prendas.filter((prenda) => {
     const coincideCategoria =
       categoriaActiva === "Todos" ||
@@ -71,9 +70,8 @@ export const DashboardCliente = () => {
   });
 
   return (
-    // IMPORTANTE: Agregamos styles.page aquí para que carguen las variables de color
     <div className={`animate__animated animate__fadeIn ${styles.page}`}>
-      {/* ── HERO SECTION REDISEÑADO ── */}
+      {/* ── HERO SECTION ── */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.title}>
