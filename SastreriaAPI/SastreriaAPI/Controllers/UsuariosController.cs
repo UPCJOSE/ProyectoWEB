@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.Models;
+using BCrypt.Net;
 
 namespace SastreriaAPI.Controllers
 {
@@ -39,6 +40,11 @@ namespace SastreriaAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            if (!string.IsNullOrEmpty(usuario.Password))
+            {
+                usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
+            }
+
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
@@ -69,6 +75,29 @@ namespace SastreriaAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+        [AllowAnonymous] 
+        [HttpPost("migrar")]
+        public async Task<IActionResult> MigrarPasswords()
+        {
+            var usuarios = await _context.Usuarios.ToListAsync();
+            int actualizados = 0;
+
+            foreach (var usuario in usuarios)
+            {
+                if (!string.IsNullOrEmpty(usuario.Password) && !usuario.Password.StartsWith("$"))
+                {
+                    usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
+                    actualizados++;
+                }
+            }
+
+            if (actualizados > 0)
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(new { Mensaje = $"Proceso terminado. Se encriptaron {actualizados} contraseñas antiguas." });
         }
     }
 }

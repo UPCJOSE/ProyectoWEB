@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.DTOs;
 using SastreriaAPI.JWT;
+using BCrypt.Net;
 
 namespace SastreriaAPI.Controllers
 {
@@ -23,9 +24,14 @@ namespace SastreriaAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.Correo == loginDto.Email && u.Password == loginDto.Password);
+                .Include(u => u.Rol)
+                .FirstOrDefaultAsync(u => u.Correo == loginDto.Email);
 
             if (usuario == null) return Unauthorized("Credenciales inválidas");
+
+            bool passencryp = BCrypt.Net.BCrypt.Verify(loginDto.Password, usuario.Password);
+
+            if (!passencryp) return Unauthorized("Credenciales inválidas");
 
             var token = _jwtGenerador.GenerateToken(usuario.Correo);
 
@@ -37,7 +43,7 @@ namespace SastreriaAPI.Controllers
                 usuario.Correo,
                 rol = new
                 {
-                    nombre = usuario.Rol.ToString()
+                    nombre = usuario.Rol.ToString() ?? "Usuario"
                 }
             });
         }
