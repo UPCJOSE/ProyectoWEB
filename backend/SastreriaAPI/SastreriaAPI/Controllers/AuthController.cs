@@ -24,7 +24,6 @@ namespace SastreriaAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var usuario = await _context.Usuarios
-                .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.Correo == loginDto.Email);
 
             if (usuario == null) return Unauthorized("Credenciales inválidas");

@@ -76,7 +76,8 @@ namespace SastreriaAPI.Controllers
 
             return NoContent();
         }
-        [AllowAnonymous] 
+        // En caso de que se necesite migrar contraseñas no hasheadas a bcrypt, se puede usar este método. Se recomienda eliminarlo después de su uso para evitar riesgos
+        /*[AllowAnonymous] 
         [HttpPost("migrar")]
         public async Task<IActionResult> MigrarPasswords()
         {
@@ -97,7 +98,7 @@ namespace SastreriaAPI.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return Ok(new { Mensaje = $"Proceso terminado. Se encriptaron {actualizados} contraseñas antiguas." });
-        }
+            return Ok(new { Mensaje = $"Proceso terminado" });
+        }*/
     }
 }

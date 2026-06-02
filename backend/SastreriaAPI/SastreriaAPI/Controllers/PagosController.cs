@@ -55,19 +55,5 @@ namespace SastreriaAPI.Controllers
 
             return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePago(int id)
-        {
-            var pago = await _context.Pagos.FindAsync(id);
-
-            if (pago == null)
-                return NotFound();
-
-            _context.Pagos.Remove(pago);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
     }
 }
