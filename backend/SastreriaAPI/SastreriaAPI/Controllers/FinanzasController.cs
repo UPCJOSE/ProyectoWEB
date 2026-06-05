@@ -23,7 +23,7 @@ namespace SastreriaAPI.Controllers
         {
             var pedidos = await _context.Pedidos
                 .Include(p => p.PrendaCatalogo)
-                .Where(p => p.ClienteId == clienteId)
+                .Where(p => p.ClienteId == clienteId && p.SaldoPendiente > 0)
                 .OrderByDescending(p => p.FechaPedido)
                 .Select(p => new
                 {

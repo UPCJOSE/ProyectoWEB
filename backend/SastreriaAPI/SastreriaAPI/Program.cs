@@ -122,6 +122,162 @@ using (var scope = app.Services.CreateScope())
 
     if (usuariosSinHash.Count > 0)
         context.SaveChanges();
+
+    const string demoMarker = "CAM-001 Camiseta básica algodón";
+    if (!context.PrendasCatalogo.Any(p => p.Nombre == demoMarker))
+    {
+        context.PrendasCatalogo.AddRange(
+            // Camisetas / camisas
+            new PrendaCatalogo
+            {
+                Nombre = "CAM-001 Camiseta básica algodón",
+                TipoPrenda = "Camisa",
+                Talla = "M",
+                Color = "Blanco",
+                Cantidad = 18,
+                Estado = "disponible",
+                PrecioBase = 45000,
+                PrecioAlquiler = 12000,
+                ConsumoTelaAprox = 1.2m,
+                ImagenUrl = "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "CAM-002 Camiseta polo clásica",
+                TipoPrenda = "Camisa",
+                Talla = "L",
+                Color = "Azul marino",
+                Cantidad = 12,
+                Estado = "disponible",
+                PrecioBase = 52000,
+                PrecioAlquiler = 15000,
+                ConsumoTelaAprox = 1.3m,
+                ImagenUrl = "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "CAM-003 Camisa formal oxford",
+                TipoPrenda = "Camisa",
+                Talla = "M",
+                Color = "Blanco",
+                Cantidad = 8,
+                Estado = "disponible",
+                PrecioBase = 118000,
+                PrecioAlquiler = 32000,
+                ConsumoTelaAprox = 2.0m,
+                ImagenUrl = "https://images.unsplash.com/photo-1596755094514-f87e34085b56?w=400"
+            },
+            // Pantalones
+            new PrendaCatalogo
+            {
+                Nombre = "PAN-001 Pantalón vestir slim",
+                TipoPrenda = "Pantalón",
+                Talla = "32",
+                Color = "Gris",
+                Cantidad = 7,
+                Estado = "disponible",
+                PrecioBase = 185000,
+                PrecioAlquiler = 48000,
+                ConsumoTelaAprox = 1.8m,
+                ImagenUrl = "https://images.unsplash.com/photo-1473966968600-fa801b279a0?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "PAN-002 Jean clásico recto",
+                TipoPrenda = "Pantalón",
+                Talla = "30",
+                Color = "Azul oscuro",
+                Cantidad = 14,
+                Estado = "disponible",
+                PrecioBase = 98000,
+                PrecioAlquiler = 28000,
+                ConsumoTelaAprox = 1.6m,
+                ImagenUrl = "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "PAN-003 Pantalón chino",
+                TipoPrenda = "Pantalón",
+                Talla = "M",
+                Color = "Beige",
+                Cantidad = 9,
+                Estado = "en alquiler",
+                PrecioBase = 89000,
+                PrecioAlquiler = 25000,
+                ConsumoTelaAprox = 1.7m,
+                ImagenUrl = "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400"
+            },
+            // Faldas
+            new PrendaCatalogo
+            {
+                Nombre = "FAL-001 Falda plisada",
+                TipoPrenda = "Falda",
+                Talla = "S",
+                Color = "Negro",
+                Cantidad = 10,
+                Estado = "disponible",
+                PrecioBase = 72000,
+                PrecioAlquiler = 22000,
+                ConsumoTelaAprox = 1.4m,
+                ImagenUrl = "https://images.unsplash.com/photo-1583498258688-c9893971f9?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "FAL-002 Falda midi lino",
+                TipoPrenda = "Falda",
+                Talla = "M",
+                Color = "Crema",
+                Cantidad = 6,
+                Estado = "disponible",
+                PrecioBase = 85000,
+                PrecioAlquiler = 26000,
+                ConsumoTelaAprox = 1.5m,
+                ImagenUrl = "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400"
+            },
+            // Suéteres (tipo Blusa en el catálogo académico)
+            new PrendaCatalogo
+            {
+                Nombre = "SUE-001 Suéter cuello redondo",
+                TipoPrenda = "Blusa",
+                Talla = "M",
+                Color = "Gris jaspe",
+                Cantidad = 11,
+                Estado = "disponible",
+                PrecioBase = 92000,
+                PrecioAlquiler = 27000,
+                ConsumoTelaAprox = 2.2m,
+                ImagenUrl = "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "SUE-002 Suéter cuello alto",
+                TipoPrenda = "Blusa",
+                Talla = "L",
+                Color = "Vino tinto",
+                Cantidad = 5,
+                Estado = "en confección",
+                PrecioBase = 105000,
+                PrecioAlquiler = 30000,
+                ConsumoTelaAprox = 2.4m,
+                ImagenUrl = "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400"
+            },
+            new PrendaCatalogo
+            {
+                Nombre = "BLU-001 Blusa seda elegante",
+                TipoPrenda = "Blusa",
+                Talla = "S",
+                Color = "Blanco",
+                Cantidad = 8,
+                Estado = "disponible",
+                PrecioBase = 78000,
+                PrecioAlquiler = 24000,
+                ConsumoTelaAprox = 1.6m,
+                ImagenUrl = "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=400"
+            }
+        );
+
+        context.SaveChanges();
+    }
 }
 
 app.UseCors("ReactPolicy");

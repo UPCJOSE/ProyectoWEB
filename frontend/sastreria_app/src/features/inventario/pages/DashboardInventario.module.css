@@ -1,3 +1,54 @@
+.tableScroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 960px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(24, 31, 33, 0.08);
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+.table th {
+  background: rgba(201, 168, 76, 0.12);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.table tr:hover td {
+  background: rgba(251, 250, 238, 0.6);
+}
+
+.photoCell {
+  width: 72px;
+  padding: 0.5rem 0.65rem;
+}
+
+.cellActions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  min-width: 150px;
+}
+
+.cellActions button {
+  flex-shrink: 0;
+}
+
 .previewBox {
   margin-top: 0.75rem;
   width: 100%;

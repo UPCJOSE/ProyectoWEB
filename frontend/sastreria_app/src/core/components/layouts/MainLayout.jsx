@@ -215,16 +215,6 @@ export const MainLayout = () => {
                 <hr className={styles.dropdownDivider} />
 
                 <button
-                  className={styles.dropdownItem}
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    alert("Abre aquí tu configuración o panel");
-                  }}
-                >
-                  <i className="bi bi-gear"></i> Configuración
-                </button>
-
-                <button
                   className={`${styles.dropdownItem} ${styles.textDanger}`}
                   onClick={handleLogout}
                 >

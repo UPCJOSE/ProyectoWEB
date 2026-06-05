@@ -165,7 +165,7 @@ export const DashboardOrdenes = () => {
       tipoBoton: form.tipoBoton,
       observaciones: form.observaciones,
       sastreId: form.sastreId ? Number(form.sastreId) : null,
-      estado: form.estado,
+      estado: editId ? form.estado : "pendiente",
     };
 
     try {
@@ -319,15 +319,26 @@ export const DashboardOrdenes = () => {
             </div>
             <div className={styles.field}>
               <label>Estado</label>
-              <select name="estado" value={form.estado} onChange={handleChange}>
-                {estadosPermitidos.map((e) => (
-                  <option key={e} value={e}>{e}</option>
-                ))}
-              </select>
-              {!clienteTieneMedidas && (
-                <small style={{ color: "#747879" }}>
-                  Solo pendiente hasta registrar medidas del cliente.
-                </small>
+              {editId ? (
+                <>
+                  <select name="estado" value={form.estado} onChange={handleChange}>
+                    {estadosPermitidos.map((e) => (
+                      <option key={e} value={e}>{e}</option>
+                    ))}
+                  </select>
+                  {!clienteTieneMedidas && (
+                    <small style={{ color: "#747879" }}>
+                      Solo pendiente hasta registrar medidas del cliente.
+                    </small>
+                  )}
+                </>
+              ) : (
+                <>
+                  <input type="text" value="pendiente" readOnly disabled />
+                  <small style={{ color: "#747879" }}>
+                    Las órdenes nuevas siempre inician en pendiente.
+                  </small>
+                </>
               )}
             </div>
             <div className={styles.field} style={{ gridColumn: "1 / -1" }}>

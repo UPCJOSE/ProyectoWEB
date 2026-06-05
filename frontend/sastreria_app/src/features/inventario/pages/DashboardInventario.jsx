@@ -328,54 +328,58 @@ export const DashboardInventario = () => {
         ) : prendas.length === 0 ? (
           <p className={styles.empty}>No hay prendas en inventario.</p>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Foto</th>
-                <th>Referencia</th>
-                <th>Tipo</th>
-                <th>Talla</th>
-                <th>Color</th>
-                <th>Cantidad</th>
-                <th>Estado</th>
-                <th>P. Venta</th>
-                <th>P. Alquiler</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {prendas.map((p) => (
-                <tr key={p.id}>
-                  <td>
-                    <ImagenPrenda
-                      url={p.imagenUrl}
-                      alt={p.nombre}
-                      tipo={p.tipoPrenda}
-                      variant="thumb"
-                    />
-                  </td>
-                  <td>{p.nombre}</td>
-                  <td>{p.tipoPrenda}</td>
-                  <td>{p.talla || "—"}</td>
-                  <td>{p.color || "—"}</td>
-                  <td>{p.cantidad}</td>
-                  <td>{p.estado}</td>
-                  <td>${Number(p.precioBase).toLocaleString("es-CO")}</td>
-                  <td>${Number(p.precioAlquiler).toLocaleString("es-CO")}</td>
-                  <td className={styles.actions}>
-                    <button className={styles.btnSecondary} onClick={() => editarPrenda(p)}>
-                      Editar
-                    </button>
-                    {esAdmin && (
-                      <button className={styles.btnDanger} onClick={() => eliminarPrenda(p.id)}>
-                        Eliminar
-                      </button>
-                    )}
-                  </td>
+          <div className={invStyles.tableScroll}>
+            <table className={invStyles.table}>
+              <thead>
+                <tr>
+                  <th>Foto</th>
+                  <th>Referencia</th>
+                  <th>Tipo</th>
+                  <th>Talla</th>
+                  <th>Color</th>
+                  <th>Cantidad</th>
+                  <th>Estado</th>
+                  <th>P. Venta</th>
+                  <th>P. Alquiler</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {prendas.map((p) => (
+                  <tr key={p.id}>
+                    <td className={invStyles.photoCell}>
+                      <ImagenPrenda
+                        url={p.imagenUrl}
+                        alt={p.nombre}
+                        tipo={p.tipoPrenda}
+                        variant="thumb"
+                      />
+                    </td>
+                    <td>{p.nombre}</td>
+                    <td>{p.tipoPrenda}</td>
+                    <td>{p.talla || "—"}</td>
+                    <td>{p.color || "—"}</td>
+                    <td>{p.cantidad}</td>
+                    <td>{p.estado}</td>
+                    <td>${Number(p.precioBase).toLocaleString("es-CO")}</td>
+                    <td>${Number(p.precioAlquiler).toLocaleString("es-CO")}</td>
+                    <td>
+                      <div className={invStyles.cellActions}>
+                        <button className={styles.btnSecondary} onClick={() => editarPrenda(p)}>
+                          Editar
+                        </button>
+                        {esAdmin && (
+                          <button className={styles.btnDanger} onClick={() => eliminarPrenda(p.id)}>
+                            Eliminar
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 

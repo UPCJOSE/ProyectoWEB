@@ -159,3 +159,4 @@ C:\Users\Jlope\Documents\UPC-1 2026 Formateo\WEB\Proyecto\ProyectoWEB\backend\Sa
 C:\Users\Jlope\Documents\UPC-1 2026 Formateo\WEB\Proyecto\ProyectoWEB\backend\SastreriaAPI\SastreriaAPI\obj\Debug\net10.0\SastreriaAPI.pdb
 C:\Users\Jlope\Documents\UPC-1 2026 Formateo\WEB\Proyecto\ProyectoWEB\backend\SastreriaAPI\SastreriaAPI\obj\Debug\net10.0\SastreriaAPI.genruntimeconfig.cache
 C:\Users\Jlope\Documents\UPC-1 2026 Formateo\WEB\Proyecto\ProyectoWEB\backend\SastreriaAPI\SastreriaAPI\obj\Debug\net10.0\ref\SastreriaAPI.dll
+C:\Users\Jlope\Documents\UPC-1 2026 Formateo\WEB\Proyecto\ProyectoWEB\backend\SastreriaAPI\SastreriaAPI\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

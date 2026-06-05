@@ -104,23 +104,7 @@ namespace SastreriaAPI.Controllers
             _context.Pagos.Add(pago);
 
             if (pedido != null && pedido.SaldoPendiente <= 0)
-            {
-                var referencia = $"ORD-{pedido.Id}";
-                var pagosAsociados = await _context.Pagos
-                    .Where(pg => pg.PedidoId == pedido.Id)
-                    .ToListAsync();
-
-                foreach (var pg in pagosAsociados)
-                {
-                    pg.Referencia = referencia;
-                    pg.PedidoId = null;
-                }
-
-                pago.PedidoId = null;
-                pago.Referencia = referencia;
-
-                _context.Pedidos.Remove(pedido);
-            }
+                pedido.Estado = "entregada";
 
             await _context.SaveChangesAsync();
 

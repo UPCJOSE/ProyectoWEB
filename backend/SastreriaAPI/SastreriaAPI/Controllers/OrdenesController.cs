@@ -102,7 +102,7 @@ namespace SastreriaAPI.Controllers
                 PrecioUnitario = precioUnitario,
                 CostoTotal = precioUnitario,
                 SaldoPendiente = precioUnitario,
-                Estado = dto.Estado,
+                Estado = "pendiente",
                 FechaEntrega = dto.FechaEntrega
             };
 
