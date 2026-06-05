@@ -51,6 +51,38 @@ namespace SastreriaAPI.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("SastreriaAPI.Models.DetalleFactura", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FacturaId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("PrendaId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacturaId");
+
+                    b.HasIndex("PrendaId");
+
+                    b.ToTable("DetalleFacturas");
+                });
+
             modelBuilder.Entity("SastreriaAPI.Models.Egreso", b =>
                 {
                     b.Property<int>("Id")
@@ -76,6 +108,52 @@ namespace SastreriaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Egresos");
+                });
+
+            modelBuilder.Entity("SastreriaAPI.Models.Factura", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("IVA")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("NumeroFactura")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TipoOperacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Facturas");
                 });
 
             modelBuilder.Entity("SastreriaAPI.Models.Material", b =>
@@ -211,6 +289,9 @@ namespace SastreriaAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("FacturaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("datetime2");
 
@@ -221,10 +302,15 @@ namespace SastreriaAPI.Migrations
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PedidoId")
+                    b.Property<int?>("PedidoId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Referencia")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FacturaId");
 
                     b.HasIndex("PedidoId");
 
@@ -239,8 +325,14 @@ namespace SastreriaAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CantidadBotones")
+                        .HasColumnType("int");
+
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("ConsumoTela")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("CostoTotal")
                         .HasColumnType("decimal(18,2)");
@@ -258,14 +350,32 @@ namespace SastreriaAPI.Migrations
                     b.Property<int?>("MedidaPrendaId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("MetrosTela")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Observaciones")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PrendaCatalogoId")
+                    b.Property<int?>("PrendaCatalogoId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("SaldoPendiente")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("SastreId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TipoBoton")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoPrenda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -274,6 +384,8 @@ namespace SastreriaAPI.Migrations
                     b.HasIndex("MedidaPrendaId");
 
                     b.HasIndex("PrendaCatalogoId");
+
+                    b.HasIndex("SastreId");
 
                     b.ToTable("Pedidos");
                 });
@@ -289,6 +401,20 @@ namespace SastreriaAPI.Migrations
                     b.Property<bool>("Activa")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ConsumoTelaAprox")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImagenUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -296,8 +422,15 @@ namespace SastreriaAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("PrecioAlquiler")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("PrecioBase")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Talla")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipoPrenda")
                         .IsRequired()
@@ -315,6 +448,9 @@ namespace SastreriaAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Correo")
                         .IsRequired()
@@ -334,6 +470,44 @@ namespace SastreriaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("SastreriaAPI.Models.DetalleFactura", b =>
+                {
+                    b.HasOne("SastreriaAPI.Models.Factura", "Factura")
+                        .WithMany("Detalles")
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SastreriaAPI.Models.PrendaCatalogo", "Prenda")
+                        .WithMany()
+                        .HasForeignKey("PrendaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Factura");
+
+                    b.Navigation("Prenda");
+                });
+
+            modelBuilder.Entity("SastreriaAPI.Models.Factura", b =>
+                {
+                    b.HasOne("SastreriaAPI.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SastreriaAPI.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("SastreriaAPI.Models.Medida", b =>
@@ -368,11 +542,17 @@ namespace SastreriaAPI.Migrations
 
             modelBuilder.Entity("SastreriaAPI.Models.Pago", b =>
                 {
+                    b.HasOne("SastreriaAPI.Models.Factura", "Factura")
+                        .WithMany()
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("SastreriaAPI.Models.Pedido", "Pedido")
                         .WithMany()
                         .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Factura");
 
                     b.Navigation("Pedido");
                 });
@@ -392,14 +572,20 @@ namespace SastreriaAPI.Migrations
                     b.HasOne("SastreriaAPI.Models.PrendaCatalogo", "PrendaCatalogo")
                         .WithMany()
                         .HasForeignKey("PrendaCatalogoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SastreriaAPI.Models.Usuario", "Sastre")
+                        .WithMany()
+                        .HasForeignKey("SastreId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Cliente");
 
                     b.Navigation("MedidaPrenda");
 
                     b.Navigation("PrendaCatalogo");
+
+                    b.Navigation("Sastre");
                 });
 
             modelBuilder.Entity("SastreriaAPI.Models.Cliente", b =>
@@ -409,6 +595,11 @@ namespace SastreriaAPI.Migrations
                     b.Navigation("MedidasPrenda");
 
                     b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("SastreriaAPI.Models.Factura", b =>
+                {
+                    b.Navigation("Detalles");
                 });
 #pragma warning restore 612, 618
         }

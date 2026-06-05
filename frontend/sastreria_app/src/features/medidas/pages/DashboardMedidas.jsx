@@ -6,7 +6,7 @@ import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API_BASE =
   (import.meta?.env?.VITE_API_URL && String(import.meta.env.VITE_API_URL)) ||
-  "https://localhost:7196/api";
+  "http://localhost:5000/api";
 
 const FIELD_META = {
   pecho: { label: "Pecho", hint: "cm" },

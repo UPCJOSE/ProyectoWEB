@@ -2,13 +2,23 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardAdmin.module.css";
 import { fetchAuth } from "../../../core/utils/fetchAuth";
+import { BuscarCliente } from "../../../core/components/BuscarCliente";
+
+const API = "http://localhost:5000/api";
 
 export const DashboardAdmin = () => {
   const [pagos, setPagos] = useState([]);
   const [egresos, setEgresos] = useState([]);
+  const [clientePago, setClientePago] = useState(null);
+  const [pedidosCliente, setPedidosCliente] = useState([]);
   const [cargando, setCargando] = useState(true);
-
-  const API = "https://localhost:7196/api";
+  const [modalPago, setModalPago] = useState(false);
+  const [pagoForm, setPagoForm] = useState({
+    clienteId: "",
+    pedidoId: "",
+    metodoPago: "",
+    monto: "",
+  });
 
   const cargarDatos = async () => {
     try {
@@ -17,14 +27,10 @@ export const DashboardAdmin = () => {
         fetchAuth(`${API}/Egresos`),
       ]);
 
-      const pagosData = await respPagos.json();
-      const egresosData = await respEgresos.json();
-
-      setPagos(pagosData);
-      setEgresos(egresosData);
+      setPagos(await respPagos.json());
+      setEgresos(await respEgresos.json());
     } catch (error) {
       console.error("Error cargando datos:", error);
-
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -40,90 +46,67 @@ export const DashboardAdmin = () => {
     cargarDatos();
   }, []);
 
-  const totalIngresos = pagos.reduce(
-    (acc, curr) => acc + Number(curr.monto),
-    0,
-  );
-
-  const totalEgresos = egresos.reduce(
-    (acc, curr) => acc + Number(curr.costo),
-    0,
-  );
-
-  const saldoFinal = totalIngresos - totalEgresos;
-
-  const formatoMoneda = (valor) => {
-    return new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-      minimumFractionDigits: 0,
-    }).format(valor);
+  const cargarPedidosCliente = async (clienteId) => {
+    if (!clienteId) {
+      setPedidosCliente([]);
+      return;
+    }
+    try {
+      const res = await fetchAuth(`${API}/Finanzas/pedidos-cliente/${clienteId}`);
+      if (res.ok) setPedidosCliente(await res.json());
+      else setPedidosCliente([]);
+    } catch {
+      setPedidosCliente([]);
+    }
   };
 
-  const registrarPago = async () => {
-    const { value: formValues } = await Swal.fire({
-      title: "Registrar Pago",
-      html: `
-        <input id="pedido" class="swal2-input" placeholder="ID Pedido">
+  const abrirModalPago = () => {
+    setPagoForm({ clienteId: "", pedidoId: "", metodoPago: "", monto: "" });
+    setClientePago(null);
+    setPedidosCliente([]);
+    setModalPago(true);
+  };
 
-        <select
-          id="metodo"
-          class="swal2-select"
-          style="display:flex; margin:1em auto; width:73%; color:#545454;"
-        >
-          <option value="" disabled selected>Seleccione el método</option>
-          <option value="Efectivo">Efectivo</option>
-          <option value="Transferencia">Transferencia</option>
-          <option value="Tarjeta">Tarjeta</option>
-        </select>
+  const onClientePagoSelect = async (cliente) => {
+    setClientePago(cliente);
+    const clienteId = cliente?.id || "";
+    setPagoForm((f) => ({ ...f, clienteId, pedidoId: "", monto: "" }));
+    await cargarPedidosCliente(clienteId);
+  };
 
-        <input id="monto" type="number" class="swal2-input" placeholder="Monto">
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: "Guardar",
-      confirmButtonColor: "#c5a880",
-      cancelButtonText: "Cancelar",
-      cancelButtonColor: "#181f21",
+  const onPedidoPagoChange = (pedidoId) => {
+    const pedido = pedidosCliente.find((p) => String(p.id) === String(pedidoId));
+    setPagoForm((f) => ({
+      ...f,
+      pedidoId,
+      monto: pedido ? String(pedido.saldoPendiente) : "",
+    }));
+  };
 
-      preConfirm: () => {
-        const pedidoId = document.getElementById("pedido").value;
-        const metodoPago = document.getElementById("metodo").value;
-        const monto = document.getElementById("monto").value;
-
-        if (!pedidoId || !metodoPago || !monto) {
-          Swal.showValidationMessage("Por favor complete todos los campos");
-          return false;
-        }
-
-        return {
-          pedidoId,
-          metodoPago,
-          monto,
-        };
-      },
-    });
-
-    if (!formValues) return;
+  const confirmarPago = async () => {
+    if (!pagoForm.clienteId || !pagoForm.pedidoId || !pagoForm.metodoPago || !pagoForm.monto) {
+      Swal.fire("Error", "Complete cliente, pedido, método y monto.", "error");
+      return;
+    }
 
     try {
-      const nuevoPago = {
-        pedidoId: Number(formValues.pedidoId),
-        metodoPago: formValues.metodoPago,
-        monto: Number(formValues.monto),
-        fechaPago: new Date().toISOString(),
-      };
-
       const respuesta = await fetchAuth(`${API}/Pagos`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(nuevoPago),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pedidoId: Number(pagoForm.pedidoId),
+          metodoPago: pagoForm.metodoPago,
+          monto: Number(pagoForm.monto),
+          fechaPago: new Date().toISOString(),
+        }),
       });
 
-      if (!respuesta.ok) throw new Error();
+      if (!respuesta.ok) {
+        const msg = await respuesta.text();
+        throw new Error(msg || "Error al registrar");
+      }
 
+      setModalPago(false);
       await cargarDatos();
 
       Swal.fire({
@@ -134,14 +117,21 @@ export const DashboardAdmin = () => {
         timer: 2500,
         showConfirmButton: false,
       });
-    } catch {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo registrar el pago.",
-      });
+    } catch (err) {
+      Swal.fire("Error", err.message || "No se pudo registrar el pago.", "error");
     }
   };
+
+  const totalIngresos = pagos.reduce((acc, curr) => acc + Number(curr.monto), 0);
+  const totalEgresos = egresos.reduce((acc, curr) => acc + Number(curr.costo), 0);
+  const saldoFinal = totalIngresos - totalEgresos;
+
+  const formatoMoneda = (valor) =>
+    new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+    }).format(valor);
 
   const registrarEgreso = async () => {
     const { value: formValues } = await Swal.fire({
@@ -157,45 +147,33 @@ export const DashboardAdmin = () => {
       confirmButtonColor: "#c5a880",
       cancelButtonColor: "#181f21",
       cancelButtonText: "Cancelar",
-
       preConfirm: () => {
         const concepto = document.getElementById("concepto").value;
         const proveedor = document.getElementById("proveedor").value;
         const costo = document.getElementById("costo").value;
-
         if (!concepto || !proveedor || !costo) {
           Swal.showValidationMessage("Por favor complete todos los campos");
           return false;
         }
-
-        return {
-          concepto,
-          proveedor,
-          costo,
-        };
+        return { concepto, proveedor, costo };
       },
     });
 
     if (!formValues) return;
 
     try {
-      const nuevoEgreso = {
-        concepto: formValues.concepto,
-        proveedor: formValues.proveedor,
-        costo: Number(formValues.costo),
-        fecha: new Date().toISOString(),
-      };
-
       const respuesta = await fetchAuth(`${API}/Egresos`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(nuevoEgreso),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          concepto: formValues.concepto,
+          proveedor: formValues.proveedor,
+          costo: Number(formValues.costo),
+          fecha: new Date().toISOString(),
+        }),
       });
 
       if (!respuesta.ok) throw new Error();
-
       await cargarDatos();
 
       Swal.fire({
@@ -207,11 +185,7 @@ export const DashboardAdmin = () => {
         showConfirmButton: false,
       });
     } catch {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo registrar el egreso.",
-      });
+      Swal.fire({ icon: "error", title: "Error", text: "No se pudo registrar el egreso." });
     }
   };
 
@@ -235,16 +209,13 @@ export const DashboardAdmin = () => {
             Dashboard <span className={styles.titleGold}>Financiero</span>
           </h1>
         </div>
-
         <div className={styles.headerBadge}>
           <div className={styles.headerBadgeIcon}>
             <i className="bi bi-wallet2" />
           </div>
           <div>
             <span className={styles.headerBadgeLabel}>Saldo en caja</span>
-            <span className={styles.headerBadgeValue}>
-              {formatoMoneda(saldoFinal)}
-            </span>
+            <span className={styles.headerBadgeValue}>{formatoMoneda(saldoFinal)}</span>
           </div>
         </div>
       </header>
@@ -256,24 +227,18 @@ export const DashboardAdmin = () => {
           </div>
           <div>
             <p className={styles.metricLabel}>Ingresos Brutos</p>
-            <h3 className={styles.metricValue}>
-              {formatoMoneda(totalIngresos)}
-            </h3>
+            <h3 className={styles.metricValue}>{formatoMoneda(totalIngresos)}</h3>
           </div>
         </div>
-
         <div className={`${styles.metricCard} ${styles.egreso}`}>
           <div className={`${styles.iconBox} ${styles.iconEgreso}`}>
             <i className="bi bi-arrow-down-right" />
           </div>
           <div>
             <p className={styles.metricLabel}>Egresos / Gastos</p>
-            <h3 className={styles.metricValue}>
-              {formatoMoneda(totalEgresos)}
-            </h3>
+            <h3 className={styles.metricValue}>{formatoMoneda(totalEgresos)}</h3>
           </div>
         </div>
-
         <div className={`${styles.metricCard} ${styles.saldo}`}>
           <div className={`${styles.iconBox} ${styles.iconSaldo}`}>
             <i className="bi bi-piggy-bank" />
@@ -291,47 +256,44 @@ export const DashboardAdmin = () => {
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
             <h4 className={styles.tableTitle}>
-              Pagos Recibidos
+              Ingresos (pagos y facturas)
               <span className={styles.tableCount}>{pagos.length}</span>
             </h4>
-
             <button
               type="button"
               className={`${styles.btnAction} ${styles.btnIngreso}`}
-              onClick={registrarPago}
+              onClick={abrirModalPago}
             >
               + Registrar Pago
             </button>
           </div>
-
           <div className={styles.tableScroll}>
             <table className={styles.atelierTable}>
               <thead>
                 <tr>
-                  <th>Pedido</th>
+                  <th>Referencia</th>
+                  <th>Cliente</th>
                   <th>Método</th>
                   <th>Monto</th>
                 </tr>
               </thead>
-
               <tbody>
                 {pagos.length > 0 ? (
                   pagos.map((pago) => (
                     <tr key={pago.id}>
-                      <td className={styles.orderId}>ORD-{pago.pedidoId}</td>
+                      <td className={styles.orderId}>
+                        {pago.referenciaTexto || pago.referencia || (pago.pedidoId ? `ORD-${pago.pedidoId}` : `FAC-${pago.facturaId}`)}
+                      </td>
+                      <td>{pago.clienteNombre || "—"}</td>
                       <td>
-                        <span className={styles.methodBadge}>
-                          {pago.metodoPago}
-                        </span>
+                        <span className={styles.methodBadge}>{pago.metodoPago}</span>
                       </td>
-                      <td className={styles.amountPositive}>
-                        {formatoMoneda(pago.monto)}
-                      </td>
+                      <td className={styles.amountPositive}>{formatoMoneda(pago.monto)}</td>
                     </tr>
                   ))
                 ) : (
                   <tr className={styles.emptyRow}>
-                    <td colSpan="3">No hay pagos registrados.</td>
+                    <td colSpan="4">No hay ingresos registrados.</td>
                   </tr>
                 )}
               </tbody>
@@ -345,7 +307,6 @@ export const DashboardAdmin = () => {
               Egresos de Inventario
               <span className={styles.tableCount}>{egresos.length}</span>
             </h4>
-
             <button
               type="button"
               className={`${styles.btnAction} ${styles.btnEgreso}`}
@@ -354,7 +315,6 @@ export const DashboardAdmin = () => {
               + Registrar Egreso
             </button>
           </div>
-
           <div className={styles.tableScroll}>
             <table className={styles.atelierTable}>
               <thead>
@@ -364,16 +324,13 @@ export const DashboardAdmin = () => {
                   <th>Costo</th>
                 </tr>
               </thead>
-
               <tbody>
                 {egresos.length > 0 ? (
                   egresos.map((egreso) => (
                     <tr key={egreso.id}>
                       <td>{egreso.concepto}</td>
                       <td className={styles.provider}>{egreso.proveedor}</td>
-                      <td className={styles.amountNegative}>
-                        - {formatoMoneda(egreso.costo)}
-                      </td>
+                      <td className={styles.amountNegative}>- {formatoMoneda(egreso.costo)}</td>
                     </tr>
                   ))
                 ) : (
@@ -387,47 +344,66 @@ export const DashboardAdmin = () => {
         </div>
       </section>
 
-      <section className={styles.reportsBox}>
-        <h4 className={styles.reportsTitle}>Exportar Reportes</h4>
+      {modalPago && (
+        <div className={styles.modalOverlay} onClick={() => setModalPago(false)}>
+          <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+            <h3 className={styles.modalTitle}>Registrar pago de pedido</h3>
+            <p className={styles.modalHint}>Busque por cliente y seleccione el pedido correspondiente.</p>
 
-        <input type="date" className={styles.dateInput} />
+            <label className={styles.modalLabel}>Cliente</label>
+            <BuscarCliente
+              value={clientePago}
+              onChange={(id) => setPagoForm((f) => ({ ...f, clienteId: id }))}
+              onSelect={onClientePagoSelect}
+            />
 
-        <span className={styles.reportsDivider}>hasta</span>
+            <label className={styles.modalLabel}>Pedido / Orden</label>
+            <select
+              className={styles.modalInput}
+              value={pagoForm.pedidoId}
+              onChange={(e) => onPedidoPagoChange(e.target.value)}
+              disabled={!pagoForm.clienteId}
+            >
+              <option value="">Seleccione pedido...</option>
+              {pedidosCliente.map((p) => (
+                <option key={p.id} value={p.id}>
+                  ORD-{p.id} — {p.estilo} — Saldo: {formatoMoneda(p.saldoPendiente)} — {p.estado}
+                </option>
+              ))}
+            </select>
 
-        <input type="date" className={styles.dateInput} />
+            <label className={styles.modalLabel}>Método de pago</label>
+            <select
+              className={styles.modalInput}
+              value={pagoForm.metodoPago}
+              onChange={(e) => setPagoForm((f) => ({ ...f, metodoPago: e.target.value }))}
+            >
+              <option value="">Seleccione...</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+              <option value="Tarjeta">Tarjeta</option>
+            </select>
 
-        <div className={styles.reportsActions}>
-          <button
-            type="button"
-            className={styles.btnExportPrimary}
-            onClick={() =>
-              Swal.fire(
-                "Próximamente",
-                "Exportación a Excel en desarrollo",
-                "info",
-              )
-            }
-          >
-            <i className="bi bi-file-earmark-excel" />
-            Exportar a Excel
-          </button>
+            <label className={styles.modalLabel}>Monto</label>
+            <input
+              type="number"
+              className={styles.modalInput}
+              value={pagoForm.monto}
+              onChange={(e) => setPagoForm((f) => ({ ...f, monto: e.target.value }))}
+              placeholder="Monto en COP"
+            />
 
-          <button
-            type="button"
-            className={styles.btnExportSecondary}
-            onClick={() =>
-              Swal.fire(
-                "Próximamente",
-                "Exportación a PDF en desarrollo",
-                "info",
-              )
-            }
-          >
-            <i className="bi bi-filetype-pdf" />
-            Exportar a PDF
-          </button>
+            <div className={styles.modalActions}>
+              <button type="button" className={styles.btnModalCancel} onClick={() => setModalPago(false)}>
+                Cancelar
+              </button>
+              <button type="button" className={styles.btnModalSave} onClick={confirmarPago}>
+                Guardar pago
+              </button>
+            </div>
+          </div>
         </div>
-      </section>
+      )}
     </div>
   );
 };

@@ -27,13 +27,17 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(
+                "http://localhost:5173",
+                "https://localhost:5173"
+            )
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
 builder.Services.AddScoped<JwtTokenGenerador>();
+builder.Services.AddScoped<SastreriaAPI.Services.FacturaService>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -44,6 +48,7 @@ builder.Services.AddAuthentication("Bearer")
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            RoleClaimType = System.Security.Claims.ClaimTypes.Role,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]!))
         };
@@ -70,34 +75,53 @@ using (var scope = app.Services.CreateScope())
             {
                 Nombre = "Administrador",
                 Correo = "admin@sastreria.com",
-                Password = "123456",
-                Rol = Rol.Administrador
+                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+                Rol = Rol.Administrador,
+                Activo = true
             },
             new Usuario
             {
                 Nombre = "Recepcionista",
                 Correo = "recepcion@sastreria.com",
-                Password = "123456",
-                Rol = Rol.Recepcionista
+                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+                Rol = Rol.Recepcionista,
+                Activo = true
             },
             new Usuario
             {
                 Nombre = "Sastre",
                 Correo = "sastre@sastreria.com",
-                Password = "123456",
-                Rol = Rol.Sastre
+                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+                Rol = Rol.Sastre,
+                Activo = true
             },
             new Usuario
             {
                 Nombre = "Cliente",
                 Correo = "cliente@sastreria.com",
-                Password = "123456",
-                Rol = Rol.Cliente
+                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+                Rol = Rol.Cliente,
+                Activo = true
             }
         );
 
         context.SaveChanges();
     }
+
+    // Hashear contraseñas demo si quedaron en texto plano
+    var usuariosSinHash = context.Usuarios
+        .Where(u => !u.Password.StartsWith("$"))
+        .ToList();
+
+    foreach (var u in usuariosSinHash)
+    {
+        u.Password = BCrypt.Net.BCrypt.HashPassword(u.Password);
+        if (!context.Entry(u).Property(x => x.Activo).IsModified)
+            u.Activo = true;
+    }
+
+    if (usuariosSinHash.Count > 0)
+        context.SaveChanges();
 }
 
 app.UseCors("ReactPolicy");

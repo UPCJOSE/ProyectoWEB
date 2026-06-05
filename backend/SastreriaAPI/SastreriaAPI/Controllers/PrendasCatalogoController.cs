@@ -46,8 +46,11 @@ namespace SastreriaAPI.Controllers
         {
             string? imagenUrl = null;
 
-            // Verificar si llegó una imagen
-            if (dto.Imagen != null && dto.Imagen.Length > 0)
+            if (!string.IsNullOrWhiteSpace(dto.ImagenUrl))
+            {
+                imagenUrl = dto.ImagenUrl.Trim();
+            }
+            else if (dto.Imagen != null && dto.Imagen.Length > 0)
             {
                 // Ruta física donde se guardarán las imágenes
                 var uploadsFolder = Path.Combine(
@@ -86,6 +89,7 @@ namespace SastreriaAPI.Controllers
                 Nombre = dto.Nombre,
                 TipoPrenda = dto.TipoPrenda,
                 PrecioBase = dto.PrecioBase,
+                ConsumoTelaAprox = dto.ConsumoTelaAprox,
                 Activa = dto.Activa,
                 ImagenUrl = imagenUrl
             };

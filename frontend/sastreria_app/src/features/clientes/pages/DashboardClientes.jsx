@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./DashboardClientes.module.css";
 import { fetchAuth } from "../../../core/utils/fetchAuth";
 
-const API = "https://localhost:7196/api/Clientes";
+const API = "http://localhost:5000/api/Clientes";
 
 export const DashboardClientes = () => {
   const [clientes, setClientes] = useState([]);

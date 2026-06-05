@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.Models;
-using BCrypt.Net;
 
 namespace SastreriaAPI.Controllers
 {
@@ -19,86 +18,111 @@ namespace SastreriaAPI.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<object>>> GetUsuarios()
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Usuarios
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Nombre,
+                    u.Correo,
+                    Rol = u.Rol.ToString(),
+                    RolId = (int)u.Rol,
+                    u.Activo
+                })
+                .ToListAsync();
         }
 
+        [Authorize(Roles = "Administrador,Recepcionista,Sastre")]
+        [HttpGet("sastres")]
+        public async Task<ActionResult<IEnumerable<object>>> GetSastres()
+        {
+            return await _context.Usuarios
+                .Where(u => u.Rol == Rol.Sastre && u.Activo)
+                .Select(u => new { u.Id, u.Nombre })
+                .ToListAsync();
+        }
+
+        [Authorize(Roles = "Administrador")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<object>> GetUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
-
             if (usuario == null)
                 return NotFound();
 
-            return usuario;
+            return new
+            {
+                usuario.Id,
+                usuario.Nombre,
+                usuario.Correo,
+                Rol = usuario.Rol.ToString(),
+                RolId = (int)usuario.Rol,
+                usuario.Activo
+            };
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<object>> PostUsuario(Usuario usuario)
         {
             if (!string.IsNullOrEmpty(usuario.Password))
-            {
                 usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
-            }
 
+            usuario.Activo = true;
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
+            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, new
+            {
+                usuario.Id,
+                usuario.Nombre,
+                usuario.Correo,
+                Rol = usuario.Rol.ToString(),
+                usuario.Activo
+            });
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
             if (id != usuario.Id)
                 return BadRequest();
 
-            _context.Entry(usuario).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var existente = await _context.Usuarios.FindAsync(id);
+            if (existente == null)
+                return NotFound();
 
+            existente.Nombre = usuario.Nombre;
+            existente.Correo = usuario.Correo;
+            existente.Rol = usuario.Rol;
+            existente.Activo = usuario.Activo;
+
+            if (!string.IsNullOrWhiteSpace(usuario.Password))
+            {
+                existente.Password = usuario.Password.StartsWith("$")
+                    ? usuario.Password
+                    : BCrypt.Net.BCrypt.HashPassword(usuario.Password);
+            }
+
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
-
             if (usuario == null)
                 return NotFound();
 
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-        // En caso de que se necesite migrar contraseñas no hasheadas a bcrypt, se puede usar este método. Se recomienda eliminarlo después de su uso para evitar riesgos
-        /*[AllowAnonymous] 
-        [HttpPost("migrar")]
-        public async Task<IActionResult> MigrarPasswords()
-        {
-            var usuarios = await _context.Usuarios.ToListAsync();
-            int actualizados = 0;
-
-            foreach (var usuario in usuarios)
-            {
-                if (!string.IsNullOrEmpty(usuario.Password) && !usuario.Password.StartsWith("$"))
-                {
-                    usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
-                    actualizados++;
-                }
-            }
-
-            if (actualizados > 0)
-            {
-                await _context.SaveChangesAsync();
-            }
-
-            return Ok(new { Mensaje = $"Proceso terminado" });
-        }*/
     }
 }

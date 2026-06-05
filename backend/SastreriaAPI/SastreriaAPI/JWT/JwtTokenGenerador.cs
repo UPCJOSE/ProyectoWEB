@@ -2,6 +2,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SastreriaAPI.Models;
 
 namespace SastreriaAPI.JWT
 {
@@ -14,12 +15,14 @@ namespace SastreriaAPI.JWT
             _config = config;
         }
 
-        public string GenerateToken(string correo)
+        public string GenerateToken(Usuario usuario)
         {
             var key = Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!);
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, correo)
+                new Claim(ClaimTypes.Name, usuario.Correo),
+                new Claim(ClaimTypes.Role, usuario.Rol.ToString()),
+                new Claim("userId", usuario.Id.ToString())
             };
 
             var token = new JwtSecurityToken(

@@ -114,6 +114,48 @@ export const MainLayout = () => {
             </>
           )}
 
+          {/* ── INVENTARIO ── */}
+          {(userRole === "administrador" || userRole === "recepcionista") && (
+            <span
+              className={`${styles.navLink} ${isActive("/inventario")}`}
+              onClick={() => navigate("/inventario")}
+            >
+              Inventario
+            </span>
+          )}
+
+          {/* ── ÓRDENES DE CONFECCIÓN ── */}
+          {(userRole === "administrador" ||
+            userRole === "recepcionista" ||
+            userRole === "sastre") && (
+            <span
+              className={`${styles.navLink} ${isActive("/ordenes")}`}
+              onClick={() => navigate("/ordenes")}
+            >
+              Órdenes
+            </span>
+          )}
+
+          {/* ── FACTURAS ── */}
+          {(userRole === "administrador" || userRole === "recepcionista") && (
+            <span
+              className={`${styles.navLink} ${isActive("/facturas")}`}
+              onClick={() => navigate("/facturas")}
+            >
+              Facturas
+            </span>
+          )}
+
+          {/* ── USUARIOS (solo admin) ── */}
+          {userRole === "administrador" && (
+            <span
+              className={`${styles.navLink} ${isActive("/usuarios")}`}
+              onClick={() => navigate("/usuarios")}
+            >
+              Usuarios
+            </span>
+          )}
+
           {/* ── RECEPCIONISTA ── */}
           {(userRole === "administrador" || userRole === "recepcionista") && (
             <span

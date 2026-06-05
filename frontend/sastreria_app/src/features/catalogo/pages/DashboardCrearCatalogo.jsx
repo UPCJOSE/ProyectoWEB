@@ -2,31 +2,34 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "./DashboardCrearCatalogo.module.css";
 import { fetchAuth } from "../../../core/utils/fetchAuth";
+import { ImagenPrenda } from "../../../core/components/ImagenPrenda";
 
-const API = "https://localhost:7196/api/PrendasCatalogo";
+const API = "http://localhost:5000/api/PrendasCatalogo";
+
+const TIPOS = ["Camisa", "Blusa", "Pantalón", "Falda"];
 
 export const DashboardCrearCatalogo = () => {
-  const [prendas, setPrendas] = useState([]);
+  const [estilos, setEstilos] = useState([]);
 
   const [form, setForm] = useState({
     nombre: "",
     tipoPrenda: "",
     precioBase: "",
+    consumoTelaAprox: "",
     activa: true,
   });
 
   const [imagen, setImagen] = useState(null);
+  const [imagenUrl, setImagenUrl] = useState("");
 
   useEffect(() => {
-    cargarPrendas();
+    cargarEstilos();
   }, []);
 
-  const cargarPrendas = async () => {
+  const cargarEstilos = async () => {
     try {
       const res = await fetchAuth(API);
-      const data = await res.json();
-
-      setPrendas(data);
+      setEstilos(await res.json());
     } catch (error) {
       console.error(error);
     }
@@ -34,86 +37,55 @@ export const DashboardCrearCatalogo = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : value,
     });
   };
 
-  const handleImagen = (e) => {
-    setImagen(e.target.files[0]);
-  };
-
-  const guardarPrenda = async (e) => {
+  const guardarEstilo = async (e) => {
     e.preventDefault();
 
     try {
       const formData = new FormData();
-
       formData.append("nombre", form.nombre);
       formData.append("tipoPrenda", form.tipoPrenda);
       formData.append("precioBase", form.precioBase);
+      formData.append("consumoTelaAprox", form.consumoTelaAprox);
       formData.append("activa", form.activa);
 
-      if (imagen) {
-        formData.append("imagen", imagen);
-      }
+      if (imagenUrl.trim()) formData.append("imagenUrl", imagenUrl.trim());
+      else if (imagen) formData.append("imagen", imagen);
 
-      const res = await fetchAuth(API, {
-        method: "POST",
-        body: formData,
-      });
-
+      const res = await fetchAuth(API, { method: "POST", body: formData });
       if (!res.ok) throw new Error();
 
-      Swal.fire(
-        "Prenda creada",
-        "La prenda fue registrada correctamente",
-        "success",
-      );
+      Swal.fire("Estilo registrado", "El estilo fue guardado correctamente", "success");
 
-      setForm({
-        nombre: "",
-        tipoPrenda: "",
-        precioBase: "",
-        activa: true,
-      });
-
+      setForm({ nombre: "", tipoPrenda: "", precioBase: "", consumoTelaAprox: "", activa: true });
       setImagen(null);
-
-      cargarPrendas();
-    } catch (error) {
-      console.error(error);
-
-      Swal.fire("Error", "No se pudo guardar la prenda", "error");
+      setImagenUrl("");
+      cargarEstilos();
+    } catch {
+      Swal.fire("Error", "No se pudo guardar el estilo", "error");
     }
   };
 
-  const eliminarPrenda = async (id) => {
+  const eliminarEstilo = async (id) => {
     const result = await Swal.fire({
-      title: "¿Eliminar?",
-      text: "Esta acción no se puede deshacer",
+      title: "¿Eliminar estilo?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Eliminar",
     });
-
     if (!result.isConfirmed) return;
 
     try {
-      const res = await fetchAuth(`${API}/${id}`, {
-        method: "DELETE",
-      });
-
+      const res = await fetchAuth(`${API}/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
-
-      Swal.fire("Eliminada", "La prenda fue eliminada", "success");
-
-      cargarPrendas();
-    } catch (error) {
-      console.error(error);
-
+      Swal.fire("Eliminado", "Estilo eliminado", "success");
+      cargarEstilos();
+    } catch {
       Swal.fire("Error", "No se pudo eliminar", "error");
     }
   };
@@ -122,42 +94,38 @@ export const DashboardCrearCatalogo = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>
-          Catálogo <span>Atelier</span>
+          Estilos de <span>Prenda</span>
         </h1>
-
-        <p className={styles.subtitle}>Administración de prendas y diseños</p>
+        <p className={styles.subtitle}>
+          Registra el estilo, costo de confección y tela aproximada
+        </p>
       </div>
 
-      {/* FORMULARIO */}
-
-      <form className={styles.formCard} onSubmit={guardarPrenda}>
+      <form className={styles.formCard} onSubmit={guardarEstilo}>
         <div className={styles.inputGroup}>
-          <label>Nombre</label>
-
+          <label>Estilo de la prenda *</label>
           <input
             type="text"
             name="nombre"
             value={form.nombre}
             onChange={handleChange}
+            placeholder="Ej: Camisa slim ejecutiva"
             required
           />
         </div>
 
         <div className={styles.inputGroup}>
-          <label>Tipo de prenda</label>
-
-          <input
-            type="text"
-            name="tipoPrenda"
-            value={form.tipoPrenda}
-            onChange={handleChange}
-            required
-          />
+          <label>Tipo de prenda *</label>
+          <select name="tipoPrenda" value={form.tipoPrenda} onChange={handleChange} required>
+            <option value="">Seleccionar...</option>
+            {TIPOS.map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
         </div>
 
         <div className={styles.inputGroup}>
-          <label>Precio base</label>
-
+          <label>Costo de confección (COP) *</label>
           <input
             type="number"
             name="precioBase"
@@ -168,49 +136,58 @@ export const DashboardCrearCatalogo = () => {
         </div>
 
         <div className={styles.inputGroup}>
-          <label>Imagen</label>
-
-          <input type="file" onChange={handleImagen} />
-        </div>
-
-        <div className={styles.checkboxRow}>
+          <label>Tela aproximada (metros) *</label>
           <input
-            type="checkbox"
-            name="activa"
-            checked={form.activa}
+            type="number"
+            step="0.1"
+            name="consumoTelaAprox"
+            value={form.consumoTelaAprox}
             onChange={handleChange}
+            placeholder="Ej: 1.8"
+            required
           />
-
-          <span>Prenda activa</span>
         </div>
 
-        <button type="submit" className={styles.btnGold}>
-          Guardar prenda
+        <div className={`${styles.inputGroup} ${styles.inputGroupFull}`}>
+          <label>URL de imagen (recomendado)</label>
+          <input
+            type="url"
+            value={imagenUrl}
+            onChange={(e) => setImagenUrl(e.target.value)}
+            placeholder="https://ejemplo.com/foto-prenda.jpg"
+          />
+          <div className={styles.imageWrap}>
+            <ImagenPrenda url={imagenUrl} alt="Vista previa" tipo={form.tipoPrenda} variant="card" />
+          </div>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label>O subir archivo (opcional)</label>
+          <input type="file" onChange={(e) => setImagen(e.target.files[0])} disabled={!!imagenUrl.trim()} />
+        </div>
+
+        <div className={`${styles.checkboxRow} ${styles.inputGroupFull}`}>
+          <input type="checkbox" name="activa" checked={form.activa} onChange={handleChange} />
+          <span>Estilo activo en catálogo</span>
+        </div>
+
+        <button type="submit" className={`${styles.btnGold} ${styles.inputGroupFull}`}>
+          Guardar estilo
         </button>
       </form>
 
-      {/* GRID */}
-
       <div className={styles.grid}>
-        {prendas.map((prenda) => (
-          <div key={prenda.id} className={styles.card}>
-            <img
-              src={`https://localhost:7196${prenda.imagenUrl}`}
-              alt={prenda.nombre}
-              className={styles.image}
-            />
-
+        {estilos.map((e) => (
+          <div key={e.id} className={styles.card}>
+            <div className={styles.imageWrap}>
+              <ImagenPrenda url={e.imagenUrl} alt={e.nombre} tipo={e.tipoPrenda} variant="card" />
+            </div>
             <div className={styles.cardBody}>
-              <h3>{prenda.nombre}</h3>
-
-              <p>{prenda.tipoPrenda}</p>
-
-              <strong>${prenda.precioBase}</strong>
-
-              <button
-                className={styles.btnDelete}
-                onClick={() => eliminarPrenda(prenda.id)}
-              >
+              <h3>{e.nombre}</h3>
+              <p>{e.tipoPrenda}</p>
+              <p><strong>Costo:</strong> ${Number(e.precioBase).toLocaleString("es-CO")}</p>
+              <p><strong>Tela aprox.:</strong> {e.consumoTelaAprox} m</p>
+              <button className={styles.btnDelete} onClick={() => eliminarEstilo(e.id)}>
                 Eliminar
               </button>
             </div>

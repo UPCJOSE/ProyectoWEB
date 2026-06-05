@@ -26,6 +26,20 @@ namespace SastreriaAPI.Controllers
             return await _context.Clientes.ToListAsync();
         }
 
+        [HttpGet("buscar")]
+        public async Task<ActionResult<IEnumerable<Cliente>>> BuscarClientes([FromQuery] string q)
+        {
+            if (string.IsNullOrWhiteSpace(q))
+                return Ok(Array.Empty<Cliente>());
+
+            var termino = q.Trim().ToLower();
+            return await _context.Clientes
+                .Where(c => c.Nombre.ToLower().Contains(termino))
+                .OrderBy(c => c.Nombre)
+                .Take(12)
+                .ToListAsync();
+        }
+
         // GET: api/Clientes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)

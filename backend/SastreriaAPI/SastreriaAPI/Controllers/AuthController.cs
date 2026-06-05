@@ -32,7 +32,10 @@ namespace SastreriaAPI.Controllers
 
             if (!passencryp) return Unauthorized("Credenciales inválidas");
 
-            var token = _jwtGenerador.GenerateToken(usuario.Correo);
+            if (!usuario.Activo)
+                return Unauthorized("Usuario inactivo. Contacte al administrador.");
+
+            var token = _jwtGenerador.GenerateToken(usuario);
 
             return Ok(new
             {
@@ -40,9 +43,11 @@ namespace SastreriaAPI.Controllers
                 usuario.Id,
                 usuario.Nombre,
                 usuario.Correo,
+                usuario.Activo,
                 rol = new
                 {
-                    nombre = usuario.Rol.ToString() ?? "Usuario"
+                    id = (int)usuario.Rol,
+                    nombre = usuario.Rol.ToString()
                 }
             });
         }

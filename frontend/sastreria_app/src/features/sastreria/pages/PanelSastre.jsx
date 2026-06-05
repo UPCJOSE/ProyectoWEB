@@ -6,7 +6,7 @@ import { fetchAuth } from "../../../core/utils/fetchAuth";
 
 const API_BASE =
   (import.meta?.env?.VITE_API_URL && String(import.meta.env.VITE_API_URL)) ||
-  "https://localhost:7196/api";
+  "http://localhost:5000/api";
 
 const ESTADO = {
   PENDIENTE: "Pendiente",
@@ -39,6 +39,8 @@ const mapPedido = (raw) => {
     medidaPrendaId: raw.medidaPrendaId ?? raw.MedidaPrendaId ?? null,
     costoTotal: raw.costoTotal ?? raw.CostoTotal ?? 0,
     saldoPendiente: raw.saldoPendiente ?? raw.SaldoPendiente ?? 0,
+    metrosTela: Number(raw.metrosTela ?? raw.MetrosTela ?? 0),
+    consumoTela: Number(raw.consumoTela ?? raw.ConsumoTela ?? 0),
     estado: normalizarEstado(raw.estado ?? raw.Estado),
     fechaEntrega: raw.fechaEntrega ?? raw.FechaEntrega ?? null,
     cliente: cliente
@@ -104,6 +106,41 @@ export const PanelSastre = () => {
       const pedido = pedidos.find((p) => p.id === id);
       if (!pedido) return;
 
+      const avanza =
+        nuevoEstado === ESTADO.EN_PROCESO ||
+        nuevoEstado === ESTADO.TERMINADO ||
+        nuevoEstado === ESTADO.ENTREGADO;
+
+      if (avanza && pedido.cliente?.id) {
+        const medRes = await fetchAuth(`${API_BASE}/Medidas/cliente/${pedido.cliente.id}`);
+        if (!medRes.ok) {
+          Swal.fire(
+            "Sin medidas",
+            "No puede aprobar ni finalizar el pedido sin medidas del cliente.",
+            "warning"
+          );
+          return;
+        }
+      }
+
+      const requiereTela =
+        nuevoEstado === ESTADO.EN_PROCESO || nuevoEstado === ESTADO.ENTREGADO;
+
+      if (requiereTela) {
+        const consumo = pedido.consumoTela;
+        const metros = pedido.metrosTela;
+        if (consumo <= 0 || metros < consumo) {
+          Swal.fire(
+            "Falta tela",
+            consumo <= 0
+              ? "La orden no tiene definido el consumo de tela requerido."
+              : `El cliente trajo ${metros} m y se requieren ${consumo} m para ${nuevoEstado === ESTADO.EN_PROCESO ? "iniciar la confección" : "entregar la prenda"}.`,
+            "warning"
+          );
+          return;
+        }
+      }
+
       const payload = {
         clienteId: pedido.clienteId,
         prendaCatalogoId: pedido.prendaCatalogoId,
@@ -145,7 +182,7 @@ export const PanelSastre = () => {
       console.error("Error actualizando pedido:", err);
       Swal.fire(
         "Error",
-        "No se pudo actualizar el estado del pedido.",
+        err.message || "No se pudo actualizar el estado del pedido.",
         "error",
       );
     }
@@ -224,6 +261,14 @@ export const PanelSastre = () => {
       <p className={styles.ticketCliente}>
         {pedido.cliente?.nombre ?? "Cliente sin nombre"}
       </p>
+      {pedido.consumoTela > 0 && (
+        <p className={styles.ticketTela}>
+          Tela: {pedido.metrosTela} / {pedido.consumoTela} m
+          {pedido.metrosTela < pedido.consumoTela && (
+            <span className={styles.telaFalta}> — incompleta</span>
+          )}
+        </p>
+      )}
 
       <div className={styles.actions}>
         <button

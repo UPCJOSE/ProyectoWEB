@@ -12,6 +12,8 @@
 
         public decimal SaldoPendiente { get; set; }
 
+        public decimal MetrosTela { get; set; }
+
         public string Estado { get; set; } = "Pendiente";
 
         public DateTime? FechaEntrega { get; set; }

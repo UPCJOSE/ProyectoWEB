@@ -1,0 +1,84 @@
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(24, 31, 33, 0.15);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.btnClear {
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #747879;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.hint {
+  display: block;
+  font-size: 0.78rem;
+  color: #747879;
+  margin-top: 0.25rem;
+}
+
+.noExiste {
+  display: block;
+  font-size: 0.85rem;
+  color: #9a9a9a;
+  margin-top: 0.35rem;
+  font-style: italic;
+}
+
+.lista {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid rgba(24, 31, 33, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(24, 31, 33, 0.12);
+  z-index: 50;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.item:hover {
+  background: #f8f7f2;
+}
+
+.item span {
+  font-size: 0.78rem;
+  color: #747879;
+}

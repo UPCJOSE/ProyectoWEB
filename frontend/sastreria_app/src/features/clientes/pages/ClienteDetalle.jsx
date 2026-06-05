@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styles from "./ClienteDetalle.module.css";
 import { fetchAuth } from "../../../core/utils/fetchAuth";
 
-const API = "https://localhost:7196/api/Clientes";
+const API = "http://localhost:5000/api/Clientes";
 
 export const ClienteDetalle = () => {
   const { id } = useParams();

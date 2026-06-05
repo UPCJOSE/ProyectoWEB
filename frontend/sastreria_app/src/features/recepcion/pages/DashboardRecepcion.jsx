@@ -4,8 +4,9 @@ import Swal from "sweetalert2";
 import styles from "./DashboardRecepcion.module.css";
 import { useNavigate } from "react-router-dom";
 import { fetchAuth } from "../../../core/utils/fetchAuth";
+import { BuscarCliente } from "../../../core/components/BuscarCliente";
 
-const API = "https://localhost:7196/api";
+const API = "http://localhost:5000/api";
 
 export const DashboardRecepcion = () => {
   const navigate = useNavigate();
@@ -23,6 +24,13 @@ export const DashboardRecepcion = () => {
   const [busquedaDirectorio, setBusquedaDirectorio] = useState("");
 
   const [prendasCatalogo, setPrendasCatalogo] = useState([]);
+  const [modalPedido, setModalPedido] = useState(false);
+  const [clientePedido, setClientePedido] = useState(null);
+  const [pedidoForm, setPedidoForm] = useState({
+    clienteId: "",
+    prendaCatalogoId: "",
+    fechaEntrega: "",
+  });
 
   useEffect(() => {
     cargarClientes();
@@ -170,93 +178,56 @@ export const DashboardRecepcion = () => {
     }
   };
 
-  const crearPedido = async () => {
-    if (!clientes.length) {
-      Swal.fire("Sin clientes", "Primero registra un cliente", "warning");
+  const abrirModalPedido = () => {
+    if (!prendasCatalogo?.length) {
+      Swal.fire("Catálogo vacío", "No hay prendas en el catálogo.", "warning");
+      return;
+    }
+    setClientePedido(null);
+    setPedidoForm({ clienteId: "", prendaCatalogoId: "", fechaEntrega: "" });
+    setModalPedido(true);
+  };
+
+  const confirmarPedido = async () => {
+    if (!pedidoForm.clienteId || !pedidoForm.prendaCatalogoId || !pedidoForm.fechaEntrega) {
+      Swal.fire("Error", "Complete cliente, prenda y fecha de entrega.", "error");
       return;
     }
 
-    if (!prendasCatalogo || prendasCatalogo.length === 0) {
+    const medRes = await fetchAuth(`${API}/Medidas/cliente/${pedidoForm.clienteId}`);
+    if (!medRes.ok) {
       Swal.fire(
-        "Catálogo vacío",
-        "No hay prendas en la base de datos para ofrecer.",
-        "warning",
+        "Sin medidas",
+        "El cliente no tiene medidas. Regístrelas en Medidas antes de crear el pedido.",
+        "warning"
       );
       return;
     }
 
-    const optionsClientes = clientes
-      .map((c) => `<option value="${c.id}">${c.nombre}</option>`)
-      .join("");
-
-    const optionsPrendas = prendasCatalogo
-      .map(
-        (p) =>
-          `<option value="${p.id}">${p.nombre} ($${p.precioBase})</option>`,
-      )
-      .join("");
-
-    const { value: formValues } = await Swal.fire({
-      title: "Nuevo Pedido",
-      html: `
-        <select id="cliente" class="swal2-select" style="display:flex;margin:1em auto;width:73%">
-          <option value="">Selecciona cliente</option>
-          ${optionsClientes}
-        </select>
-
-        <select id="prenda" class="swal2-select" style="display:flex;margin:1em auto;width:73%">
-          <option value="">Selecciona prenda del catálogo</option>
-          ${optionsPrendas}
-        </select>
-
-        <input id="fecha" type="date" class="swal2-input" style="width: 73%;">
-      `,
-      showCancelButton: true,
-      confirmButtonText: "Crear",
-      cancelButtonText: "Cancelar",
-      confirmButtonColor: "#c9a84c",
-      cancelButtonColor: "#181f21",
-      preConfirm: () => {
-        const clienteId = document.getElementById("cliente").value;
-        const prendaCatalogoId = document.getElementById("prenda").value;
-        const fechaEntrega = document.getElementById("fecha").value;
-
-        if (!clienteId || !prendaCatalogoId || !fechaEntrega) {
-          Swal.showValidationMessage("Completa todos los campos");
-          return false;
-        }
-
-        return {
-          clienteId,
-          prendaCatalogoId,
-          fechaEntrega,
-        };
-      },
-    });
-
-    if (!formValues) return;
-
     try {
       const payload = {
-        clienteId: Number(formValues.clienteId),
-        prendaCatalogoId: Number(formValues.prendaCatalogoId),
+        clienteId: Number(pedidoForm.clienteId),
+        prendaCatalogoId: Number(pedidoForm.prendaCatalogoId),
         medidaPrendaId: null,
         costoTotal: 0,
         saldoPendiente: 0,
+        metrosTela: 0,
         estado: "Pendiente",
-        fechaEntrega: formValues.fechaEntrega,
+        fechaEntrega: pedidoForm.fechaEntrega,
       };
 
       const res = await fetchAuth(`${API}/Pedidos`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || "Error al crear pedido");
+      }
 
+      setModalPedido(false);
       await cargarPedidos();
 
       Swal.fire({
@@ -267,8 +238,8 @@ export const DashboardRecepcion = () => {
         timer: 2200,
         showConfirmButton: false,
       });
-    } catch {
-      Swal.fire("Error", "No se pudo crear pedido", "error");
+    } catch (err) {
+      Swal.fire("Error", err.message || "No se pudo crear pedido", "error");
     }
   };
 
@@ -292,6 +263,38 @@ export const DashboardRecepcion = () => {
 
     if (!nuevoEstado || nuevoEstado === pedido.estado) return;
 
+    const avanza = ["En proceso", "Terminado", "Entregado"].includes(nuevoEstado);
+    const requiereTela = nuevoEstado === "En proceso" || nuevoEstado === "Entregado";
+
+    if (requiereTela) {
+      const metros = Number(pedido.metrosTela ?? 0);
+      const consumo = Number(
+        pedido.consumoTela ?? pedido.prendaCatalogo?.consumoTelaAprox ?? 0
+      );
+      if (consumo <= 0 || metros < consumo) {
+        Swal.fire(
+          "Falta tela",
+          consumo <= 0
+            ? "La orden no tiene consumo de tela definido."
+            : `El cliente trajo ${metros} m y se requieren ${consumo} m.`,
+          "warning"
+        );
+        return;
+      }
+    }
+
+    if (avanza && pedido.clienteId) {
+      const medRes = await fetchAuth(`${API}/Medidas/cliente/${pedido.clienteId}`);
+      if (!medRes.ok) {
+        Swal.fire(
+          "Sin medidas",
+          "No puede aprobar ni finalizar el pedido sin medidas del cliente.",
+          "warning"
+        );
+        return;
+      }
+    }
+
     try {
       const payload = {
         id: pedido.id,
@@ -312,7 +315,10 @@ export const DashboardRecepcion = () => {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || "Error al actualizar");
+      }
 
       await cargarPedidos();
 
@@ -324,8 +330,8 @@ export const DashboardRecepcion = () => {
         timer: 2200,
         showConfirmButton: false,
       });
-    } catch {
-      Swal.fire("Error", "No se pudo actualizar", "error");
+    } catch (err) {
+      Swal.fire("Error", err.message || "No se pudo actualizar", "error");
     }
   };
 
@@ -542,7 +548,7 @@ export const DashboardRecepcion = () => {
         <section className={styles.ordersSection}>
           <button
             className={styles.btnGold}
-            onClick={crearPedido}
+            onClick={abrirModalPedido}
             style={{ marginBottom: "2rem" }}
           >
             + Crear Pedido
@@ -593,6 +599,59 @@ export const DashboardRecepcion = () => {
             )}
           </div>
         </section>
+      )}
+
+      {modalPedido && (
+        <div className={styles.modalOverlay} onClick={() => setModalPedido(false)}>
+          <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+            <h3 className={styles.modalTitle}>Nuevo pedido</h3>
+
+            <label className={styles.modalLabel}>Cliente</label>
+            <BuscarCliente
+              value={clientePedido}
+              onChange={(id) => setPedidoForm((f) => ({ ...f, clienteId: id }))}
+              onSelect={(c) => {
+                setClientePedido(c);
+                setPedidoForm((f) => ({ ...f, clienteId: c?.id || "" }));
+              }}
+            />
+
+            <label className={styles.modalLabel}>Prenda del catálogo</label>
+            <select
+              className={styles.modalInput}
+              value={pedidoForm.prendaCatalogoId}
+              onChange={(e) =>
+                setPedidoForm((f) => ({ ...f, prendaCatalogoId: e.target.value }))
+              }
+            >
+              <option value="">Seleccionar...</option>
+              {prendasCatalogo.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.nombre} (${Number(p.precioBase).toLocaleString("es-CO")})
+                </option>
+              ))}
+            </select>
+
+            <label className={styles.modalLabel}>Fecha de entrega</label>
+            <input
+              type="date"
+              className={styles.modalInput}
+              value={pedidoForm.fechaEntrega}
+              onChange={(e) =>
+                setPedidoForm((f) => ({ ...f, fechaEntrega: e.target.value }))
+              }
+            />
+
+            <div className={styles.modalActions}>
+              <button type="button" className={styles.btnOutline} onClick={() => setModalPedido(false)}>
+                Cancelar
+              </button>
+              <button type="button" className={styles.btnGold} onClick={confirmarPedido}>
+                Crear pedido
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

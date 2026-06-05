@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SastreriaAPI.Data;
 using SastreriaAPI.DTOs;
 using SastreriaAPI.Models;
+using SastreriaAPI.Services;
 
 namespace SastreriaAPI.Controllers
 {
@@ -69,20 +70,28 @@ namespace SastreriaAPI.Controllers
                 return BadRequest("Prenda no encontrada");
             }
 
+            var (medidasOk, medidasError) = await PedidoReglas.ValidarMedidasClienteAsync(_context, dto.ClienteId);
+            if (!medidasOk)
+                return BadRequest(medidasError);
+
+            if (PedidoReglas.RequiereMedidasParaEstado(dto.Estado) && !medidasOk)
+                return BadRequest(medidasError);
+
+            var costo = dto.CostoTotal > 0 ? dto.CostoTotal : prenda.PrecioBase;
+            var saldo = dto.SaldoPendiente > 0 ? dto.SaldoPendiente : costo;
+
             var pedido = new Pedido
             {
                 ClienteId = dto.ClienteId,
                 PrendaCatalogoId = dto.PrendaCatalogoId,
                 MedidaPrendaId = dto.MedidaPrendaId,
-
+                TipoPrenda = prenda.TipoPrenda,
+                ConsumoTela = prenda.ConsumoTelaAprox,
+                MetrosTela = dto.MetrosTela,
                 PrecioUnitario = prenda.PrecioBase,
-
-                CostoTotal = dto.CostoTotal,
-
-                SaldoPendiente = dto.SaldoPendiente,
-
+                CostoTotal = costo,
+                SaldoPendiente = saldo,
                 Estado = dto.Estado,
-
                 FechaEntrega = dto.FechaEntrega
             };
 
@@ -104,6 +113,20 @@ namespace SastreriaAPI.Controllers
             if (pedido == null)
             {
                 return NotFound();
+            }
+
+            if (PedidoReglas.RequiereMedidasParaEstado(dto.Estado))
+            {
+                var (medidasOk, medidasError) = await PedidoReglas.ValidarMedidasClienteAsync(_context, dto.ClienteId);
+                if (!medidasOk)
+                    return BadRequest(medidasError);
+            }
+
+            if (PedidoReglas.RequiereTelaCompletaParaEstado(dto.Estado))
+            {
+                var (telaOk, telaError) = PedidoReglas.ValidarTelaSuficiente(pedido.MetrosTela, pedido.ConsumoTela);
+                if (!telaOk)
+                    return BadRequest(telaError);
             }
 
             pedido.ClienteId = dto.ClienteId;
