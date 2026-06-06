@@ -1,0 +1,218 @@
+/* Estilos compartidos para módulos académicos */
+.page {
+  --gold: #c9a84c;
+  --ink: #181f21;
+  --cream: #fbfaee;
+  --text-muted: #747879;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --radius-md: 14px;
+  --shadow-card: 0 22px 60px rgba(24, 31, 33, 0.1);
+
+  padding: 2rem 0 3rem;
+  background: var(--cream);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(115, 92, 0, 0.12);
+}
+
+.title {
+  font-family: "Noto Serif", serif;
+  font-size: 1.85rem;
+  margin: 0;
+  color: var(--ink);
+}
+
+.subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.filters select,
+.filters input {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(24, 31, 33, 0.15);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+.btnPrimary {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btnSecondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(24, 31, 33, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnDanger {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Formularios: sin recortar menús desplegables */
+.cardForm {
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: visible;
+  margin-bottom: 1.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(24, 31, 33, 0.08);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.table th {
+  background: rgba(201, 168, 76, 0.12);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.table tr:hover td {
+  background: rgba(251, 250, 238, 0.6);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.badgeSuccess { background: #e9f7ef; color: var(--success); }
+.badgeWarning { background: #fef9e7; color: #b7950b; }
+.badgeDanger { background: #fdf5f6; color: var(--danger); }
+.badgeInfo { background: #ebf5fb; color: #2980b9; }
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.35rem 1.5rem;
+  padding: 1.5rem;
+  align-items: start;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.35rem;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0;
+  color: var(--text-muted);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(24, 31, 33, 0.15);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fff;
+  line-height: 1.4;
+}
+
+.field select {
+  cursor: pointer;
+  min-height: 2.5rem;
+}
+
+.field textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+}
+
+.empty {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media print {
+  .noPrint { display: none !important; }
+}

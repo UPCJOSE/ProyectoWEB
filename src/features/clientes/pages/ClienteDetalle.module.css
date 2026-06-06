@@ -1,0 +1,161 @@
+.container {
+  padding: 3rem;
+  background: #f8f7f2;
+  min-height: 100vh;
+}
+
+.loading {
+  padding: 3rem;
+  font-size: 1.2rem;
+}
+
+.hero {
+  background: #181f21;
+  color: white;
+  border-radius: 20px;
+  padding: 3rem;
+  margin-bottom: 3rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.title {
+  font-family: "Noto Serif", serif;
+  font-size: 3rem;
+  margin-top: 1rem;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.5rem;
+}
+
+.heroBadge {
+  background: linear-gradient(90deg, #735c00, #cca72f);
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  margin-bottom: 3rem;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.card h2 {
+  margin-bottom: 2rem;
+  color: #181f21;
+}
+
+.infoBlock {
+  margin-bottom: 1.5rem;
+}
+
+.infoBlock label,
+.measuresGrid label,
+.orderInfo label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8b8b8b;
+  margin-bottom: 6px;
+}
+
+.infoBlock strong,
+.measuresGrid strong,
+.orderInfo strong {
+  color: #181f21;
+}
+
+.measuresGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.ordersSection {
+  margin-top: 2rem;
+}
+
+.sectionHeader {
+  margin-bottom: 2rem;
+}
+
+.sectionHeader h2 {
+  font-family: "Noto Serif", serif;
+  font-size: 2rem;
+  color: #181f21;
+}
+
+.ordersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.orderCard {
+  background: white;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.orderTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 2rem;
+}
+
+.orderTop h3 {
+  color: #181f21;
+}
+
+.status {
+  background: #181f21;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.orderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: start;
+  }
+}
