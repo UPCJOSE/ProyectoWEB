@@ -1,0 +1,573 @@
+/* src/features/finanzas/pages/DashboardAdmin.module.css */
+
+.page {
+  --gold: #c9a84c;
+  --gold-light: #d4b98f;
+  --ink: #181f21;
+  --ink-soft: #232b2e;
+  --cream: #fbfaee;
+  --cream-dark: #f0efe3;
+  --text-muted: #747879;
+  --success: #27ae60;
+  --success-soft: #e9f7ef;
+  --danger: #e74c3c;
+  --danger-soft: #fdf5f6;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --shadow-soft: 0 24px 64px rgba(24, 31, 33, 0.08);
+  --shadow-card: 0 22px 60px rgba(24, 31, 33, 0.1);
+
+  padding: 2.25rem 0 4rem;
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 100% 0%,
+      rgba(201, 168, 76, 0.07),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 0% 100%,
+      rgba(24, 31, 33, 0.04),
+      transparent
+    ),
+    var(--cream);
+}
+
+/* ── CARGA ── */
+.loadingWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.loadingText {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── CABECERA ── */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.75rem;
+  border-bottom: 1px solid rgba(115, 92, 0, 0.1);
+}
+
+.headerMain {
+  flex: 1;
+  min-width: 240px;
+}
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: rgba(24, 31, 33, 0.55);
+}
+
+.title {
+  font-family: "Noto Serif", serif;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+
+.titleGold {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.subtitle {
+  margin: 0.85rem 0 0;
+  max-width: 52ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.headerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(24, 31, 33, 0.06);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.headerBadge::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--gold), var(--gold-light));
+}
+
+.headerBadgeIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
+  color: var(--gold);
+  font-size: 1.15rem;
+  margin-left: 0.5rem;
+}
+
+.headerBadgeLabel {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 800;
+  color: rgba(24, 31, 33, 0.5);
+}
+
+.headerBadgeValue {
+  display: block;
+  font-family: "Noto Serif", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+
+/* ── KPIs ── */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.metricCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 1.75rem 1.75rem 1.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  border: 1px solid rgba(24, 31, 33, 0.06);
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.metricCard::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+}
+
+.metricCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 80px rgba(24, 31, 33, 0.12);
+}
+
+.metricCard.ingreso::before {
+  background: linear-gradient(180deg, #2ecc71, #27ae60);
+}
+
+.metricCard.egreso::before {
+  background: linear-gradient(180deg, #e74c3c, #c0392b);
+}
+
+.metricCard.saldo {
+  background: linear-gradient(135deg, var(--ink) 0%, #2a3336 100%);
+  border-color: rgba(201, 168, 76, 0.2);
+  color: white;
+}
+
+.metricCard.saldo::before {
+  background: linear-gradient(180deg, var(--gold), var(--gold-light));
+}
+
+.metricCard.saldo:hover {
+  border-color: rgba(201, 168, 76, 0.4);
+}
+
+.iconBox {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  background: var(--cream-dark);
+  color: var(--ink);
+  box-shadow: 0 10px 28px rgba(24, 31, 33, 0.06);
+}
+
+.iconIngreso {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.iconEgreso {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.iconSaldo {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  color: white;
+  box-shadow: 0 12px 32px rgba(201, 168, 76, 0.3);
+}
+
+.metricValue {
+  font-family: "Noto Serif", serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  margin: 0.25rem 0 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.metricValueSaldo {
+  color: var(--gold);
+}
+
+.metricLabel {
+  margin: 0;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.saldo .metricLabel {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── TABLAS ── */
+.tablesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 992px) {
+  .tablesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tableContainer {
+  background: rgba(255, 255, 255, 0.88);
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(24, 31, 33, 0.06);
+  transition: box-shadow 0.25s ease;
+}
+
+.tableContainer:hover {
+  box-shadow: 0 26px 72px rgba(24, 31, 33, 0.11);
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(24, 31, 33, 0.08);
+}
+
+.tableTitle {
+  font-family: "Noto Serif", serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+
+.tableCount {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  background: var(--cream-dark);
+  color: var(--text-muted);
+  vertical-align: middle;
+}
+
+.btnAction {
+  padding: 0.65rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btnIngreso {
+  background: var(--success-soft);
+  color: var(--success);
+  box-shadow: 0 8px 20px rgba(39, 174, 96, 0.12);
+}
+
+.btnEgreso {
+  background: var(--danger-soft);
+  color: var(--danger);
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.12);
+}
+
+.btnAction:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.atelierTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.atelierTable th {
+  text-align: left;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(24, 31, 33, 0.45);
+  font-weight: 800;
+  padding: 0 0 0.85rem;
+  border-bottom: 1px solid rgba(24, 31, 33, 0.06);
+}
+
+.atelierTable td {
+  padding: 1rem 0.5rem 1rem 0;
+  border-bottom: 1px solid rgba(24, 31, 33, 0.05);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.atelierTable tbody tr {
+  transition: background 0.15s ease;
+}
+
+.atelierTable tbody tr:hover td {
+  background: rgba(251, 250, 238, 0.6);
+}
+
+.atelierTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.orderId {
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.methodBadge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  background: var(--cream-dark);
+  color: var(--ink-soft);
+  border: 1px solid rgba(24, 31, 33, 0.06);
+}
+
+.amountPositive {
+  color: var(--success);
+  font-weight: 800;
+}
+
+.provider {
+  color: var(--text-muted);
+}
+
+.amountNegative {
+  color: var(--danger);
+  font-weight: 800;
+}
+
+.emptyRow td {
+  text-align: center;
+  padding: 2.5rem 1rem !important;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* ── REPORTES ── */
+.reportsBox {
+  background: rgba(255, 255, 255, 0.75);
+  padding: 1.75rem 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(24, 31, 33, 0.06);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.reportsTitle {
+  font-family: "Noto Serif", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.reportsDivider {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dateInput {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(24, 31, 33, 0.12);
+  border-radius: 12px;
+  background: white;
+  font-size: 0.9rem;
+  color: var(--ink);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: rgba(201, 168, 76, 0.5);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+}
+
+.reportsActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.btnExportPrimary,
+.btnExportSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.btnExportPrimary {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
+  color: var(--cream);
+  box-shadow: 0 10px 28px rgba(24, 31, 33, 0.2);
+}
+
+.btnExportPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(24, 31, 33, 0.26);
+}
+
+.btnExportSecondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(24, 31, 33, 0.2);
+}
+
+.btnExportSecondary:hover {
+  background: var(--ink);
+  color: var(--cream);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding-top: 1.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerBadge {
+    width: 100%;
+  }
+
+  .reportsBox {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reportsActions {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .btnExportPrimary,
+  .btnExportSecondary {
+    flex: 1;
+    justify-content: center;
+  }
+}
