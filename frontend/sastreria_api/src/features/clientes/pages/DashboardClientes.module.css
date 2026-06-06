@@ -1,0 +1,122 @@
+.container {
+  padding: 3rem;
+  background: #f8f7f2;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #8b8b8b;
+}
+
+.title {
+  font-family: "Noto Serif", serif;
+  font-size: 3.5rem;
+  margin-top: 0.5rem;
+  color: #181f21;
+}
+
+.title span {
+  color: #c9a84c;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.subtitle {
+  color: #6f6f6f;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.cardTop h2 {
+  font-size: 1.4rem;
+  color: #181f21;
+  margin-bottom: 5px;
+}
+
+.cardTop span {
+  color: #8a8a8a;
+  font-size: 0.9rem;
+}
+
+.badge {
+  background: #181f21;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.info label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8b8b8b;
+  margin-bottom: 6px;
+}
+
+.info strong {
+  color: #181f21;
+  font-size: 1rem;
+}
+
+.btnGold {
+  width: 100%;
+  border: none;
+  background: linear-gradient(90deg, #735c00, #cca72f);
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btnGold:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
