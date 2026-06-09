@@ -19,7 +19,7 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
 
     try {
       if (isRegister) {
@@ -31,7 +31,7 @@ export const LoginPage = () => {
             nombre: nombre,
             correo: email,
             password: password,
-            rol: 3,
+            rol: 1,
           }),
         });
 
